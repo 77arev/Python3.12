@@ -3033,7 +3033,7 @@ import locale
 # print(a)
 # print('o' in a)  # True
 # print('a' in a)  # False
-# a.add("a")  # добавляет букву a, но куда попало
+# a.add("a")  # добавляет букву a, рандомно
 # print(a)
 # a.remove("e")
 # print(a)
@@ -3056,6 +3056,9 @@ import locale
 
 # ЗАРЕГАЙСЯ НА ГИТХАБ ***
 
-print("Hello World")
-print("Hello World")
+# print("Hello World")
+# print("Hello World")
+
+print("Данные для добавления на GitHub")
+
 
