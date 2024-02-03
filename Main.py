@@ -3059,9 +3059,275 @@ import locale
 # print("Hello World")
 # print("Hello World")
 
-print("Данные для добавления на GitHub")
+# print("Данные для добавления на GitHub")
 # Ссылку на домашнее задание прислать
 # Новое
 
+
+# ----------------------------------------------------------------
+# Урок №11 Python от 31.01.2024
+# Урок №1
+# ----------------------------------
+
+
+# Генератор списков
+# s = ['ab_1', 'ac_2', 'bc_1', 'bc_2']
+# a = [x for x in s if 'a' not in x]
+# print(a)
+
+# Тернарное выражение q = True if условие else False
+# Вариант №1
+# s = ['ab_1', 'ac_2', 'bc_1', 'bc_2']
+# a = ['A' if x[0] == 'a' else 'B' for x in s]
+# a = ['A' + x[1:] if x[0] == 'a' else 'B' + x[1:] for x in s]  # ['Ab_1', 'Ac_2', 'Bc_1', 'Bc_2']
+# a = ['A' + x[1:] if x[0] == 'a' else 'B' + x[1:] for x in s if x[1] == 'c']
+# a = {'A' + x[1:] if x[0] == 'a' else 'B' + x[1:] for x in s if x[1] == 'c'}  # Set - в рамдомном порядке
+# a = ['A' + x[1:] if x[0] == 'a' else 'B' + x[1:] for x in s if x[1] == 'c']
+# print(a)
+
+# Тернарное выражение q = True if условие else False
+# Вариант №2
+# lst = []
+# for x in s:
+#     if x[1] == 'c':
+#         if x[0] == 'a':
+#             lst.append('A' + x[1:])
+#         else:
+#             lst.append('B' + x[1:])
+# print(lst)
+
+# Получилось:
+# ['Ac_2', 'Bc_1', 'Bc_2']
+# ['Ac_2', 'Bc_1', 'Bc_2']
+
+
+# Вариант №3
+# s = ['ab_1', 'ac_2', 'bc_1', 'bc_2']
+# print(['A' + x[1:] if x[0] == 'a' else 'B' + x[1:] for x in s if x[1] == 'c'])
+
+# Вариант №4
+# s = ['ab_1', 'ac_2', 'bc_1', 'bc_2']
+# print(['A' + x[1:] if x[0] == 'a' else 'B' + x[1:] for x in ['ab_1', 'ac_2', 'bc_1', 'bc_2'] if x[1] == 'c'])
+# Получилось:
+# ['Ac_2', 'Bc_1', 'Bc_2']
+# ['Ac_2', 'Bc_1', 'Bc_2']
+
+# С кортежем тоже работает:
+# print(tuple('A' + x[1:] if x[0] == 'a' else 'B' + x[1:] for x in ['ab_1', 'ac_2', 'bc_1', 'bc_2'] if x[1] == 'c'))
+
+
+# Методы множества:
+# Папка № 10
+# a = {0, 1, 2, 3}
+# b = {4, 3, 2, 1}
+# c = a | b # добавилась 4
+# c = a & b # пересечение элементов {1, 2, 3}
+# a &= b  # {1, 2, 3}
+# print(a)
+# c = a.union(b)
+# print(c)  # {0, 1, 2, 3, 4}
+# a |= b
+# print(a)
+# c = a + b
+# a += b => a = a + b
+
+# c = a - b # уникальный элемент
+# a -= b
+# print(c)
+
+# c = a ^ b  # {0, 4} который не повторяется в двух множествах set
+# a ^= b
+# print(c)
+
+# Задача:
+# Дан набор множеств
+# s1 = {1, 2}
+# s2 = {3}
+# s3 = {4, 5}
+# s4 = {3, 2, 6}
+# s5 = {6}
+# s6 = {7, 8}
+# s7 = {9, 8}
+# # s = s1.union(s2, s3, s4, s5, s6, s7)  # {1, 2, 3, 4, 5, 6, 7, 8, 9}
+# s = s1 | s2 | s3 | s4 | s5 | s6 | s7
+# print(s)
+# print(len(s))
+# print(min(s))
+# print(max(s))
+
+# Задача:
+# Найдите общие буквы в двух разных строках:
+# s1 = "Hello"
+# s2 = "How are you"
+# s = set(s1) & set(s2)
+# print(s)
+# for i in s:
+#     print(i, end="")
+
+# Задача:
+# Найдите все буквы в первой строчке:
+# s1 = "Python"
+# s2 = "Programming language"
+# s = set(s1) - set(s2)
+# print(s)
+# for i in s:
+#     print(i, end=" ")
+
+
+# c1 = set("Python")
+# c2 = set("Programming language")
+# print(c1-c2)
+
+
+# Задача:
+# drawing = {'Марина', 'Женя', 'Света'}
+# music = {'Костя', 'Женя', 'Илья'}
+# one_hobby = drawing ^ music  # домик
+# print(one_hobby)
+# both_hobby = drawing & music  # амперсанд
+# print(both_hobby)
+#
+# drawing = drawing - both_hobby
+# print(drawing)
+
+
+# a = {0, 1, 2, 3, 4}
+# b = {3, 2, 1}
+# print(a <= b)  # False
+# print(a >= b)  # True
+# print(a < b)  # False
+# print(a > b)  # True
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# FROZEN SET
+# s = frozenset([1, 2, 3, 4, 5, 6])
+# print(s)  # frozenset({1, 2, 3, 4, 5, 6})
+
+# s = frozenset("Hello")
+# print(s)  # frozenset({'H', 'e', 'o', 'l'})
+
+
+# НОВАЯ ТЕМА
+# dictionary словарь
+# DICT
+
+# s = [1, 2, 3]
+# d = {"one": 1, "two": 2, "three": 3}  # ключи и значения
+# print(s)  # [1, 2, 3]
+# print(d)  # {'one': 1, 'two': 2, 'three': 3}
+# print(s[1])  # 2
+# print(d["two"])  # 2 - здесь ставим ключ
+
+# s1 = ["one", "two", "three"]
+# d1 = {1: "one", 2: "two", 3: "three"}
+# print(s1[1])
+# print(d1[2])  # здесь ставим ключ
+
+# Значениями могут быть все типы данных, а ключами - многие, но не все
+# d = {0: "test", "one": 45, (1, 2.3): "Кортеж", True: 1, [2, 3, 6, 7]: 35}  # TypeError:
+# # unhashable type: 'list'
+# print(d)
+
+# Ключами нельзя делать "Списки" и "Множества" - то есть ИЗМЕНЯЕМЫЕ ТИПЫ ДАННЫХ
+
+# d = {0: "test", "one": 45, (1, 2.3): "Кортеж", True: 1, 35: [2, 3, 6, 7], "one": "один"}  # TypeError:
+# # unhashable type: 'list'
+# print(d)
+
+# Ключи повторяться не могут
+# Dictionary contains duplicate keys 'one'
+
+# d = {0: "test", "one": 45, (1, 2.3): "Кортеж", True: 1, 35: [2, 3, 6, 7], False: "один"}  # TypeError:
+# print(d)
+
+# d = {0: "test", "one": 45, (1, 2.3): "Кортеж", True: 1, 35: [2, 3, 6, 7], False: "один"}
+# print(d[True])  # 1
+# print(d[1, 2.3])  # Кортеж
+# d[1, 2.3] = 100
+# print(d)
+
+# И словари и списки - это изменяемые типы данных
+# Создание словаря
+# d = {'one': 1, 'two': 2}
+# print(d)
+# print(type(d))  # {'one': 1, 'two': 2}  - <class 'dict'>
+
+# d1 = dict('one': 1, 'two': 2)  # SyntaxError: invalid syntax
+# d1 = dict(one=1, two=2)
+# print(d1)
+# print(type(d1))  # {'one': 1, 'two': 2}  - <class 'dict'>
+
+# Передача туда другого типа данных
+# d1 = dict([("one", 1), ("two", 2)])  # {'one': 1, 'two': 2}
+# print(d1)
+
+# d1 = dict(["on", ("two", 2)])  # {'one': 1, 'two': 2}
+# print(d1)  # {'o': 'n', 'two': 2}
+
+
+# Генератор словарей
+# d = {x: x ** 2 for x in range(7)}
+# print(d)  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36}
+
+
+# d = {'one': 1, 'two': 2, "three": 3}
+# print("two" in d)
+# print(2 in d)
+# print(len(d))
+# for key in d:
+#     print(key)  # получаем ключи
+#     print(key, "->", d[key])
+
+
+# d = {'one': 1, 'two': 2, "three": 3}
+# print("four" in d)  # False
+# print(d["four")  # ошибка
+# key = "four"
+# if key in d:
+#     print(d[key])
+# try:
+#     print(d[key])
+# except KeyError:
+#     print("Такого ключа не существует")
+
+
+# d = {'one': 1, 'two': 2, "three": 3}
+# print(d)
+# key = "one"
+# del d[key]
+# print(d)
+
+
+# Задача:
+# Дан словарь с числовыми значениями.
+
+# d = {'x1': 3, 'x2': 7, 'x3': 5, 'x4': -1}
+# res = 1
+# for x in d:
+#     res *= d[x]
+# print(res)
+
+
+# Задача:
+# Вариант №1
+# d = dict()
+# d[1] = input("-> ")
+# d[2] = input("-> ")
+# d[3] = input("-> ")
+# d[4] = input("-> ")
+# print(d)
+
+d = {x: input("-> ") for x in range(1, 5)}
+print(d)
+try:
+    dislike = int(input("Какой элемент исключить: "))
+    del d[dislike]
+except (KeyError, ValueError):
+    print("Такого ключа не существует")
+print(d)
 
 
