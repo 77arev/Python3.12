@@ -208,6 +208,8 @@ from math import pi
 
 
 # ДЗ №10 от 29.01.2024
+# https://github.com/77arev/Python3.12/blob/master/Domashka/DZ.py
+
 
 
 
