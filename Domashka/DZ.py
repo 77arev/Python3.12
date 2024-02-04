@@ -192,23 +192,36 @@ from math import pi
 #     print("Количество ", i, "=", a.count(i))
 
 # Вариант №3
-c = tuple(input("Введите по порядку без пробелов элементы кортежа: "))
-cc = tuple(sorted(c))
-print(cc)
-ii = "0"
-n = 0
-for i in cc:
-    if i == ii:
-        n = n + 1
-    if i != ii:
-        print("Количество ", ii, "=", n)  # для предыдущего элемента
-        n = 1
-    ii = i
-print("Количество ", i, "=", n)  # для последнего элемента
+# c = tuple(input("Введите по порядку без пробелов элементы кортежа: "))
+# cc = tuple(sorted(c))
+# print(cc)
+# ii = "0"
+# n = 0
+# for i in cc:
+#     if i == ii:
+#         n = n + 1
+#     if i != ii:
+#         print("Количество ", ii, "=", n)  # для предыдущего элемента
+#         n = 1
+#     ii = i
+# print("Количество ", i, "=", n)  # для последнего элемента
 
 
 # ДЗ №10 от 29.01.2024
 # Строка кода :)
+
+
+# ДЗ №11 от 31.01.2024
+# Задача:
+# Олимпиада
+physics = {"Matvei", "Evgeniya", "Michail", "Maxim", "Natalia"}
+mathematics = {"Maxim", "Matvei", "Aleksandr"}
+general_list = physics | mathematics
+print("Все призеры:", general_list)
+both_olympiads = physics & mathematics
+print("Призеры обеих олимпиад:", both_olympiads)
+mathematics &= both_olympiads
+print("Обновленный список по математике:", mathematics)
 
 
 
