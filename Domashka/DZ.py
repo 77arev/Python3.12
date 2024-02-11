@@ -214,14 +214,45 @@ from math import pi
 # ДЗ №11 от 31.01.2024
 # Задача:
 # Олимпиада
-physics = {"Matvei", "Evgeniya", "Michail", "Maxim", "Natalia"}
-mathematics = {"Maxim", "Matvei", "Aleksandr"}
-general_list = physics | mathematics
-print("Все призеры:", general_list)
-both_olympiads = physics & mathematics
-print("Призеры обеих олимпиад:", both_olympiads)
-mathematics &= both_olympiads
-print("Обновленный список по математике:", mathematics)
+# physics = {"Matvei", "Evgeniya", "Michail", "Maxim", "Natalia"}
+# mathematics = {"Maxim", "Matvei", "Aleksandr"}
+# general_list = physics | mathematics
+# print("Все призеры:", general_list)
+# both_olympiads = physics & mathematics
+# print("Призеры обеих олимпиад:", both_olympiads)
+# mathematics &= both_olympiads
+# print("Обновленный список по математике:", mathematics)
+
+
+# ДЗ №12 от 05.02.2024
+# Задача:
+sales = {'John': {'N': 3056, 'S': 8463, 'E': 8441, 'W': 2694},
+         'Tom': {'N': 4832, 'S': 6786, 'E': 4737, 'W': 3612},
+         'Anne': {'N': 5239, 'S': 4802, 'E': 5820, 'W': 1859},
+         'Fiona': {'N': 3904, 'S': 3645, 'E': 8821, 'W': 2451}}
+
+for x in sales:
+    print(x)
+    for y in sales[x]:
+        print("\t", y, ":", sales[x][y])
+
+person = input("Имя: ")
+region = input("Регион: ")
+print(sales[person][region])
+new_data = int(input("Новое значение: "))
+sales[person][region] = new_data
+print(sales[person])
+
+
+# ДЗ №13 от 07.02.2024
+# Задача:
+
+
+
+
+
+
+
 
 
 
