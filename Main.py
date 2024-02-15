@@ -3768,31 +3768,50 @@ import locale
 
 # -----------------------------------------------
 
-# Встроенная функция zip()
-
+# Встроенная функция zip() - создать словарь
+# У нас есть списки и нам нужно создать из них словарь
 # one = [1, 2, 3]
 # two = ["one", "two", "three"]
-# three = [2.5, 4.6, 8.9]
+# three = [2.5, 4.6, 8.9]  #
 
-# d = dict(zip(one, two))
+# d = dict(zip(one, two))  # Можем передать только из 2 списков !! чтобы получить пары (ключ - значение)
+# получили словарь, значения 1 списка используются в качестве ключей,
+# значения 2-го - в качестве значений - {1: 'one', 2: 'two', 3: 'three'}
 # print(d)
-#
-# lst = list(zip(one, two, three))
+
+# lst = list(zip(one, two))  # делаем список (из двух списков), получили список кортежей -
+# # [(1, 'one', 2.5), (2, 'two', 4.6), (3, 'three', 8.9)]
 # print(lst)
-#
-# lst1 = list(zip(one))
+
+# lst1 = list(zip(one, two, three))  # вывел список из 3-х списков -
+# # [(1, 'one', 2.5), (2, 'two', 4.6), (3, 'three', 8.9)]
 # print(lst1)
 
-# f = {k: v for k, v in zip(two, one)}
-# print(f)
+# lst2 = list(zip(one))  # Здесь можно и 1 параметр - [(1,), (2,), (3,)]
+# print(lst2)
+
+
+# Другой вариант, как создать словарь с помощью генератора словаря
+# one = [1, 2, 3]
+# two = ["one", "two", "three"]
+# three = [2.5, 4.6, 8.9]  #
+# f = {k: v for k, v in zip(two, one)}  # генератор словаря
+# print(f)  # {'one': 1, 'two': 2, 'three': 3}
 
 
 # Задача:
-#
+# Сделаем два словаря, выведем данные этих пользователей с помощью цикла с zip:
 # one = {"name": "Igor", "surname": "Doe", "job": "Consultant"}
 # two = {"name": "Irina", "surname": "Smith", "job": "Manager"}
 
-# Сделаем кортежем:
+# for k, v in one.items():  # Таким образом мы выведем данные 1 словаря
+#     print(k, "->", v)
+
+# for k, v in zip(one.items(), two.items()):  # Таким образом мы выводим данные из двух словарей
+#     print(k, "->", v)
+# В виде кортежей! Кортежи мы можем распаковать!
+
+# Сделаем кортежи и распакуем:
 # for (k1, v1), (k2, v2) in zip(one.items(), two.items()):
 #     print(k1, "->", v1)
 #     print(k2, "->", v2)
@@ -3804,17 +3823,18 @@ import locale
 
 
 # Задача:
-#
+# С помощью zip мы делаем сейчас обратное действие, раскладываем этот список кортежей на два
+# отдельных кортежа
 # lst = [(1, 'one'), (2, 'two'), (3, 'three')]
-# a, b = zip(*lst)
-# print(a)
-# print(b)
+# a, b = zip(*lst)  # (*) - распаковка последовательностей
+# print(a)  # (1, 2, 3)
+# print(b)  # ('one', 'two', 'three')
 
 
-# Как с помощью ** объединить словари
+# Как с помощью (**) объединить словари!
 # a = {"one": 1, "two": 2}
 # b = {"three": 3, "four": 4}
-# print({**a, **b})
+# print({**a, **b})  # Мы объединили словари с один третий словарь - {'one': 1, 'two': 2, 'three': 3, 'four': 4}
 #
 # for k, v in {**a, **b}.items():
 #     print(k, "->", v)
@@ -3827,39 +3847,54 @@ import locale
 # four -> 4
 
 
-#
+# Небольшая темка - enumerate (нумерация), здесь можно добавлять дополнительный параметр
+# Вариант №1
 # data = [5, 7, 9, 4, 1, 3, 5, 8, 6, 4]
 # j = 0
 # for i in data:
 #     print(j, ") ", i, sep="")
 #     j += 1
 
-
+# Вариант №2
 # data = [5, 7, 9, 4, 1, 3, 5, 8, 6, 4]
-# for j, i in enumerate(data, 1):
+# for j, i in enumerate(data, 1):  # (data, 1) если здесь добавить 1, то нумерация будет начинаться с 1
 #     print(j, ") ", i, sep="")
 
 
 # date = ["red", "green", "blue"]
 # for num, color in enumerate(date, 1):
 #     print(num, ") ", color, sep="")
+# Результат:
+# 1) red
+# 2) green
+# 3) blue
 
+
+# Темка - звездочка *
+# a = [1, 2, 3]
+# b = [a, 4, 5, 6]  # [[1, 2, 3], 4, 5, 6]
+# print(b)
 
 # a = [1, 2, 3]
 # b = [*a, 4, 5, 6]  # У нас пропали квадратные скобки []
 # print(b)
 
+
+# КАК РАБОТАЮТ ФУНКЦИИ:
+
 # def func(*args):
-#     return args
+#     print(*args)  # 5 6 7 abc
+#     return args  # получили кортеж
 #
 #
 # print(func(5))
-# print(func(5, 6, 7, "abc"))
+# print(func(5, 6, 7, "abc"))  # чтобы передавать больше 1 числа, нужно использовать * перед args
 # print(func())
+
 
 # def summa(*args):
 #     res = 0
-#     for i in args:
+#     for i in args:  # будем перебирать i в кортеже (args)
 #         res += i
 #     return res
 #
@@ -3870,7 +3905,9 @@ import locale
 
 
 # Задача:
-#
+# Напишите функцию, которая принимает произвольное кол-во аргументов. И возвращает словарь,
+# в котором каждый элемент списка являться и ключом и значением
+# Вариант учителя
 # def to_dict(*di):
 #     return {i: i for i in di}
 #     # return dict(zip(di, di))
@@ -3880,20 +3917,40 @@ import locale
 # print(to_dict("green", (2, 17), 3.11, -4))
 
 
+# Вариант №1
+# def a(*did):
+#     return {i: i for i in did}
+#
+#
+# print(a(1, 5, 2, 6, 3, 56, 888, 2, 25, 55, 22, 2))
+
+
+# Вариант №2
+# def a(*did):
+#     dict = {}
+#     for i in did:
+#         dict.update({i: i})
+#
+#     return dict
+#
+#
+# print(a(1, 5, 2, 6, 3, 56, 888, 2, 25, 55, 22, 2))
+
+
 # ----------------------------------------------------------------
 # Урок №2
 # ----------------------------
 
 
 # Задача:
-#
-
+# Написать функцию, которая принимает произвольное число чисел. Вычисляет их среднее арифметическое
+# и возвращает только те числа, которые меньше полученного среднего арифметического
 # def ch(*args):
 #     average = sum(args) / len(args)
 #     print(average)
 #     res = []
 #     for num in args:
-#         if average < num:
+#         if average > num:
 #             res.append(num)
 #     return res
 #
@@ -3903,18 +3960,21 @@ import locale
 
 
 # Задача:
-#
 # def func(a, *args):
 #     return a, args
 #
 #
-# print(func(5))
-# print(func(5, 9, 6, 5, 26, 5, 4))
+# print(func(5))  # (5, ())
+# print(func(5, 9, 6, 5, 26, 5, 4))  # (5, (9, 6, 5, 26, 5, 4))
 
+
+# Задача:
+# Распечатаем оценки студентов
 # def print_scores(student, *scores):
-#     print("Name: ", student)
+#     print("Name:", student)
 #     for score in scores:
-#         print(score)
+#         print(score, end=" ")
+#     print()
 #
 #
 # print_scores("Roman", 4, 5, 3, 3, 4, 5, 5, 4, 5)
@@ -3923,36 +3983,68 @@ import locale
 
 # def func(**kwargs):
 #     return kwargs
-
-
-# ДОДЕЛАТЬ
-# ДОДЕЛАТЬ
-# ДОДЕЛАТЬ
-
-
-# def func(a, b, *args, dd=5, cc=7, **kwargs):
-#     return a, b, args, kwargs, dd, cc
 #
 #
-# print(func(1, 2, 3, 4, 5, 6, aaa=1, bb=2, cc=3))
+# print(func(a=1, b=2, c=3))
+# print(func())
+# print(func(name="Python"))
 
 
 # Задача:
+# Одна звездочка * (*args) - со всеми параметрами, там где нет ключей, две звездочки ** (**kwargs)
+# со словарями и ключами
+# Пользователь вводит данные, некоторые поля обязательные для заполнения, другие нет
+# def intro(**kwargs):
+#     for k, v in kwargs.items():
+#         print(k, "is", v)
+#     print()
 #
+#
+# intro(name="Irina", surname="Sharma", age=22)
+# intro(name="Igor", surname="Wood", email="igor@mail.com", age=22, phone="987654321")
+
+
+#
+# У нас могут быть позиционный аргумент и аргумент с одной звездочкой (*) и с (**)
+# def func(a, b, *args, dd=5, cc=7, **kwargs):  # Порядок только такой
+#     return a, b, args, kwargs, dd, cc
+#
+#
+# print(func(1, 2, 3, 4, 5, 6, aaa=1, bb=2, cc=3))  # А здесь порядок только такой, вначале цифры,
+# потом именованные параметры
+
+
+# Задача:
+# Написать функцию, которая принимает неограниченное количество параметров ключ-значение
 # def db(**kwargs):
-#     my_dict.update(**kwargs)
+#     my_dict.update(**kwargs)  # обновляем словарь новыми ключами и значениями
 #
 #
 # my_dict = {"one": "first"}
 # db(k1=22, k2=31, k3=11, k4=91)
-# db(name="Bob", age=31, weight=61, eyes_color="gray")
+# db(name="Bob", age=31, weight=61, eyes_color="grey")
 # print(my_dict)
+# # {'one': 'first', 'k1': 22, 'k2': 31, 'k3': 11, 'k4': 91, 'name': 'Bob', 'age': 31, 'weight': 61,
+# 'eyes_color': 'grey'}
+
+
+# ---------------------------------
+# *** ОБЛАСТИ ВИДИМОСТИ ***
+# В Питоне 4 области видимости !!!
+# ---------------------------------
+# Приоритет от Local (L)
+# 1) Локальная (в середине функции) - Local (L)
+# 2) Объемлющая - локальная объемлющих функций - Enclosed (E)
+# 3) Глобальная (на уровне модуля) - Global (G)
+# 4) Встроенная (на уровне языка Питон) - Built-in (B)
 
 
 # name = "Tom"  # Глобальная переменная
+# surname = ""  # задали здесь кавычками
 #
 #
 # def hi():
+#     global name, surname  # Мы локальную переменную сделали глобальной с помощью global
 #     name = "Sam"  # Локальная переменная
 #     surname = "Johnson"
 #     print("Hello", name, surname)
@@ -3962,11 +4054,15 @@ import locale
 #     print("Good bye", name)
 #
 #
+# print(name)
 # hi()
-# bye(surname)
+# bye()
+# print(name)  # Tom, потому что переменная-Tom находится в глобальной области видимости
+# print(surname)
 
 
-# i = 5
+# Еще одна особенность питона:
+# i = 5  # глобальная
 # i = 6
 #
 #
@@ -3974,7 +4070,7 @@ import locale
 #     print(arg)
 #
 #
-# i = 6
+# i = 6  # глобальная
 # func()
 
 
@@ -3985,5 +4081,498 @@ import locale
 #         print("x:", x)
 #         return a + x
 #
+#     return inner()
+#
 #
 # print(func(3))
+
+
+# ----------------------------------------------------------------
+# Урок №14 Python от 12.02.2024
+# Урок №1
+# -----------------------------------------------
+
+
+# ДОМАШКА от 07.02.2024
+
+# students = {}
+# n = int(input("Количество студентов: "))
+# s = 0
+# for key in range(n):
+#     # print(key + 1, "-й студент: ", sep="")
+#     name = input(str(key + 1) + "-й студент: ")
+#     point = int(input("Балл: "))
+#     students[name] = point
+#     s += point
+#
+# average = s / n
+# print("Средний балл: ", average)
+# for key in students:
+#     if students[key] > average:
+#         print(key)
+
+
+# -----------------------------------------------
+
+# ОБЛАСТИ ВИДИМОСТИ В ПИТОН:
+
+# Ctrl + Alt + левой кнопкой мыши = открывается файл (builtins) (встроенные функции)
+# ---------------------------------
+# *** ОБЛАСТИ ВИДИМОСТИ ***
+# В Питоне 4 области видимости !!!
+# ---------------------------------
+# Приоритет от Local (L)
+# 1) Локальная (в середине функции) - Local (L)
+# 2) Объемлющая - локальная объемлющих функций - Enclosed (E)
+# 3) Глобальная (на уровне модуля) - Global (G)
+# 4) Встроенная (на уровне языка Питон) - Built-in (B)
+
+input = 5
+
+print(input)
+x = input("Введите")
+print(x)
+
+
+# def outer(who):
+#     def inner():
+#         print("Hello,", who)
+#
+#     inner()
+#
+#
+# outer("World!")
+
+
+# def fun1():
+#     a = 6
+#
+#     def fun2(b):
+#         a = 4
+#         print(a + b)
+#
+#     print("a: ", a)
+#     fun2(4)
+#
+#
+# fun1()
+
+
+# x = 25
+# t = 0
+#
+#
+# def fn():
+#     global t
+#     a = 30
+#
+#     def inner():
+#         nonlocal a
+#         a = 35
+#
+#     inner()
+#     t = a
+#
+#
+# fn()
+# q = x + t
+# print(q)  # 55
+
+
+# x = 5
+#
+#
+# def fn1():
+#     x = 25
+#
+#     def fn2():
+#         x = 33
+#
+#         def fn3():
+#             nonlocal x
+#             x = 55
+#
+#         fn3()
+#         print("fn2.x =", x)
+#
+#     fn2()
+#     print("fn1.x =", x)
+#
+#
+# fn1()
+# Результат:
+# fn2.x = 33
+# fn1.x = 25
+
+
+# def outer(a1, b1, a2, b2):
+#     a = 0
+#     b = 0
+#
+#     def inner():
+#         a = a1 + a2
+#         b = b1 + b2
+#         print("a: ", a)
+#         print("b: ", b)
+#
+#     inner()
+#     return [a, b]
+#
+#
+# print(outer(2, 3, -1, 4))
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# ЗАМЫКАНИЕ
+# через return
+
+# def outer(n):
+#     def inner(x):
+#         return n + x
+#
+#     return inner
+#
+#
+# out1 = outer(5)
+# print(out1(10))  # то, что принимает вложенная функция
+#
+# out2 = outer(6)
+# print(out2(4))
+#
+# print(outer(5)(10))
+
+
+# def func1():
+#     a = 1
+#     b = "line"
+#     c = [1, 2, 3]
+#
+#     def func2():
+#         nonlocal a, b
+#         c.append(4)
+#         a = a + 1
+#         b = b + "_new"
+#         return a, b, c
+#
+#     return func2
+#
+#
+# func = func1()
+# print(func())
+
+
+# Задача:
+
+# def func(city):
+#     count = 0  # неизменяемый тип данных
+#
+#     def inner():
+#         nonlocal count
+#
+#         count += 1
+#         print(city, count)
+#
+#     return inner
+#
+#
+# res1 = func("Москва")
+# res1()
+# res1()
+# res2 = func("Сочи")
+# res2()
+# res2()
+# res1()
+
+
+# lambda - функция (выражение)
+# функция в одну строку
+
+# def func(x, y):
+#     return x + y
+#
+#
+# print(func(2, 3))
+#
+# print((lambda x, y: x + y)(2, 3))
+#
+# variable = (lambda x, y: x + y)  # скобочки
+#
+# print(variable(2, 3))
+
+
+# print((lambda x, y: x + y)(2, 3))
+# print((lambda x, y: x + y)(12, 3))
+
+
+#
+# print((lambda x, y: x ** 2 + y ** 2)(2, 5))
+
+#
+# print((lambda a, b, c: a + b + c)(10, 20, 30))
+# print((lambda a, b, c=3: a + b + c)(10, 20))
+# print((lambda a, b=2, c=3: a + b + c)(10))
+# print((lambda a=1, b=2, c=3: a + b + c)())
+
+
+# print((lambda *args: args)(1, 2, 3, 4, 5, 6))
+# print((lambda *args: args)("a", "b", "c"))
+
+
+# c = (
+#     lambda x: x * 2,
+#     lambda x: x * 3,
+#     lambda x: x * 4,
+# )
+#
+# # print(c[0](5))
+# for t in c:
+#     print(t("abc_"))
+
+
+# def outer(n):
+#     def inner(x):
+#         return n + x
+#
+#     return inner
+#
+#
+# f = outer(5)
+# print(f(10))
+#
+#
+# def outer(n):
+#     return lambda x: n + x
+#
+#
+# f = outer(5)
+# print(f(10))
+#
+# outer2 = lambda n: lambda x: n + x
+#
+# f2 = outer2(5)
+# print(f(10))
+
+
+# Задача:
+# print((lambda n: lambda x: lambda y: n + x + y)(2)(4)(6))
+
+
+# print((lambda n: lambda x: lambda y: n+x+y)
+#       (int(input("Введите 1 число: ")))
+#       (int(input("Введите 2 число: ")))
+#       (int(input("Введите 3 число: "))))
+
+
+# def func(i):
+#     return i[1]
+#
+#
+# d = {"b": 15, "a": 7, "c": 3}
+# print(d)
+# lst = list(d.items())
+# print(lst)
+# # lst.sort(key=lambda i: i[1])
+# lst.sort(key=func)
+# print(lst)
+
+
+# -----------------------------------------------
+# ----------------------------------------------------------------
+# Урок №15 Python от 14.02.2024
+# Урок №1
+# -----------------------------------------------
+
+# ДОМАШКА от 07.02.2024
+
+# Вариант №1
+# def outer(a, b, c):
+#     def inner(i, j):
+#         return i * j
+#
+#     s = 2 * (inner(a, b) + inner(a, c) + inner(b, c))
+#     return s
+#
+#
+# print(outer(2, 4, 6))
+# print(outer(5, 8, 2))
+# print(outer(1, 6, 8))
+# -----------------------------------------------
+
+# Вариант №2
+# s = 0
+#
+#
+# def outer(a, b, c):
+#     def inner(i, j):
+#         return i * j
+#
+#     global s
+#     s = 2 * (inner(a, b) + inner(a, c) + inner(b, c))
+#     return s
+#
+#
+# outer(2, 4, 6)
+# print(s)
+# outer(5, 8, 2)
+# print(s)
+# outer(1, 6, 8)
+# print(s)
+# -----------------------------------------------
+
+# Вариант №3
+# def outer(a, b, c):
+#     s = 0
+#
+#     def inner(i, j):
+#         nonlocal s
+#         s = s + i * j  # s += i * j
+#
+#     inner(a, b)
+#     inner(a, c)
+#     inner(b, c)
+#     return 2 * s
+#
+#
+# print(outer(2, 4, 6))
+# print(outer(5, 8, 2))
+# print(outer(1, 6, 8))
+# -----------------------------------------------
+
+
+# def func(i):
+#     return i[1]
+#
+#
+# d = {"b": 15, "a": 7, "c": 3}
+# print(d)
+# lst = list(d.items())
+# print(lst)
+# # lst.sort(key=lambda i: i[1])
+# lst.sort(key=func)
+# print(lst)
+
+
+# Задача:
+# Дан список игроков команды, причем для каждого игрока указаны его имя, фамилия и игровой рейтинг
+# players = [
+#     {'name': 'Антон', 'last_name': 'Бирюков', 'rating': 9},
+#     {'name': 'Алексей', 'last_name': 'Бодня', 'rating': 10},
+#     {'name': 'Федор', 'last_name': 'Сидоров', 'rating': 4},
+#     {'name': 'Михаил', 'last_name': 'Семенов', 'rating': 6},
+# ]
+#
+# res1 = sorted(players, key=lambda item: item['last_name'])
+# print(res1)
+# res2 = sorted(players, key=lambda item: item['rating'])
+# print(res2)
+# res3 = sorted(players, reverse=True, key=lambda item: item['rating'])
+# print(res3)
+
+
+# Задача:
+# a = [lambda x, y: x + y, lambda x, y: x - y, lambda x, y: x * y]
+# b = a[1](5, 3)  # обращение к lambda по индексу
+# print(b)
+
+
+# Задача:
+# d = {
+#     1: lambda: print("Понедельник"),
+#     2: lambda: print("Вторник"),
+#     3: lambda: print("Среда"),
+#     4: lambda: print("Четверг"),
+# }
+# d[3]()  # Среда
+
+
+# Задача:
+# print((lambda a, b: a if a > b else b)(5, 3))
+
+
+# Задача:
+# Создать лямбда-выражение нахождения минимального значения между тремя числами 9, 8, 5
+# Вариант №1
+# print((lambda a, b, c: a if a < b else b if b < c else c)(9, 8, 15))
+# Вариант №2
+# print((lambda a, b, c: a if (a < b) and (b < c) else b if b < c else c)(9, 8, 15))
+
+# Доделать !!!
+# print((lambda a, b, c: a if (a < b) and ((b < c) or (b > c)) else b if b < c else c)(905, 12, 15))
+
+# print((lambda a, b, c: a if (a < b) and (a < c) else b if (b < c) and (b < a) else c if (c < a) and (
+#         c < b) else "Ну тут уже всё:)")(11, 12, 3))
+
+# Последний учительский вариант
+# print((lambda a, b, c: a if (a < b) and (a < c) else b if (b < c) and (b < a) else c)(12, 36, 15))
+
+# print((lambda *args: min(args))(2, 5, 6))
+#
+# print((lambda a, b, c: a if min(a, b, c) == a else b if min(a, b, c) == b else c if
+# min(a, b, c) == c else "Несколько равных")(11, 2, 111))
+#
+# print((lambda *args: min(args))(2, 5, 6))
+
+# print((lambda *args: sorted(list(args))[0])(2, 5, 6))
+# print((lambda *args: sorted(args)[-1])(2, 5, 6))
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# map(func, iterable), filter(func, iterable)
+
+
+# def mult(t):
+#     return t * 2
+#
+#
+# lst = [2, 8, 12, -5, -10]
+#
+# lt = list(map(mult, lst))
+# print(lt)
+#
+# lt1 = list(map(lambda t: t * 2, lst))
+# print(lt1)
+#
+# lt1 = list(map(lambda t: t * 2, [2, 8, 12, -5, -10]))
+
+
+# lst = ['1', '2', '3', '4', '5']
+# print(lst)
+# print(list(map(lambda x: int(x), lst)))
+# print(list(map(int, lst)))
+# print([int(i) for i in lst])
+
+
+# st = ['a', 'b', 'c', 'd', 'e']
+# num = [1, 2, 3, 4, 5]
+# print(list(map(lambda x, y: (x, y), st, num)))  #  ДОДЕЛАТЬ
+
+#  ДОДЕЛАТЬ
+
+#
+#
+# t = ('abcd', 'abc', 'hfhffj', 'deftr', 'tyu')
+# # t2 = tuple(filter(lambda s: len(s) == 3, t))
+# t2 = tuple(filter(lambda s: s * 3, t))
+# print(t2)
+#  ДОДЕЛАТЬ
+
+
+# b = [66, 90, 68, 59, 76, 60, 88, 74, 81, 65]
+# print(list(filter(lambda s: s > 75, b)))
+
+
+# Задача:
+# from random import randint
+#
+# arr = [randint(0, 40) for i in range(10)]
+# print(arr)
+# print(list(filter(lambda a: 10 <= a <= 20, arr)))
+
+
+# print(list(map(lambda x: x ** 2)))
