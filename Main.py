@@ -2413,6 +2413,7 @@ import math
 import time
 import locale
 
+
 # locale.setlocale(locale.LC_ALL, "ru")  # Россия
 # locale.setlocale(locale.LC_ALL, "bel")  # Беларусь
 
@@ -4127,15 +4128,19 @@ import locale
 # 3) Глобальная (на уровне модуля) - Global (G)
 # 4) Встроенная (на уровне языка Питон) - Built-in (B)
 
-input = 5
 
-print(input)
-x = input("Введите")
-print(x)
+# input = 5
+#
+# print(input)
+# x = input("Введите")
+# print(x)  # TypeError: 'int' object is not callable
+
+# lst = [1, 2, 3, 4, 5, 6]
+# print(sum(lst))
 
 
 # def outer(who):
-#     def inner():
+#     def inner():  # к вложенным функциям просто так мы не можем обратиться
 #         print("Hello,", who)
 #
 #     inner()
@@ -4167,11 +4172,11 @@ print(x)
 #     a = 30
 #
 #     def inner():
-#         nonlocal a
+#         nonlocal a  # перезапишет переменную a на уровень выше
 #         a = 35
 #
 #     inner()
-#     t = a
+#     t = a  # 35
 #
 #
 # fn()
@@ -4210,6 +4215,7 @@ print(x)
 #     b = 0
 #
 #     def inner():
+#         nonlocal a, b
 #         a = a1 + a2
 #         b = b1 + b2
 #         print("a: ", a)
@@ -4220,6 +4226,10 @@ print(x)
 #
 #
 # print(outer(2, 3, -1, 4))
+# Результат:
+# a:  1
+# b:  7
+# [1, 7]
 
 
 # ----------------------------------------------------------------
@@ -4236,13 +4246,24 @@ print(x)
 #     return inner
 #
 #
-# out1 = outer(5)
-# print(out1(10))  # то, что принимает вложенная функция
+# out1 = outer(5)  # здесь мы вызвали наружнюю функцию - outer(), то есть def inner(x): return n + x
+# print(out1(10))  # то, что принимает вложенная функция, то есть здесь мы обратились к внутренней функции
+# # inner с помощью out1(10)
 #
 # out2 = outer(6)
 # print(out2(4))
+
+# print(outer(5)(10))  # это 2 вариант, получим тот же результат 15, но это с замыканием не работает
+
+
+# def func(a):
+#     return a + 2
 #
-# print(outer(5)(10))
+#
+# var = func(5)  # вызываем функцию func(5)
+# print(var)  # печатаем ее
+# Но где мы ее сохраняем? пока нигде, нужна переменная, к примеру, var, и потом эту переменную (var)
+# мы выводим
 
 
 # def func1():
@@ -4252,9 +4273,9 @@ print(x)
 #
 #     def func2():
 #         nonlocal a, b
-#         c.append(4)
-#         a = a + 1
-#         b = b + "_new"
+#         c.append(4)  # c - это список, это изменяемый тип данных, ему nonlocal не нужен
+#         a = a + 1  # здесь a - целое число, nonlocal нужен
+#         b = b + "_new"  # здесь b - строка, nonlocal нужен
 #         return a, b, c
 #
 #     return func2
@@ -4265,13 +4286,15 @@ print(x)
 
 
 # Задача:
-
+# Напишите функцию, ведущую подсчет количества посещений указанного города. Функция должна принимать в
+# качестве аргумента название города и возвращать некоторую внутреннюю функцию, которая каждый раз при ее
+# вызове будет увеличивать счетчик посещений на 1.
+# Использовать нелокальную область видимости.
 # def func(city):
 #     count = 0  # неизменяемый тип данных
 #
 #     def inner():
-#         nonlocal count
-#
+#         nonlocal count  # без этой надписи nonlocal ни одна локальная переменная снаружи видна не будет
 #         count += 1
 #         print(city, count)
 #
@@ -4287,19 +4310,24 @@ print(x)
 # res1()
 
 
+# *** НОВАЯ ТЕМА  ***
+# LAMBDA ВЫРАЖЕНИЕ
+
 # lambda - функция (выражение)
 # функция в одну строку
 
-# def func(x, y):
+# Вариант №1
+# def func(x, y):  # 5
 #     return x + y
 #
 #
 # print(func(2, 3))
-#
-# print((lambda x, y: x + y)(2, 3))
-#
+
+# Вариант №2
+# print((lambda x, y: x + y)(2, 3))  # 5
+
+
 # variable = (lambda x, y: x + y)  # скобочки
-#
 # print(variable(2, 3))
 
 
@@ -4307,16 +4335,20 @@ print(x)
 # print((lambda x, y: x + y)(12, 3))
 
 
-#
+# Задача:
+# Создать лямбда-выражение, которое находит сумму квадратов двух чисел:
 # print((lambda x, y: x ** 2 + y ** 2)(2, 5))
 
-#
+
+# Задача:
+# Присваивание значений
 # print((lambda a, b, c: a + b + c)(10, 20, 30))
 # print((lambda a, b, c=3: a + b + c)(10, 20))
 # print((lambda a, b=2, c=3: a + b + c)(10))
 # print((lambda a=1, b=2, c=3: a + b + c)())
 
 
+# Принимаемые аргументы
 # print((lambda *args: args)(1, 2, 3, 4, 5, 6))
 # print((lambda *args: args)("a", "b", "c"))
 
@@ -4327,11 +4359,12 @@ print(x)
 #     lambda x: x * 4,
 # )
 #
-# # print(c[0](5))
+# # print(c[0](5))  # вызвали лямбда выражение по [0] индексу
 # for t in c:
 #     print(t("abc_"))
 
 
+# Вариант №1
 # def outer(n):
 #     def inner(x):
 #         return n + x
@@ -4341,26 +4374,28 @@ print(x)
 #
 # f = outer(5)
 # print(f(10))
-#
-#
-# def outer(n):
+
+
+# Вариант №2
+# def outer1(n):
 #     return lambda x: n + x
 #
 #
-# f = outer(5)
+# f = outer1(5)
 # print(f(10))
-#
+
+
+# Вариант №3
 # outer2 = lambda n: lambda x: n + x
-#
 # f2 = outer2(5)
-# print(f(10))
+# print(f2(10))
 
 
 # Задача:
+# Создать лямбда-выражение для вычисления суммы трех чисел, с использованием вложенных лямбда-выражений
 # print((lambda n: lambda x: lambda y: n + x + y)(2)(4)(6))
 
-
-# print((lambda n: lambda x: lambda y: n+x+y)
+# print((lambda n: lambda x: lambda y: n + x + y)
 #       (int(input("Введите 1 число: ")))
 #       (int(input("Введите 2 число: ")))
 #       (int(input("Введите 3 число: "))))
@@ -4374,7 +4409,7 @@ print(x)
 # print(d)
 # lst = list(d.items())
 # print(lst)
-# # lst.sort(key=lambda i: i[1])
+# lst.sort(key=lambda i: i[1])  # сортировка по возрастанию
 # lst.sort(key=func)
 # print(lst)
 
@@ -4387,6 +4422,7 @@ print(x)
 
 # ДОМАШКА от 07.02.2024
 
+# Самая простая версия с помощью локальной переменной
 # Вариант №1
 # def outer(a, b, c):
 #     def inner(i, j):
@@ -4420,17 +4456,17 @@ print(x)
 # print(s)
 # outer(1, 6, 8)
 # print(s)
-# -----------------------------------------------
+# # -----------------------------------------------
 
 # Вариант №3
-# def outer(a, b, c):
+# def outer(a, b, c):  # Вначале, здесь
 #     s = 0
 #
-#     def inner(i, j):
+#     def inner(i, j):  # Последнее действие
 #         nonlocal s
 #         s = s + i * j  # s += i * j
 #
-#     inner(a, b)
+#     inner(a, b)  # Потом, здесь
 #     inner(a, c)
 #     inner(b, c)
 #     return 2 * s
@@ -4442,17 +4478,17 @@ print(x)
 # -----------------------------------------------
 
 
-# def func(i):
-#     return i[1]
-#
-#
-# d = {"b": 15, "a": 7, "c": 3}
-# print(d)
-# lst = list(d.items())
-# print(lst)
-# # lst.sort(key=lambda i: i[1])
-# lst.sort(key=func)
-# print(lst)
+def func(i):
+    return i[1]
+
+
+d = {"b": 15, "a": 7, "c": 3}
+print(d)
+lst = list(d.items())
+print(lst)
+# lst.sort(key=lambda i: i[1])
+lst.sort(key=func)
+print(lst)
 
 
 # Задача:
