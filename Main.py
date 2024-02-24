@@ -2,8 +2,7 @@
 # Урок №1 Python от 18.12.2023
 # Урок №1
 # ----------------------------
-import random
-import math
+import sys
 
 # firstName = "admin"
 # # print(name)
@@ -2085,7 +2084,6 @@ import math
 # ГЕНЕРАЦИЯ СЛУЧАЙНЫХ ДАННЫХ
 # их нельзя использовать просто так, нужно импортировать модуль random
 # print()
-import random  # CTRL + левая кнопка мыши
 # print(random.random())  # от 0 до 1 (не включая) - 0.517323349343888
 
 # Теперь хотим получить целочисленное значение (случайных чисел)
@@ -2232,8 +2230,6 @@ import random  # CTRL + левая кнопка мыши
 # print(5 in lst)  # True - вопрос - Существует ли цифра 5 в списке
 
 
-import random
-
 # Задача:
 # Большое условие
 # Два списка целых заполняются случайными числами. Необходимо:
@@ -2364,7 +2360,6 @@ import random
 
 # Modules
 # МОДУЛИ:
-import math
 
 # print(math.sqrt(4))  # 2.0 - корень квадратный
 # print(math.pi)  # 3.141592653589793
@@ -2408,10 +2403,6 @@ import math
 # a = int(input("Введите первый катет: "))
 # b = int(input("Введите второй катет: "))
 # print(round(sqrt(a ** 2 + b ** 2), 2))
-
-
-import time
-import locale
 
 
 # locale.setlocale(locale.LC_ALL, "ru")  # Россия
@@ -4128,13 +4119,13 @@ import locale
 # 3) Глобальная (на уровне модуля) - Global (G)
 # 4) Встроенная (на уровне языка Питон) - Built-in (B)
 
-
+#
 # input = 5
 #
 # print(input)
 # x = input("Введите")
 # print(x)  # TypeError: 'int' object is not callable
-
+#
 # lst = [1, 2, 3, 4, 5, 6]
 # print(sum(lst))
 
@@ -4149,18 +4140,19 @@ import locale
 # outer("World!")
 
 
+# Последовательность действий для вложенных функций:
 # def fun1():
-#     a = 6
+#     a = 6  # 2
 #
 #     def fun2(b):
-#         a = 4
-#         print(a + b)
+#         a = 4  # 5
+#         print(a + b)  # 6
 #
-#     print("a: ", a)
-#     fun2(4)
+#     print("a: ", a)  # 3
+#     fun2(4)  # 4
 #
 #
-# fun1()
+# fun1()  # 1
 
 
 # x = 25
@@ -4168,11 +4160,11 @@ import locale
 #
 #
 # def fn():
-#     global t
+#     global t  # пока мы t не сделаем глобальной (она сама по себе локальная), она не будет видна
 #     a = 30
 #
 #     def inner():
-#         nonlocal a  # перезапишет переменную a на уровень выше
+#         nonlocal a  # перезапишет переменную (a) на уровень выше
 #         a = 35
 #
 #     inner()
@@ -4246,24 +4238,46 @@ import locale
 #     return inner
 #
 #
-# out1 = outer(5)  # здесь мы вызвали наружнюю функцию - outer(), то есть def inner(x): return n + x
-# print(out1(10))  # то, что принимает вложенная функция, то есть здесь мы обратились к внутренней функции
+# a = outer(5)  # здесь мы вызвали наружнюю функцию - outer(), то есть def inner(x): return n + x
+# print(a(10))  # то, что принимает вложенная функция, то есть здесь мы обратились к внутренней функции
 # # inner с помощью out1(10)
 #
-# out2 = outer(6)
-# print(out2(4))
-
+# b = outer(6)
+# print(b(4))
+#
 # print(outer(5)(10))  # это 2 вариант, получим тот же результат 15, но это с замыканием не работает
+
+
+# a = outer(5)
+# Или  a = def inner(x): return n + x
+# Это тоже самое
 
 
 # def func(a):
 #     return a + 2
 #
 #
-# var = func(5)  # вызываем функцию func(5)
+# var = func(5)  # вызываем функцию func(5) - в переменную var мы сохраняем результат выполнения функции,
+# # то есть цифру 7
 # print(var)  # печатаем ее
 # Но где мы ее сохраняем? пока нигде, нужна переменная, к примеру, var, и потом эту переменную (var)
 # мы выводим
+
+
+# def func1():
+#     a = 1
+#     b = "line"
+#     c = [1, 2, 3]
+#
+#     def func2():
+#         return a, b, c
+#
+#     return func2
+#
+#
+# func = func1()
+# print(func())
+# Результат: (1, 'line', [1, 2, 3]) - вернули кортеж
 
 
 # def func1():
@@ -4310,6 +4324,7 @@ import locale
 # res1()
 
 
+# -------------------------------------------------------
 # *** НОВАЯ ТЕМА  ***
 # LAMBDA ВЫРАЖЕНИЕ
 
@@ -4329,14 +4344,16 @@ import locale
 
 # variable = (lambda x, y: x + y)  # скобочки
 # print(variable(2, 3))
-
-
+#
+#
 # print((lambda x, y: x + y)(2, 3))
 # print((lambda x, y: x + y)(12, 3))
 
 
 # Задача:
 # Создать лямбда-выражение, которое находит сумму квадратов двух чисел:
+# print((lambda x, y: x ** 2 + y ** 2)(2, 5))
+
 # print((lambda x, y: x ** 2 + y ** 2)(2, 5))
 
 
@@ -4349,17 +4366,19 @@ import locale
 
 
 # Принимаемые аргументы
-# print((lambda *args: args)(1, 2, 3, 4, 5, 6))
+# print((lambda *args: sum(args))(1, 2, 3, 4, 5, 6))
 # print((lambda *args: args)("a", "b", "c"))
 
 
+# Особенность лямбда выражения, что мы не могли делать с обычными функциями
 # c = (
 #     lambda x: x * 2,
 #     lambda x: x * 3,
 #     lambda x: x * 4,
 # )
 #
-# # print(c[0](5))  # вызвали лямбда выражение по [0] индексу
+# print(c)
+# print(c[0](5))  # вызвали лямбда выражение по [0] индексу с числом 5
 # for t in c:
 #     print(t("abc_"))
 
@@ -4390,10 +4409,15 @@ import locale
 # f2 = outer2(5)
 # print(f2(10))
 
+# Вариант №4
+# print((lambda n: lambda x: n + x)(5)(10))
+
 
 # Задача:
 # Создать лямбда-выражение для вычисления суммы трех чисел, с использованием вложенных лямбда-выражений
 # print((lambda n: lambda x: lambda y: n + x + y)(2)(4)(6))
+
+# print((lambda a: lambda b: lambda c: a + b + c)(2)(4)(6))
 
 # print((lambda n: lambda x: lambda y: n + x + y)
 #       (int(input("Введите 1 число: ")))
@@ -4403,15 +4427,20 @@ import locale
 
 # def func(i):
 #     return i[1]
-#
-#
-# d = {"b": 15, "a": 7, "c": 3}
-# print(d)
-# lst = list(d.items())
+
+
+# d = {"b": 15, "a": 7, "c": 3}  # делаем словарь
+# print(d)  # выводим словарь
+# lst = list(d.items())  # делаем список, который разлагается на список кортежей
 # print(lst)
-# lst.sort(key=lambda i: i[1])  # сортировка по возрастанию
+# lst.sort()  # отсортировать список по алфавиту (сортируются только ключи)
+# print(lst)
+# print(dict(lst))  # переведем в словарь, но сортировка только по ключам
+#
+# lst.sort(key=lambda i: i[1])  # сортировка по возрастанию по значениям
 # lst.sort(key=func)
 # print(lst)
+# print(dict(lst))
 
 
 # -----------------------------------------------
@@ -4478,17 +4507,17 @@ import locale
 # -----------------------------------------------
 
 
-def func(i):
-    return i[1]
-
-
-d = {"b": 15, "a": 7, "c": 3}
-print(d)
-lst = list(d.items())
-print(lst)
-# lst.sort(key=lambda i: i[1])
-lst.sort(key=func)
-print(lst)
+# def func(i):
+#     return i[1]
+#
+#
+# d = {"b": 15, "a": 7, "c": 3}
+# print(d)
+# lst = list(d.items())
+# print(lst)
+# # lst.sort(key=lambda i: i[1])
+# lst.sort(key=func)
+# print(lst)
 
 
 # Задача:
@@ -4510,7 +4539,7 @@ print(lst)
 
 # Задача:
 # a = [lambda x, y: x + y, lambda x, y: x - y, lambda x, y: x * y]
-# b = a[1](5, 3)  # обращение к lambda по индексу
+# b = a[1](5, 3)  # обращение к lambda по индексу [1] - это (lambda x, y: x - y)
 # print(b)
 
 
@@ -4531,11 +4560,11 @@ print(lst)
 # Задача:
 # Создать лямбда-выражение нахождения минимального значения между тремя числами 9, 8, 5
 # Вариант №1
-# print((lambda a, b, c: a if a < b else b if b < c else c)(9, 8, 15))
+# print((lambda a, b, c: a if a < b else b if b < c else c)(9, 7, 15))
 # Вариант №2
-# print((lambda a, b, c: a if (a < b) and (b < c) else b if b < c else c)(9, 8, 15))
+# print((lambda a, b, c: a if (a < b) and (b < c) else b if b < c else c)(9, 7, 15))
 
-# Доделать !!!
+# Вариант №3
 # print((lambda a, b, c: a if (a < b) and ((b < c) or (b > c)) else b if b < c else c)(905, 12, 15))
 
 # print((lambda a, b, c: a if (a < b) and (a < c) else b if (b < c) and (b < a) else c if (c < a) and (
@@ -4544,22 +4573,26 @@ print(lst)
 # Последний учительский вариант
 # print((lambda a, b, c: a if (a < b) and (a < c) else b if (b < c) and (b < a) else c)(12, 36, 15))
 
-# print((lambda *args: min(args))(2, 5, 6))
+
+# print((lambda *args: min(args))(2, 5, 6))  # самый классный вариант ***
 #
 # print((lambda a, b, c: a if min(a, b, c) == a else b if min(a, b, c) == b else c if
 # min(a, b, c) == c else "Несколько равных")(11, 2, 111))
 #
 # print((lambda *args: min(args))(2, 5, 6))
 
-# print((lambda *args: sorted(list(args))[0])(2, 5, 6))
-# print((lambda *args: sorted(args)[-1])(2, 5, 6))
+
+# print((lambda *args: sorted(list(args))[0])(2, 5, 6))  # отсортировали по возрастанию (min)
+# print((lambda *args: sorted(args)[-1])(2, 5, 6))  # [-1] здесь мы нашли самый маленький элемент (max)
 
 
 # ----------------------------------------------------------------
 # Урок №2
 # ----------------------------
 
-# map(func, iterable), filter(func, iterable)
+# Сейчас мы посмотрим циклы, которые записываются в одну строку
+# ФУНКЦИИ (map & filter) вместе с lambda - выражением
+map(func, iterable), filter(func, iterable)
 
 
 # def mult(t):
@@ -4612,3 +4645,597 @@ print(lst)
 
 
 # print(list(map(lambda x: x ** 2)))
+#
+
+#
+#
+
+#
+
+# ----------------------------------------------------------------
+# Урок №16 Python от 19.02.2024
+# Урок №1
+# -----------------------------------------------
+
+# ДЕКОРАТОРЫ
+
+# def bold(fn):
+#     def wrap():
+#         return "<b>" + fn() + "</b>"
+#
+#     return wrap
+#
+#
+# def italic(fn):
+#     def wrap():
+#         return "<i>" + fn() + "</i>"
+#
+#     return wrap
+#
+#
+# @bold
+# @italic
+# def hello():
+#     return "text"
+#
+#
+# print(hello())
+
+
+# Задача
+#
+
+# def cnt(fn):
+#     count = 0
+#
+#     def wrap():
+#         nonlocal count
+#         count += 1
+#         fn()
+#         print("Вызов функции: ", count)
+#
+#     return wrap
+#
+#
+# @cnt
+# def hello():
+#     print("Hello")
+#
+#
+# hello()
+# count = "Python"
+# hello()
+# hello()
+
+
+# def args_decorator(fn):
+#     def wrap(arg1, arg2):
+#         print("Данные:", arg1, arg2)
+#         fn(arg1, arg2)
+#
+#     return wrap
+#
+#
+# @args_decorator
+# def print_full_name(first, last):
+#     print("Меня зовут: ", first, last)
+#
+#
+# print_full_name("Ирина", "Мумладзе")
+
+
+# def args_decorator(fn):
+#     def wrap(*args, **kwargs):
+#         print("args", args)
+#         print("kwargs", kwargs)
+#         fn(*args, **kwargs)
+#
+#     return wrap
+#
+#
+# @args_decorator
+# def func(a, b, c, study="Python"):
+#     print(a, b, c, "изучают", study, end="\n\n")
+#
+#
+# @args_decorator
+# def func1(study):
+#     print("Мне нравится", study)
+#
+#
+# func("Борис", "Елизавета", "Светлана", study="JavaScript")
+# func("Владимир", "Екатерина", "Виктор")
+# func1(study="HTML")
+
+
+#
+# Вариант №1
+# def decor_args(arg1):
+#     def decor(fn):
+#         def wrap(x, y):
+#             print(arg1, x, "и", y, "=", end=" ")
+#             fn(x, y)
+#
+#         return wrap
+#
+#     return decor
+#
+#
+# @decor_args("Сумма:")
+# def summa(a, b):
+#     print(a + b)
+#
+#
+# @decor_args("Разность:")
+# def sub(a, b):
+#     print(a - b)
+#
+#
+# summa(5, 2)
+# sub(5, 2)
+
+
+# Вариант №2
+# def decor_args(arg1, arg2):
+#     def decor(fn):
+#         def wrap(x, y):
+#             print(arg1, x, arg2, y, "=", end=" ")
+#             fn(x, y)
+#
+#         return wrap
+#
+#     return decor
+#
+#
+# @decor_args("Сумма:", "+")
+# def summa(a, b):
+#     print(a + b)
+#
+#
+# @decor_args("Разность:", "-")
+# def sub(a, b):
+#     print(a - b)
+#
+#
+# summa(5, 2)
+# sub(5, 2)
+#
+# summa(5, 2)
+# sub(5, 2)
+
+
+# Задача:
+# Создать декоратор
+# def decor_args(arg1):
+#     def decor(fn):
+#         def wrap(x):
+#             return arg1 * fn(x)
+#
+#         return wrap
+#
+#     return decor
+#
+#
+# @decor_args(3)
+# def return_num(num):
+#     print(num)
+#
+#
+# return_num(5)
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# *** СТРОКИ ***
+# print(int("19"))
+# print(int("19.5"))
+# print(int(19.5))
+
+
+# print(int("100", 2))  # 2 параметр - это система исчисления
+# print(int("100", 10))
+# print(int("100", 8))
+# print(int("100", 16))
+
+# print(bin(18))  # 0b10010 - двоичная система
+# print(oct(18))  # 0o22
+# print(hex(18))  # 0x12
+#
+# print(bin(0b10010))
+# print(oct(0o22))
+# print(hex(0x12))
+
+# q = 'Pyt'
+# w = "hon"
+# e = q + w
+# print(e)
+# print(e * -2)
+# print("y1" in e)
+# print(e[0])
+# print(e[1:3])
+
+
+# s = "Python"
+# # s[3] = "t"
+# s = s[:3] + 't'
+# print(s)
+
+
+# Задача:
+#
+# def change_char_to_str(s, old, new):
+#     s2 = ""
+#     i = 0
+#
+#     while i < len(s):
+#         if s[i] == old:
+#             ...
+#         else:
+#             s2 = s2 + s[i]
+#         i += 1
+#
+#     return s2
+#
+#
+# str1 = "Я изучаю Nython. Мне нравится Nython. Nython очень интересный язык программирования."
+# str2 = change_char_to_str(str1, "N", "P")
+# print("str1 =", str1)
+# print("str2 =", str1)
+
+
+# print("Привет")
+# print(u"Привет")
+
+# print("C:\\folder\\fil\\nes.txt\\")
+# print("C:\\folder\\filse.txt")
+# print(r"C:\folder\files" + "\\")
+
+
+# name = "Дмитрий"
+# age = 25
+# print("Меня зовут" + name + ".Мне " + str(age) + "лет.")
+# print(f"Меня зовут" {name} .Мне {age} "лет.")
+
+
+# ch = 5.258986696
+#
+# print(f"Число: {round(ch, 2)}")
+# print(f"Число: {ch}")
+# print(f"Число: {ch:.3f}")
+
+
+# x = 10
+# y = 5
+# print(f"{x = }, {y = }")
+# print(f"{x} x {y} / 2 = {x * y / 2}")
+
+# num = 74
+# print(f"{{num}}")
+# print("C: \\\\text")
+
+# dir_name = 'my_doc'
+# file_name = "data.txt"
+# print(fr"home\{dir_name}\{file_name}")
+# print("home\\" + dir_name + "\\" + file_name)
+
+
+# ----------------------------------------------------------------
+# Урок №17 Python от 21.02.2024
+# Урок №1
+# -----------------------------------------------
+
+#############################################
+# Домашнее задание (последнее)
+
+# Задача
+# Вариант №1
+# def avg(fn):
+#     def wrap(*arg):
+#         print("Среднее арифметическое: ", fn(*arg) / len(arg))
+#
+#     return wrap
+#
+#
+# @avg
+# def summa(*args):
+#     print("Сумма чисел: ", *args, "=", sum(args))
+#     return sum(args)
+#
+#
+# summa(2, 3, 3, 4)
+
+
+# Задача
+# Вариант №2
+# def avg(fn):
+#     def wrap(*arg):
+#         a = ""
+#         for i in arg:
+#             a += str(i) + ", "
+#         print("Среднее арифметическое: ", a[:-2], "=", fn(*arg) / len(arg))
+#
+#     return wrap
+#
+#
+# @avg
+# def summa(*args):
+#     print("Сумма чисел: ", *args, "=", sum(args))
+#     return sum(args)
+#
+#
+# summa(2, 3, 3, 4)
+
+#############################################
+
+
+# s = """
+# Несколько
+# строк
+# """
+# print(s)
+#
+#
+# s1 = '''
+# Несколько
+# строк
+# '''
+# print(s1)
+#
+#
+# s2 = "Нес  колько" \
+#
+# "Несколько строк"
+
+
+# def square(n):
+#     """Принимает число n, возвращает квадрат числа n"""
+#     print()
+#     return n ** 2
+#
+#
+# print(square(5))
+# print(square.__doc__)
+#
+# # max(5, 5)
+# # len()
+# print(len.__doc__)
+
+
+# from math import pi
+#
+#
+# def cylinder(r, h):
+#     """
+#     Вычисляет площадь цилиндра.
+#
+#     Вычисляет площадь цилиндра на основании заданной высоты и радиуса основания
+#
+#     :param r: положительное число, радиус основания цилиндра
+#     :param h: положительное число, высота цилиндра
+#     :return: положительное число, площадь цилиндра
+#     """
+#     return 2 * pi * r * (r * h)
+#
+#
+# print(cylinder(2, 4))
+# print(cylinder.__doc__)
+# print(min.__doc__)
+# print(max.__doc__)
+# print(dict.__doc__)
+
+
+# print(ord('a'))
+# print(ord('#'))
+# print(ord('н'))
+
+# while True:
+#     n = input("-> ")
+#     if n != "-1":  # условие выхода (-1)
+#         print(ord(n))
+#     else:
+#         break
+
+
+# Задача:
+
+# s = "Test string for met"
+# arr = [ord(x) for x in s]
+# print("ASCII коды: ", arr)
+# arr = [int(sum(arr) / len(arr))] + arr
+# print("Среднее арифметическое: ", arr)
+# arr += [ord(x) for x in input("-> ")[:3] if ord(x) not in arr]
+# print(arr)
+# print(arr.count(arr[-1]) - 1)
+# arr.sort(reverse=True)
+# print(arr)
+
+
+# Задача:
+#
+# print(chr(97))
+# print(chr(1567))
+# print(chr(8364))
+# print(chr(89654))
+
+
+# Задача:
+#
+# a = 122
+# b = 97
+# for i in range(b, a + 1):
+#     print(chr(i), end=" ")
+
+
+# a = 197
+# b = 122
+# if a < b:
+#     a, b = b, a
+#
+# for i in range(b, a + 1):
+#     print(chr(i), end=" ")
+# z { | } ~                          
+#          ¡ ¢ £ ¤ ¥ ¦ § ¨ © ª « ¬ ­ ® ¯ ° ± ² ³ ´ µ ¶ · ¸ ¹ º» ¼ ½ ¾ ¿ À Á Â Ã Ä Å
+
+
+# print("apple" == "Apple")  # False
+# print("apple" > "Apple")  # True
+# print("apple" > "aPple")  # True
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# from random import randint
+#
+# shortest = 7
+# longest = 10
+# min_ascii = 33
+# max_ascii = 126
+#
+#
+# def random_password():
+#     res = ""
+#     for i in range(randint(shortest, longest)):
+#         rand_char = chr(randint(min_ascii, max_ascii))
+#         res += rand_char
+#
+#     return res
+#
+#
+# print("Ваш случайный пароль: ", random_password())
+
+
+# *** МЕТОДЫ СТРОК ***
+
+# Методы, влияющие на регистр строк
+# s = "hello, WORLD! I am learning Python."
+# print(s.capitalize())  # Hello, world! i am learning python.
+# print(s.lower())  # hello, world! i am learning python.
+# print(s.upper())  # HELLO, WORLD! I AM LEARNING PYTHON.
+# print(s.swapcase())  # HELLO, world! i AM LEARNING pYTHON.
+# print(s.title())  # Hello, World! I Am Learning Python.
+# print(s)
+
+
+# s = "hello, WORLD! I am learning Python."
+# print(s.count("h"))  # 2 буквы h
+# print(s.count("l", 3))  # 3 буквы l
+# print(s.count("l", 3, 10)) # цифры после - это диапазон цифр (начало и конец)
+
+
+# s = "hello, WORLD! I am learning Python."
+# print(s.find("Python"))  # возвращает индекс первого вхождения подстроки в строку - 28
+# print(s.find("l"))  # 2
+# print(s.find("l", 4))  # 19
+# print(s.find("Python1"))  # -1 - если такой подстроки нет, возвращает "-1"
+# print(s.rfind("l"))  # поиск с правой стороны r (right)
+
+# print(s.index("l"))
+# print(s.rindex("l"))
+# print(s.index("l1"))  # если элемента нет - ValueError: substring not found
+# print(s.rindex("l1"))
+
+
+# Задача:
+#
+# st = input("Введите два слова через пробел: ")
+# first = st[:st.find(" ")]
+# second = st[st.find(" ") +1:]
+# print(first)
+# print(second)
+# print(second + " " + first)
+
+
+# s = "hello, WORLD! I am learning Python."
+# print(s.startswith("hello"))  # True
+# print(s.startswith("I am"))  # False
+# print(s.index("I am"))  # 14
+# print(s.endswith("on."))  # True
+
+
+# print(int("45"))
+# print(int("ffffff"))
+
+# print('123'.isdigit())  # True - только числа
+# print('ййй'.isalpha())  # True - только буквы
+# print('ййй6'.isalpha())  # False
+# print('ййй6896'.isalnum())  # True
+# print('ййй6896!*'.isalnum())  # False - спецсимволы нельзя
+
+# print('abc'.islower())  # True - только нижний регистр
+# print('abc125'.islower())  # True
+# print('abc125"#'.isupper())  # False
+# print('GHTR125"#'.isupper())  # True - только верхний регистр
+
+
+# n = input("Введите число: ")
+# print(n * 2)
+# n = int(input("Введите число: "))
+# print(n * 2)
+
+
+# n = input("Введите число: ")
+# if n.isdigit():
+#     n = int(n)
+#     print(n * 2)
+
+# print('py'.center(10))
+# print('py'.center(10, "-"))  # ----py----
+
+
+# print('   py'.lstrip())  # с левой стороны
+# print('   py'.rstrip())  # с правой стороны
+# print('   py       '.strip()) # по умолчанию удаляет пробелы с обоих сторон
+
+# print('https://www.python.org'.lstrip('/:pths'))  # www.python.org
+# print('https://www.python.org'.strip('/:pths.org'))  # www.python
+# print('https://www.python.org'.lstrip('/:pths').rstrip('.org'))
+
+
+# str1 = "Я изучаю Nython. Мне нравится Nython. Nython очень интересный язык программирования."
+# print(str1.replace("Nython", "Python"))
+
+
+# s = "-"
+# seq = ('a', 'b', 'c')
+# print(s.join(seq))
+#
+# print("..".join(['1', '99']))
+# print(":".join(["Hello"]))
+# print(",".join(["Hello"]))
+
+
+# Задача
+# Вариант №2
+# Теперь решаем с помощью метода join
+# def avg(fn):
+#     def wrap(*arg):
+#         a = ""
+#         for i in arg:
+#             a += str(i) + ", "
+#         print("Среднее арифметическое: ", a[:-2], "=", fn(*arg) / len(arg))
+#
+#     return wrap
+#
+#
+# @avg
+# def summa(*args):
+#     a = ", ".join(map(str, args))
+#     print("Сумма чисел: ", a, "=", sum(args))
+#     return sum(args)
+#
+#
+# summa(2, 3, 3, 4)
+
+
+# if ...:
+#
+#
+
+
+# a = input("-> ").split()
+# b = list(map(int, a))
+# print(a)

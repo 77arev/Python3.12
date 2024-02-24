@@ -110,6 +110,7 @@ import math
 from math import sqrt
 from math import pi
 
+
 # ДЗ №7 от 17.01.2024
 # Вычисление площади фигур. Выбор фигуры:
 # 1. треугольник
@@ -264,23 +265,51 @@ from math import pi
 
 # ДЗ №14 от 12.02.2024
 # Задача:
-def outer(a, b, c):
-    def inner(i, j):
-        return i * j
-
-    s = 2 * (inner(a, b) + inner(a, c) + inner(b, c))
-    return s
-
-
-print(outer(2, 4, 6))
-print(outer(5, 8, 2))
-print(outer(1, 6, 8))
-
-
+# def outer(a, b, c):
+#     def inner(i, j):
+#         return i * j
+#
+#     s = 2 * (inner(a, b) + inner(a, c) + inner(b, c))
+#     return s
+#
+#
+# print(outer(2, 4, 6))
+# print(outer(5, 8, 2))
+# print(outer(1, 6, 8))
 
 
+# ДЗ №15 от 14.02.2024
+# Задача:
+# Дан список слов. Отфильтровать список с использованием lambda-выражения, оставив в нем слова-палиндромы.
+# Тестовые значения: ('madam', 'fire', 'tomato', 'book', 'kiosk', 'mom') -> (madam, mom)
+
+# Разные варианты
+# Вариант №1
+def f(x):
+    if x == x[::-1]:
+        return True
+    else:
+        return False
 
 
+a = ['madam', 'fire', 'tomato', 'book', 'kiosk', 'mom']
+b = list(filter(f, a))
+print(b)
 
+
+# Вариант №2
+def f(x):
+    return x == x[::-1]
+
+
+a = ['madam', 'fire', 'tomato', 'book', 'kiosk', 'mom']
+b = list(filter(f, a))
+print(b)
+
+
+# Вариант №3
+a = ['madam', 'fire', 'tomato', 'book', 'kiosk', 'mom']
+b = list(filter(lambda x: x == x[::-1], a))
+print(b)
 
 
