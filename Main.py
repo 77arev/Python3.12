@@ -4,6 +4,7 @@
 # ----------------------------
 import sys
 
+
 # firstName = "admin"
 # # print(name)
 # # строчный комментарий
@@ -4592,9 +4593,12 @@ import sys
 
 # Сейчас мы посмотрим циклы, которые записываются в одну строку
 # ФУНКЦИИ (map & filter) вместе с lambda - выражением
-map(func, iterable), filter(func, iterable)
+# map(func, iterable), filter(func, iterable)
+# Они все принимают какую-нибудь функцию и итерируемый объект
 
 
+# Функция (map) проходится по всем элементам итерируемого объекта и к каждому применяет действие функции
+# Map - заменяет цикл
 # def mult(t):
 #     return t * 2
 #
@@ -4617,26 +4621,43 @@ map(func, iterable), filter(func, iterable)
 # print([int(i) for i in lst])
 
 
-# st = ['a', 'b', 'c', 'd', 'e']
+# st = ['a', 'b', 'c', 'd', 'e'] # пар должно быть одинаковое количество
 # num = [1, 2, 3, 4, 5]
-# print(list(map(lambda x, y: (x, y), st, num)))  #  ДОДЕЛАТЬ
+# print(list(map(lambda x, y: (x, y), st, num))) # хотим получить кортеж ()
+# # [('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5)]
+# print(list(map(lambda x, y: {x, y}, st, num))) # хотим получить словарь, а можно и список []
+# [{1, 'a'}, {2, 'b'}, {3, 'c'}, {'d', 4}, {5, 'e'}]
 
-#  ДОДЕЛАТЬ
 
-#
-#
+# st = [9, 8, 7, 6, 5]
+# num = [1, 2, 3, 4, 5]
+# print(list(map(lambda x, y: x + y, st, num)))
+
+
+# Функция (filter) проходится по всем элементам итерируемого объекта и выводит только те,
+# которые выполняют условие функции, то есть отфильтровывает элементы (ФИЛЬТР)
+# Filter - фильтр
+
 # t = ('abcd', 'abc', 'hfhffj', 'deftr', 'tyu')
-# # t2 = tuple(filter(lambda s: len(s) == 3, t))
-# t2 = tuple(filter(lambda s: s * 3, t))
+# t2 = tuple(filter(lambda s: len(s) == 3, t))
 # print(t2)
-#  ДОДЕЛАТЬ
+# выводит только те значения, длина которых является 3 элемента - ('abc', 'tyu')
+
+
+# t = ('abcd', 'abc', 'hfhffj', 'deftr', 'tyu', '', False)
+# t2 = list(filter(lambda s: s * 3, t))
+# print(t2)
+# не сработает, результат - ['abcd', 'abc', 'hfhffj', 'deftr', 'tyu']
 
 
 # b = [66, 90, 68, 59, 76, 60, 88, 74, 81, 65]
 # print(list(filter(lambda s: s > 75, b)))
+# [90, 76, 88, 81]
 
 
 # Задача:
+# Сгенерировать список из 10 элементов случайным образом. Из него выбрать только в диапазоне от 10 до 20
+# (включительно)
 # from random import randint
 #
 # arr = [randint(0, 40) for i in range(10)]
@@ -4644,13 +4665,116 @@ map(func, iterable), filter(func, iterable)
 # print(list(filter(lambda a: 10 <= a <= 20, arr)))
 
 
-# print(list(map(lambda x: x ** 2)))
-#
+# Попробуем совместить map и filter, обычно они работают в качестве вложенных списков
+# Вывести на экран квадраты нечетных чисел от 1 до 10
+# print(list(map(lambda x: x ** 2, filter(lambda x: x % 2, range(1, 10)))))
+# # [1, 9, 25, 49, 81]
+# print(list(map(lambda x: x ** 2, filter(lambda x: x % 2, [1, 2, 3, 4, 5, 6, 7, 8, 9]))))  # нечетные
+# print(list(map(lambda x: x ** 2, [1, 3, 5, 7, 9])))
+# print([x ** 2 for x in range(1, 10) if x % 2])  # нечетные
+# print([x ** 2 for x in range(1, 10) if x % 2 != 0])  # нечетные
+# print([x ** 2 for x in range(1, 10) if x % 2 == 0])  # четные
 
-#
-#
 
+# ВЛОЖЕННЫЕ ФУНКЦИИ
+# ЗАМЫКАНИЕ
+# ДЕКОРАТОРЫ - декораторы строятся на основе замыкания (декорирование функций)
+
+# def hello():
+#     return 'Hello, I am func "hello"'
 #
+#
+# def super_func(func):
+#     print('Hello, I am func "super_func"')
+#     print(func())  # сюда попадает (Hello, I am func "hello")
+#
+#
+# super_func(hello)  # передали сюда имя другой функции hello, просто имя
+
+
+# def summa(a, b):
+#     return a + b
+#
+#
+# n = 5
+# m = 10
+# print(summa(n, m))  # разные имена (параметры)
+
+
+# def hello():
+#     return 'Hello, I am func "hello"'
+#
+#
+# test = hello  # в переменную test сохранили имя функции hello
+# print(id(test))
+# print(id(hello))
+# print(test())
+# print(id(test))
+
+
+# Как записывается декоратор - пока записываем без декоратора:
+# def my_decorator(func):
+#     def inner():
+#         print('Code before')
+#         func()
+#         print('Code after')
+#
+#     return inner
+#
+#
+# def func_test():
+#     print('Hello, I am func "func_test"')
+#
+#
+# test = my_decorator(func_test)
+# test()
+
+
+# Теперь с декоратором @my_decorator
+# def my_decorator(func):  # декорирующая функция
+#     def inner():
+#         print('Code before')
+#         func()
+#         print('Code after')
+#
+#     return inner
+#
+#
+# @my_decorator  # декоратор
+# def func_test():  # декорируемая функция
+#     print('Hello, I am func "func_test"')
+#
+#
+# func_test()
+
+
+# def my_decorator(func):  # декорирующая функция
+#     def inner():
+#         print('@' * 50)
+#         func()
+#         print('*' * 50)
+#
+#     return inner
+#
+#
+# @my_decorator  # декоратор
+# def func_test():  # декорируемая функция
+#     print('Hello, I am func "func_test"')
+#
+#
+# @my_decorator
+# def hello():
+#     print('Hello, I am func "hello"')
+#
+#
+# func_test()
+# hello()
+
+
+# Слова - палиндромы
+# m = "Hello"
+# print(m[::-1])
+
 
 # ----------------------------------------------------------------
 # Урок №16 Python от 19.02.2024
@@ -4683,7 +4807,7 @@ map(func, iterable), filter(func, iterable)
 
 
 # Задача
-#
+# Создайте декоратор, который будет выводить количество вызовов декорирующей функции и ее содержимое
 
 # def cnt(fn):
 #     count = 0
@@ -4743,7 +4867,8 @@ map(func, iterable), filter(func, iterable)
 #     print("Мне нравится", study)
 #
 #
-# func("Борис", "Елизавета", "Светлана", study="JavaScript")
+# func("Борис", "Елизавета", "Светлана", study="JavaScript")  # это для словаря study="JavaScript" -
+# # ключ значение
 # func("Владимир", "Екатерина", "Виктор")
 # func1(study="HTML")
 
@@ -4800,12 +4925,13 @@ map(func, iterable), filter(func, iterable)
 # summa(5, 2)
 # sub(5, 2)
 #
-# summa(5, 2)
-# sub(5, 2)
+# summa(10, 2)
+# sub(10, 2)
 
 
 # Задача:
-# Создать декоратор
+# Создать декоратор, который будет принимать в виде аргумента число. Это число будет
+# умножаться на число принимаемой функцией
 # def decor_args(arg1):
 #     def decor(fn):
 #         def wrap(x):
@@ -4818,10 +4944,10 @@ map(func, iterable), filter(func, iterable)
 #
 # @decor_args(3)
 # def return_num(num):
-#     print(num)
+#     return num
 #
 #
-# return_num(5)
+# print(return_num(5))
 
 
 # ----------------------------------------------------------------
@@ -4926,7 +5052,7 @@ map(func, iterable), filter(func, iterable)
 # Урок №1
 # -----------------------------------------------
 
-#############################################
+# *****************************************
 # Домашнее задание (последнее)
 
 # Задача
@@ -4967,7 +5093,7 @@ map(func, iterable), filter(func, iterable)
 #
 # summa(2, 3, 3, 4)
 
-#############################################
+# *****************************************
 
 
 # s = """

@@ -285,31 +285,55 @@ from math import pi
 
 # Разные варианты
 # Вариант №1
-def f(x):
-    if x == x[::-1]:
-        return True
-    else:
-        return False
-
-
-a = ['madam', 'fire', 'tomato', 'book', 'kiosk', 'mom']
-b = list(filter(f, a))
-print(b)
+# def f(x):
+#     if x == x[::-1]:
+#         return True
+#     else:
+#         return False
+#
+#
+# a = ['madam', 'fire', 'tomato', 'book', 'kiosk', 'mom']
+# b = list(filter(f, a))
+# print(b)
 
 
 # Вариант №2
-def f(x):
-    return x == x[::-1]
-
-
-a = ['madam', 'fire', 'tomato', 'book', 'kiosk', 'mom']
-b = list(filter(f, a))
-print(b)
+# def f(x):
+#     return x == x[::-1]
+#
+#
+# a = ['madam', 'fire', 'tomato', 'book', 'kiosk', 'mom']
+# b = list(filter(f, a))
+# print(b)
 
 
 # Вариант №3
-a = ['madam', 'fire', 'tomato', 'book', 'kiosk', 'mom']
-b = list(filter(lambda x: x == x[::-1], a))
-print(b)
+# a = ['madam', 'fire', 'tomato', 'book', 'kiosk', 'mom']
+# b = list(filter(lambda x: x == x[::-1], a))
+# print(b)
+
+
+# ДЗ №16 от 19.02.2024
+# Задача:
+# Создать функцию, которая будет находить сумму любого количества чисел. И декоратор,
+# который будет находить среднее арифметическое этих чисел
+def avg(fn):
+    def wrap(*arg):
+        print("Среднее арифметическое: ", fn(*arg) / len(arg))
+
+    return wrap
+
+
+@avg
+def summa(*args):
+    print("Сумма чисел: ", *args, "=", sum(args))
+    return sum(args)
+
+
+summa(2, 3, 3, 4)
+
+
+
+
 
 
