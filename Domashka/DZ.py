@@ -312,27 +312,34 @@ from math import pi
 # b = list(filter(lambda x: x == x[::-1], a))
 # print(b)
 
+# Стоки нельзя изменить, но можно перезаписать в другую переменную с новыми значениями!
+
 
 # ДЗ №16 от 19.02.2024
 # Задача:
 # Создать функцию, которая будет находить сумму любого количества чисел. И декоратор,
 # который будет находить среднее арифметическое этих чисел
-def avg(fn):
-    def wrap(*arg):
-        print("Среднее арифметическое: ", fn(*arg) / len(arg))
+# def avg(fn):
+#     def wrap(*arg):
+#         print("Среднее арифметическое: ", *arg, "=", fn(*arg) / len(arg))
+#
+#     return wrap
+#
+#
+# @avg
+# def summa(*args):
+#     print("Сумма чисел: ", *args, "=", sum(args))
+#     return sum(args)
+#
+#
+# summa(2, 3, 3, 4)
 
-    return wrap
 
-
-@avg
-def summa(*args):
-    print("Сумма чисел: ", *args, "=", sum(args))
-    return sum(args)
-
-
-summa(2, 3, 3, 4)
-
-
+# ДЗ №17 от 21.02.2024
+# Задача:
+fio = input("Введите ФИО: ").split()
+print(fio)
+print(f"{fio[0]} {fio[1][0]}. {fio[2][0]}.")
 
 
 

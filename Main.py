@@ -3,7 +3,7 @@
 # Урок №1
 # ----------------------------
 import sys
-
+from random import randint
 
 # firstName = "admin"
 # # print(name)
@@ -4955,49 +4955,59 @@ import sys
 # ----------------------------
 
 # *** СТРОКИ ***
+# Питон - это десятичная система исчисления (10)
 # print(int("19"))
 # print(int("19.5"))
 # print(int(19.5))
 
 
-# print(int("100", 2))  # 2 параметр - это система исчисления
-# print(int("100", 10))
-# print(int("100", 8))
-# print(int("100", 16))
+# print(int("100", 2))  # 4 - 2 параметр - это система исчисления, то есть в двоичной системе исчисления 100
+# # - перевелось в десятичную (у нас это цифра 4)
+# print(int("100", 10))  # 100
+# print(int("100", 8))  # 64
+# print(int("100", 16))  # 256
 
-# print(bin(18))  # 0b10010 - двоичная система
-# print(oct(18))  # 0o22
-# print(hex(18))  # 0x12
-#
-# print(bin(0b10010))
-# print(oct(0o22))
-# print(hex(0x12))
+# print(bin(18))  # 0b10010 - bin - преобразовывает в двоичную систему
+# print(oct(18))  # 0o22 - oct - преобразовывает в восьмеричную систему
+# print(hex(18))  # 0x12 - hex - в шестнадцатеричную систему
+
+# print(0b10010)  # 18
+# print(0o22)  # 18
+# print(0x12)  # 18
+# print(0b10010 + 0x12)  # 36 - питону без разницы в какой системе исчисления мы работаем
+
 
 # q = 'Pyt'
 # w = "hon"
-# e = q + w
+# e = q + w  # Python
 # print(e)
-# print(e * -2)
-# print("y1" in e)
-# print(e[0])
-# print(e[1:3])
+# print(e * 2)  # PythonPython
+# print(e * -2)  # можем, но будет пробел
+# print(e)  # ! но строки неизменяемый тип данных, поэтому - print(e) - будет Python
+# a = e * 2  # Если мы сохраним результат в переменную a и выведем ее, то все будет ок!
+# print(a)
+# print("y" in e)  # True
+# print("y1" in e)  # False
+# print(e)  # Python
+# print(e[0])  # срезы прекрасно работают - P
+# print(e[1:3])  # yt
 
 
-# s = "Python"
-# # s[3] = "t"
-# s = s[:3] + 't'
-# print(s)
+# s = "Python"  # Строки - это неизменяемый тип данных
+# # s[3] = "t" # Так нельзя
+# s = s[:3] + 't' + s[4:]  # Мы перезаписываем строку заново, если хотим там что изменить
+# print(s)  # Pytton
 
 
 # Задача:
-#
-# def change_char_to_str(s, old, new):
-#     s2 = ""
-#     i = 0
+# Заменить символ в строке
+# def change_char_to_str(s, old, new):  # (строка, старый символ, новый символ)
+#     s2 = ""  # мы создали новую строку s2 и инициализировали пустой строкой ""
+#     i = 0  # вспомогательная переменная (i) для цикла while
 #
 #     while i < len(s):
 #         if s[i] == old:
-#             ...
+#             s2 = s2 + new
 #         else:
 #             s2 = s2 + s[i]
 #         i += 1
@@ -5005,30 +5015,38 @@ import sys
 #     return s2
 #
 #
-# str1 = "Я изучаю Nython. Мне нравится Nython. Nython очень интересный язык программирования."
-# str2 = change_char_to_str(str1, "N", "P")
+# str1 = "Я изучаю Nython. Мне нравится Nython. Nython очень интересный язык программирования."  # эта строка
+# # будет приходить в параметр (s)
+# str2 = change_char_to_str(str1, "N", "P")  # изменить символ в строке (change_char_to_str)
 # print("str1 =", str1)
-# print("str2 =", str1)
+# print("str2 =", str2)
 
 
+# НОВОЕ ***
+# У СТРОК ЕСТЬ ПРЕФИКСЫ
 # print("Привет")
-# print(u"Привет")
+# print(u"Привет")  # u - unicode
+
+# r (R) - подавляет экранирование, r - чтобы в задачах не экранировать каждый элемент
+# print("C:\folder\files.txt")  # C:olderiles.txt
+# print(r"C:\folder\files.txt")  # C:\folder\files.txt
+# print("C:\\folder\\files.txt")
 
 # print("C:\\folder\\fil\\nes.txt\\")
-# print("C:\\folder\\filse.txt")
-# print(r"C:\folder\files" + "\\")
+# print("C:\\folder\\files.txt\\"[:-1])
+# print(r"C:\folder\files" + "\\")  # в конце добавили через конкатенацию два бэк слеша "\\"
 
-
+# b (B) - байтовые строки
+# f (F) - конкатенация
 # name = "Дмитрий"
 # age = 25
-# print("Меня зовут" + name + ".Мне " + str(age) + "лет.")
-# print(f"Меня зовут" {name} .Мне {age} "лет.")
+# print("Меня зовут " + name + ". Мне " + str(age) + " лет.")
+# print(f"Меня зовут {name}. Мне {age} лет.")
 
 
-# ch = 5.258986696
+# ch = 5.26987412
 #
-# print(f"Число: {round(ch, 2)}")
-# print(f"Число: {ch}")
+# print(f"Число: {round(ch, 3)}")
 # print(f"Число: {ch:.3f}")
 
 
@@ -5038,8 +5056,13 @@ import sys
 # print(f"{x} x {y} / 2 = {x * y / 2}")
 
 # num = 74
-# print(f"{{num}}")
-# print("C: \\\\text")
+# print(f"{num}")  # 74
+# print(f"{{num}}")  # {num}
+# print(f"{{{num}}}") # {74}
+# print(f"{{{{{num}}}}}")  # {{74}}
+# print("C: \\\\text")  # C: \\text
+# print("C: \\\text")  # C: \	ext
+
 
 # dir_name = 'my_doc'
 # file_name = "data.txt"
@@ -5059,14 +5082,14 @@ import sys
 # Вариант №1
 # def avg(fn):
 #     def wrap(*arg):
-#         print("Среднее арифметическое: ", fn(*arg) / len(arg))
+#         print("Среднее арифметическое: ", *arg, "=", fn(*arg) / len(arg))
 #
 #     return wrap
 #
 #
 # @avg
 # def summa(*args):
-#     print("Сумма чисел: ", *args, "=", sum(args))
+#     print("Сумма чисел: ", *args, "=", sum(args))  # *args - распаковали кортеж
 #     return sum(args)
 #
 #
@@ -5095,8 +5118,10 @@ import sys
 
 # *****************************************
 
+# НОВАЯ ТЕМА
+# *** МЕТОДЫ СТРОК ***
 
-# s = """
+# s = """  # кавычки поддерживают многострочный текст, используются для документирования функций
 # Несколько
 # строк
 # """
@@ -5113,6 +5138,7 @@ import sys
 # s2 = "Нес  колько" \
 #
 # "Несколько строк"
+# print(s2)
 
 
 # def square(n):
@@ -5121,8 +5147,9 @@ import sys
 #     return n ** 2
 #
 #
-# print(square(5))
-# print(square.__doc__)
+# print(square(5))  # наводим курсор на (square), получим наше описание - Принимает число n,
+# # возвращает квадрат числа n
+# print(square.__doc__)  # посмотреть документацию любой функции через __doc__
 #
 # # max(5, 5)
 # # len()
@@ -5130,8 +5157,8 @@ import sys
 
 
 # from math import pi
-#
-#
+
+
 # def cylinder(r, h):
 #     """
 #     Вычисляет площадь цилиндра.
@@ -5149,13 +5176,15 @@ import sys
 # print(cylinder.__doc__)
 # print(min.__doc__)
 # print(max.__doc__)
+# print(zip.__doc__)
 # print(dict.__doc__)
 
 
-# print(ord('a'))
+# print(ord('a'))  # Returns the Unicode code point for a one-character string
 # print(ord('#'))
 # print(ord('н'))
-
+#
+#
 # while True:
 #     n = input("-> ")
 #     if n != "-1":  # условие выхода (-1)
@@ -5165,11 +5194,11 @@ import sys
 
 
 # Задача:
-
+# Дана строка "Test string for me"
 # s = "Test string for met"
 # arr = [ord(x) for x in s]
 # print("ASCII коды: ", arr)
-# arr = [int(sum(arr) / len(arr))] + arr
+# arr = [int(sum(arr) / len(arr))] + arr  # round & int - округлит до целого числа
 # print("Среднее арифметическое: ", arr)
 # arr += [ord(x) for x in input("-> ")[:3] if ord(x) not in arr]
 # print(arr)
@@ -5179,19 +5208,21 @@ import sys
 
 
 # Задача:
-#
-# print(chr(97))
+# Есть функция, которая делает обратные действия, мы можем получить из кода ASCII - сам символ
+# print(chr(97))  # Return a Unicode string of one character with ordinal i; 0 <= i <= 0x10ffff.
 # print(chr(1567))
 # print(chr(8364))
 # print(chr(89654))
 
 
 # Задача:
-#
+# Два числа с кодами символов. Вывести все символы, ASCII коды которых лежат между a и b включительно
+# по возрастанию кодов
 # a = 122
 # b = 97
 # for i in range(b, a + 1):
 #     print(chr(i), end=" ")
+# a b c d e f g h i j k l m n o p q r s t u v w x y z
 
 
 # a = 197
@@ -5205,6 +5236,7 @@ import sys
 #          ¡ ¢ £ ¤ ¥ ¦ § ¨ © ª « ¬ ­ ® ¯ ° ± ² ³ ´ µ ¶ · ¸ ¹ º» ¼ ½ ¾ ¿ À Á Â Ã Ä Å
 
 
+
 # print("apple" == "Apple")  # False
 # print("apple" > "Apple")  # True
 # print("apple" > "aPple")  # True
@@ -5216,6 +5248,10 @@ import sys
 
 # from random import randint
 #
+# # Задача:
+#
+# # Диапазон. Указываем, какой будет генерироваться мин символ и какой мах
+# # Подготовим 4 глобальных переменных
 # shortest = 7
 # longest = 10
 # min_ascii = 33
@@ -5236,29 +5272,40 @@ import sys
 
 # *** МЕТОДЫ СТРОК ***
 
-# Методы, влияющие на регистр строк
+# Методы, влияющие на регистр строк (маленькие или большие буквы):
 # s = "hello, WORLD! I am learning Python."
-# print(s.capitalize())  # Hello, world! i am learning python.
-# print(s.lower())  # hello, world! i am learning python.
-# print(s.upper())  # HELLO, WORLD! I AM LEARNING PYTHON.
-# print(s.swapcase())  # HELLO, world! i AM LEARNING pYTHON.
-# print(s.title())  # Hello, World! I Am Learning Python.
+# print(s.capitalize())  # Hello, world! i am learning python. - capitalize - 1 букву в строке сделал
+# # большой, остальные все сделал маленькими (в нижнем регистре)
+# print(s.lower())  # hello, world! i am learning python. - lower - все символы в нижний регистр
+# print(s.upper())  # HELLO, WORLD! I AM LEARNING PYTHON. - upper - все в верхний регистр
+# print(s.swapcase())  # HELLO, world! i AM LEARNING pYTHON. - swapcase - все меняет местами
+# print(s.title())  # Hello, World! I Am Learning Python. - title - преобразовывает каждую букву,
+# # с которой начинается каждое новое слово в большую
 # print(s)
 
 
+# Метод count - считает, сколько и каких символов в строке
 # s = "hello, WORLD! I am learning Python."
 # print(s.count("h"))  # 2 буквы h
-# print(s.count("l", 3))  # 3 буквы l
-# print(s.count("l", 3, 10)) # цифры после - это диапазон цифр (начало и конец)
+# print(s.count("l"))  # 3 буквы l
+# print(s.count("l", 3))  # l - поиск, начиная с 3го символа (2-ым параметром)
+# print(s.count("l", 3, 10)) # помимо буквы, еще 2 параметра (начало и конец поиска)
 
 
+# Метод find - поиск и похожих методов несколько
 # s = "hello, WORLD! I am learning Python."
-# print(s.find("Python"))  # возвращает индекс первого вхождения подстроки в строку - 28
-# print(s.find("l"))  # 2
-# print(s.find("l", 4))  # 19
-# print(s.find("Python1"))  # -1 - если такой подстроки нет, возвращает "-1"
-# print(s.rfind("l"))  # поиск с правой стороны r (right)
+# print(s.find("Python"))  # возвращает индекс первого вхождения подстроки в строку - 28 индекс
+# print(s.find("l"))  # 2 индекс первого вхождения буквы l
+# print(s.find("l", 4))  # если я укажу 4 индекс, питон выведет 19 индекс, он нашел в слове
+# # learning (после 4 индекса)
+# print(s.find("l", 4, 20))  # 19 - диапазон с 4 по 20
+# print(s.find("Python1"))  # Если символа нет, выведет (-1)
+# print(s.rfind("l"))  # поиск с правой стороны r (right) - 19 индекс
 
+
+# Метод index - также возвращает индекс при первом вхождении в строку, но в отличие от find, он
+# при не обнаружении элемента, выбрасывает ошибку - ValueError: substring not found
+# s = "hello, WORLD! I am learning Python."
 # print(s.index("l"))
 # print(s.rindex("l"))
 # print(s.index("l1"))  # если элемента нет - ValueError: substring not found
@@ -5266,35 +5313,42 @@ import sys
 
 
 # Задача:
-#
+# Строка из 2 слов. Переставьте эти слова местами. Результат запишите в одну строку и выведите результат.
 # st = input("Введите два слова через пробел: ")
-# first = st[:st.find(" ")]
-# second = st[st.find(" ") +1:]
+# first = st[:st.find(" ")]  # получаем слово от начала строки до пробельного символа (" ")
+# second = st[st.find(" ") + 1:]
 # print(first)
 # print(second)
 # print(second + " " + first)
 
 
+# Метод startswith - endswith - это с чего строка начинается и чем заканчивается
 # s = "hello, WORLD! I am learning Python."
 # print(s.startswith("hello"))  # True
 # print(s.startswith("I am"))  # False
+# print(s.startswith("I am", 14))  # True
 # print(s.index("I am"))  # 14
 # print(s.endswith("on."))  # True
 
 
+# Метод int - преобразуем строку в число
 # print(int("45"))
-# print(int("ffffff"))
+# print(int("ffffff")) # Но здесь будет ошибка
 
-# print('123'.isdigit())  # True - только числа
-# print('ййй'.isalpha())  # True - только буквы
+
+# Методы isdigit, isalpha, isalnum
+# print('123'.isdigit())  # True - isdigit - проверяет, есть ли в строке только числа
+# print('ййй'.isalpha())  # True - isalpha - проверяет, есть ли в строке только буквы
 # print('ййй6'.isalpha())  # False
-# print('ййй6896'.isalnum())  # True
+# print('ййй6896'.isalnum())  # True - isalnum - и буквы и числа (кроме спец символов)
 # print('ййй6896!*'.isalnum())  # False - спецсимволы нельзя
 
-# print('abc'.islower())  # True - только нижний регистр
-# print('abc125'.islower())  # True
-# print('abc125"#'.isupper())  # False
-# print('GHTR125"#'.isupper())  # True - только верхний регистр
+
+# Методы, которые проверяют в каком регистре у нас находятся символы
+# print('abc'.islower())  # True - islower - проверяет, находятся ли буквы только в нижнем регистре
+# print('abc125'.islower())  # True тоже (не проверяет наличие цифр и спец символов)
+# print('abc125"#'.isupper())  # False - isupper - проверяет, находятся ли буквы только в верхнем регистре
+# print('GHTR125"#'.isupper())  # True (но также не проверяет наличие других символов)
 
 
 # n = input("Введите число: ")
@@ -5302,41 +5356,55 @@ import sys
 # n = int(input("Введите число: "))
 # print(n * 2)
 
-
+# Альтернатива работы с исключениями
 # n = input("Введите число: ")
 # if n.isdigit():
 #     n = int(n)
 #     print(n * 2)
 
-# print('py'.center(10))
-# print('py'.center(10, "-"))  # ----py----
+
+# Метод форматирования - center - по центру
+# print('py'.center(10))  # выравнивание по центру с отступом, так чтобы в общей сложности
+# # получилось 10 символов вместе с (py)
+# print('py'.center(10, "-"))  # может быть 2 параметра (ширина и вид заполнителя) ----py----
 
 
+# Метод strip - убирание лишних пробельных символов
 # print('   py'.lstrip())  # с левой стороны
 # print('   py'.rstrip())  # с правой стороны
 # print('   py       '.strip()) # по умолчанию удаляет пробелы с обоих сторон
+# но здесь в скобочки после strip() можно поставить и любой другой символ, который мы хотим убрать
+
 
 # print('https://www.python.org'.lstrip('/:pths'))  # www.python.org
 # print('https://www.python.org'.strip('/:pths.org'))  # www.python
 # print('https://www.python.org'.lstrip('/:pths').rstrip('.org'))
 
+# www.python.org
+# www.python
+# www.python
 
-# str1 = "Я изучаю Nython. Мне нравится Nython. Nython очень интересный язык программирования."
+
+# Метод replace - поиск и замена целых слов и отдельных букв
+# str1 = "Я изучаю Nython. Мне нравится Nython. Nython очень интересный язык программирования. New"
 # print(str1.replace("Nython", "Python"))
+# print(str1.replace("N", "P"))
 
 
+# Метод join - объединение строк (итерируемого объекта и элементов другой строки)
 # s = "-"
 # seq = ('a', 'b', 'c')
-# print(s.join(seq))
+# print(s.join(seq))  # a-b-c вместе с разделителем - объединителем "-"
 #
-# print("..".join(['1', '99']))
-# print(":".join(["Hello"]))
-# print(",".join(["Hello"]))
+# print("..".join(['1', '99']))  # 1..99
+# print(":".join("Hello"))  # H:e:l:l:o
+# print(",".join("Hello"))  # H,e,l,l,o
 
 
+# *****************************************
 # Задача
-# Вариант №2
-# Теперь решаем с помощью метода join
+# Вариант №3
+# Теперь решаем с помощью метода join и map
 # def avg(fn):
 #     def wrap(*arg):
 #         a = ""
@@ -5349,19 +5417,353 @@ import sys
 #
 # @avg
 # def summa(*args):
-#     a = ", ".join(map(str, args))
+#     a = ", ".join(map(str, args))  # с помощью join и map
 #     print("Сумма чисел: ", a, "=", sum(args))
 #     return sum(args)
 #
 #
 # summa(2, 3, 3, 4)
+# *****************************************
 
 
-# if ...:
-#
-#
+# Метод split - разбивает строку по пробелам, делает список
+# print("Строка разделенная пробелами".split())  # ['Строка', 'разделенная', 'пробелами']
+# print('www.python.org.ru'.split("."))  # разбивает по точкам "." - ['www', 'python', 'org', 'ru']
+# print('www.python.org.'.split(".", 4)) # на 4 элемента - ['www', 'python', 'org', '']
+# print('www.python.org.ru'.rsplit(".", 2))  # взял 2 элемента с правой стороны
 
 
 # a = input("-> ").split()
 # b = list(map(int, a))
-# print(a)
+# print(b)
+
+
+#
+# ----------------------------------------------------------------
+# Урок №18 Python от 26.02.2024
+# Урок №1
+# -----------------------------------------------
+# ***********************************************
+
+# Домашнее задание:
+# fio = input("Введите ФИО: ").split()
+# print(fio)
+# print(f"{fio[0]} {fio[1][0]}. {fio[2][0]}.")
+
+# -----------------------------------------------
+
+# НОВАЯ ТЕМА
+# Работа с регулярными выражениями
+
+import re
+
+s = "Я ищу совпадение в 2024 году. И я их найду в 2 счета."  # шаблон регулярного выражения
+reg = "я"
+
+# print(re.findall(reg, s))  # все совпадения с шаблоном ['я']
+# # findall - возвращает список, содержащий все совпадения по шаблону регулярного выражения
+# print(re.search(reg, s))  # возвращает только 1 расположение объекта (индекс)
+# print(re.search(reg, s).span())
+# print(re.search(reg, s).start())
+# print(re.search(reg, s).end())
+# print(re.search(reg, s).group())
+
+# print(re.match(reg, s))  # поиск совпадения с шаблоном в начале строки
+#
+# print(re.split(reg, s))  # возвращает список, в котором строка разбита по шаблону
+#
+# print(re.sub(reg, "!", s))  # поиск и замена
+
+
+# s = "Я ищу совпадение в 2024 году. И я их найду в 2 счета. 98765 Hello"  # шаблон регулярного выражения
+# reg = "[2024]"  # ['2', '0', '2', '4', '2']
+# reg = "[ищу]"  # ['и', 'щ', 'у', 'и', 'у', 'и', 'у']
+# reg = "[0-9]"
+# reg = "[6-9]"  # ['9', '8', '7', '6']
+# reg = "[0-9][0-9]"  # ['20', '24', '98', '76']
+# reg = "[21][0-9][0-9][0-9]"  # ['2024']
+# reg = "[а-я]"
+# reg = "[а-яё]"
+# reg = "[А-яа-яё]"
+# reg = "[a-z]"
+
+# print(re.findall(reg, s))
+# print(ord('я')) # 1103
+# print(ord('ё')) # 1105
+# print(ord('Я')) # 1071
+# print(ord('а')) # 1072
+
+
+# s = "Я ищу совпадение в 2024 году. И я их найду в 2 счета. 98765 Hello"
+# reg = "."
+# reg = r"\."
+# reg = r"[a-z-A-Z]"  # ['H', 'e', 'l', 'l', 'o']
+# reg = r"[a-z-A-Z?!]"
+# reg = r"[A-Za-z?-!]"  # ошибка
+# reg = r"[A-Za-z\[\]-]"
+
+# reg = r"[^0-9]"  # указывает ^ все выведется, кроме цифр
+# reg = r"[^А-яЁёФ]"
+# reg = r"[0-9^]"  # в конце - выводит цифры
+# print(re.findall(reg, s))
+
+
+# Задача:
+#
+# st = "Час в 24 формате от 00 до 23. 2021-06-15T21:45. Минуты в диапазоне от 00 до 59. 2021-06-15T01:09."
+# pattern = "[0-9][0-9]:[0-9][0-9]"
+# print(re.findall(pattern, st))
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+import re
+
+# s = "Я ищу совпадение в 2024 году. И я их найду в 2 счета. 98765 He_llo"
+# reg = "."
+# reg = r"\d"
+# reg = r"\D"
+# reg = r"\s"
+# reg = r"\w"
+# reg = r"\АИ я"
+# reg = r"\АИ ищу"
+# reg = r"lo\Z"
+# reg = r"\Вние"
+# print(re.findall(reg, s))
+
+
+# s = "Я ищу совпадение в 2024 году. И я их найду в 2 счета. 98765 He_llo 2000000000000000000000"
+# reg = "."
+# reg = r"\d"
+# reg = r"\w+"
+# reg = r"20*"
+# reg = r"[20]*"
+# print(re.findall(reg, s))
+
+# Количество повторений
+# + - от 1 до бесконечности
+# ? - от 0 до бесконечности
+
+
+# d = "Цифры: 7, +17, -42, 0013, 0.3"
+# # reg = r'\d'
+# # reg = r'\d+'  # ['7', '17', '42', '0013', '0', '3']
+# reg = r'[+-]?\d+'
+# print(re.findall(reg, d))
+
+
+# s = "05-03-1987 # Дата рождения"
+# print("Дата рождения: ", re.sub(r"\s#.*", "", s))
+# print(re.sub('-', '.', s))
+# Дата рождения: 05.03.1987
+
+# Доделать
+
+
+# Задача:
+#
+# s = "author=Пушкин А.С.; title  = Евгений Онегин; price =200; year= 1831"
+# reg = r'\w+\s*=\s*[^;]+'
+# reg = r'[^;]+'
+# print(re.findall(reg, s))
+
+
+# s = "12 сентября 2024 года 56987414123"
+# # reg = r"\d"
+# reg = r"\d{2,4}"
+# print(re.findall(reg, s))
+
+
+# s = "Я ищу совпадение в 2024 году. И я их [найду] в 2 сче_та. 98765 He_llo"
+# # reg = r"^\w+\s\w+"  # ['Я ищу']
+# reg = r"\w+\.$"
+# print(re.findall(reg, s))
+
+
+# def validate_login(login):
+#     return re.findall(r"[A-Za-z0-9-]{3,16}", login)
+#
+#
+# print(validate_login("Python-master"))  # ['Python-master']
+# print(validate_login("Pyth@on-master"))  # ['Pyth', 'on-master']
+#
+
+
+# ----------------------------------------------------------------
+# Урок №19 Python от 28.02.2024
+# Урок №1
+# -----------------------------------------------
+
+# *************************************
+
+# Домашняя работа
+
+
+# *************************************
+
+
+import re
+
+# print(re.findall(r"\w+", "12 + й"))
+# print(re.findall(r"\w+", "12 + й", flags=re.ASCII))
+#
+# text = "Hello world"
+# print(re.findall(r"\w\+", text, re.DEBUG))
+
+
+# s = "Я ищу совпадение в 2024 году. И я их найду в 2 счёта."
+# reg = "я"
+#
+# print(re.findall(reg, s, re.IGNORECASE))
+# print(re.findall(reg, s, re.I))
+
+
+# text = """
+# one
+# two
+# """
+
+# print(re.findall(r"one.\w+", text))
+# print(re.findall(r"one.\w+", text, re.DOTALL))  # ['one\ntwo']
+# print(re.findall(r"one$", text))
+# print(re.findall(r"one$", text, re.MULTILINE))  # ['one']
+#
+# print(re.findall("""
+# [A-Za-z0-9._-]+
+# @
+# [A-Za-z0.-]+
+# """, 'test@mail.ru', re.VERBOSE))
+
+
+# text = """Python,
+# python,
+# PYTHON"""
+#
+# reg = "(?im)^python"
+# print(re.findall(reg, text))
+
+
+# text = "<body>Пример жадного соответствия регулярных выражений</body>"
+# print(re.findall("<.*?>", text))
+
+# +?, *?, ??
+# {m,n}?, {,n}?, {m,}?
+# s = "12 сентября 2024 года 568789456"
+# reg = r"\d{2,4}?"
+# print(re.findall(reg, s))
+
+# s = "Ольга и Виталий отлично учатся!"
+# reg = "Петр|Ольга|Виталий"  # | - значит ИЛИ (or)
+# print(re.findall(reg, s))
+
+
+# s = "int = 4, float = 4.0f, double = 8.0"
+# # reg = r"\w+\s*=\s*\d[.\w+]*"
+# reg = r"\w+\s*=\s*\d[.\w]*|float\s*=\s*\d[.\w]*"
+# print(re.findall(reg, s))
+# # Результат - ['int = 4', 'float = 4.0f', 'double = 8.0']
+# print(re.findall(reg, s))
+# print(re.search(reg, s))
+
+
+# (?: ....) - группирующая скобка не является сохраняющей
+
+# s = "5 + 7*2 - 4"
+# reg = r"\s*[+*-]\s"
+# print(re.split(reg, s))
+
+
+# Задача:
+# Попросите пользователя ввести текущую дату по заданному шаблону
+
+# s = "28-02-2024"
+# reg = "([0-2][0-9]|3[01])-([0-9][0-9])-([0-9][0-9][0-9][0-9])"
+# print(re.findall(reg, s))
+# print(re.search(reg, s).group())
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+
+# s = "28-02-2024"
+# reg = "([0-2][0-9]|3[01])-([0-9][0-9])-([0-9][0-9][0-9][0-9])"
+# print(re.findall(reg, s))
+# print(re.search(reg, s).group())
+# m = re.search(reg, s)
+# print(m[0])
+# print(m[1])
+# print(m[2])
+# print(m[3])
+# print(re.search(reg, s).group(0))
+# print(re.search(reg, s).group(1))
+# print(re.search(reg, s).group(2))
+# print(re.search(reg, s).group(3))
+
+
+# text = """
+# Самара
+# Москва
+# Тверь
+# Уфа
+# Казань
+# """
+# count = 0
+#
+#
+# def replace_find(m):
+#     global count
+#     count += 1
+#     return f"<option value='{count}'>{m.group(1)}</option>\n"
+#
+#
+# print(re.sub(r"\s*(\w+)\s*", replace_find, text))
+
+
+# s = "Самолет прилетает 10/23/2024. Будем рады вас видеть после 10/24/2024." # 23.10.2024  24.10.2024
+# reg = r"(\d{2})/(\d{2})/(\d{4})"
+# print(re.sub(reg, r"\2.\1.\3", s))
+
+# s = "yandex.com and yandex.ru"
+# reg = r"([a-z0-9-]{2,}\.[a-z]{2,4})"
+# print(re.sub(reg, r"http://\1", s))  # http://
+
+
+# ПАПКА № 17
+# Рекурсия
+
+# def elevator(n):
+#     if n == 0:  # базовый случай
+#         print("Вы в подвале")
+#         return
+#     print("=>", n)
+#     elevator(n - 1)
+#     print(n, end=" ")
+#
+#
+# n1 = int(input("На каком этаже вы сейчас находитесь?"))
+# elevator(n1)
+
+
+# Задача:
+# def sum_list(lst):
+#     res = 0
+#     for i in lst:
+#         res += i
+#     return res
+#
+#
+# print(sum_list([1, 3, 5, 7, 9]))
+
+
+# def sum_list(lst):
+#     if len(lst) == 1:
+#         return lst[0]
+#     else:
+#         return lst[0] + sum_list(lst[1:])
+#
+#
+# print(sum_list([1, 3, 5, 7, 9]))
