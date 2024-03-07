@@ -110,7 +110,6 @@ import math
 from math import sqrt
 from math import pi
 
-
 # ДЗ №7 от 17.01.2024
 # Вычисление площади фигур. Выбор фигуры:
 # 1. треугольник
@@ -344,15 +343,34 @@ from math import pi
 
 import re
 
-
 # ДЗ №18 от 26.02.2024
 # Задача:
 # Найти номер телефона в формате +7хххххххххх или 7хххххххххх
 
-s = "+7 499 456-45-78, +74994564578, 7 (499) 456 45 78, 74994564578, +24994564578"
-reg = r"\+?7\d{10}"
+# s = "+7 499 456-45-78, +74994564578, 7 (499) 456 45 78, 74994564578, +24994564578"
+# reg = r"\+?7\d{10}"  # \d - только цифры, {10} - сколько цифр
+# print(re.findall(reg, s))
+
+
+# ДЗ №19 от 28.02.2024
+# Задача:
+# Проверка соответствия пароля. Он должен состоять из цифр, букв английского алфавита, дефис, собака и
+# подчеркивание. Длина пароля от 6 до 18 символов.
+
+import re
+
+s = "my-p@ssword, rdjjk_1, 123798@, 7 (499) 456 45 78, *nhgk*, urttrryuuyuyyyurtrrtrtr-trrr"
+reg = r"[a-zA-Z0-9\_\-\@]{6,18}"
 print(re.findall(reg, s))
 
+
+while True:
+    password = input('Input a strong password: ')
+    if re.match(r'[A-Za-z0-9@#$%^&+=]{8,16}', password):
+        print('Very nice password. Much secure')
+        break
+    else:
+        print('Not a valid password')
 
 
 

@@ -5236,7 +5236,6 @@ from random import randint
 #          ¡ ¢ £ ¤ ¥ ¦ § ¨ © ª « ¬ ­ ® ¯ ° ± ² ³ ´ µ ¶ · ¸ ¹ º» ¼ ½ ¾ ¿ À Á Â Ã Ä Å
 
 
-
 # print("apple" == "Apple")  # False
 # print("apple" > "Apple")  # True
 # print("apple" > "aPple")  # True
@@ -5598,9 +5597,7 @@ import re
 # Урок №2
 # ----------------------------
 
-import re
-
-
+# import re
 
 # s = "Я ищу совпадение в 2024 году. И я их найду в 2 счета. 98765 He_llo"
 # reg = r"\." - точка
@@ -5731,17 +5728,19 @@ import re
 
 import re
 
-print(re.findall(r"\w+", "12 + й"))
-print(re.findall(r"\w+", "12 + й", flags=re.ASCII))
+# ФЛАГИ
 
-text = "Hello world"
-print(re.findall(r"\w\+", text, re.DEBUG))
+# print(re.findall(r"\w+", "12 + й YYY RRR"))  # ['12', 'й', 'YYY', 'RRR']
+# print(re.findall(r"\w+", "12 + й", flags=re.ASCII))  # ['12'] без букв
+
+# text = "Hello world"
+# print(re.findall(r"\w\+", text, re.DEBUG))
 
 
 # s = "Я ищу совпадение в 2024 году. И я их найду в 2 счёта."
 # reg = "я"
 #
-# print(re.findall(reg, s, re.IGNORECASE))
+# print(re.findall(reg, s, re.IGNORECASE))  # игнорирование регистра
 # print(re.findall(reg, s, re.I))
 
 
@@ -5751,15 +5750,23 @@ print(re.findall(r"\w\+", text, re.DEBUG))
 # """
 
 # print(re.findall(r"one.\w+", text))
-# print(re.findall(r"one.\w+", text, re.DOTALL))  # ['one\ntwo']
+# print(re.findall(r"one.\w+", text, re.DOTALL))  # ['one\ntwo'] # DOTALL - точка (.) принимает перенос
+# на новую строку
 # print(re.findall(r"one$", text))
-# print(re.findall(r"one$", text, re.MULTILINE))  # ['one']
-#
+# print(re.findall(r"one$", text, re.MULTILINE))  # ['one']  # MULTILINE - многострочный текст
+
 # print(re.findall("""
-# [A-Za-z0-9._-]+
-# @
-# [A-Za-z0.-]+
-# """, 'test@mail.ru', re.VERBOSE))
+# [A-Za-z0-9._-]+  # part 1
+# @  # @@
+# [A-Za-z0.-]+  # part 1
+# """, 'test@mail.ru', re.VERBOSE))  # позволяет использовать пробелы, переносы и комментарии
+
+# ФЛАГИ:
+# a = re.ASCII
+# i = re.IGNORECASE
+# m = re.MULTILINE - мультилиния; линия из нескольких параллельных линий
+# s = re.DOTALL
+# x = re.VERBOSE
 
 
 # text = """Python,
@@ -5771,12 +5778,12 @@ print(re.findall(r"\w\+", text, re.DEBUG))
 
 
 # text = "<body>Пример жадного соответствия регулярных выражений</body>"
-# print(re.findall("<.*?>", text))
+# print(re.findall("<.*?>", text))  # ленивое выражение с (?)
 
-# +?, *?, ??
+# +?, *?, ?? - все значения по минимуму
 # {m,n}?, {,n}?, {m,}?
 # s = "12 сентября 2024 года 568789456"
-# reg = r"\d{2,4}?"
+# reg = r"\d{2,4}?"  # (?) - взял по минимуму (по 2)
 # print(re.findall(reg, s))
 
 # s = "Ольга и Виталий отлично учатся!"
@@ -5785,28 +5792,37 @@ print(re.findall(r"\w\+", text, re.DEBUG))
 
 
 # s = "int = 4, float = 4.0f, double = 8.0"
-# # reg = r"\w+\s*=\s*\d[.\w+]*"
-# reg = r"\w+\s*=\s*\d[.\w]*|float\s*=\s*\d[.\w]*"
+# reg = r"\w+\s*=\s*\d[.\w+]*"
+# reg = r"\w*\s*=\s*\d\.*\w*"  # МОЙ ВАРИАНТ (*-*)
 # print(re.findall(reg, s))
-# # Результат - ['int = 4', 'float = 4.0f', 'double = 8.0']
+
+# reg = r"int\s*=\s*\d[.\w]*|float\s*=\s*\d[.\w]*"  # теперь найдем только int и float
+# reg = r"(int|float)\s*=\s*\d[.\w]*"
 # print(re.findall(reg, s))
-# print(re.search(reg, s))
+# Результат - ['int = 4', 'float = 4.0f', 'double = 8.0']
+
+# reg = r"(?:int|float)\s*=\s*\d[.\w]*"  # чтобы скобку сделать несохраняющей, нам надо поставить перед ней (?:)
+# # print(re.findall(reg, s))
+# # # print(re.findall(reg, s))
+# # print(re.search(reg, s))
 
 
 # (?: ....) - группирующая скобка не является сохраняющей
 
+
 # s = "5 + 7*2 - 4"
-# reg = r"\s*[+*-]\s"
+# reg = r"\s*([+*-])\s*"  # А что же значат скобки [] - для поиска символов, () - включает ВСЕ символы
 # print(re.split(reg, s))
 
 
 # Задача:
-# Попросите пользователя ввести текущую дату по заданному шаблону
+# Попросите пользователя ввести текущую дату по заданному шаблону и проверьте данные на соответствие
+s = "28-02-2024"
+reg = "(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-(19[0-9][0-9]|20[0-9][0-9])"
+print(re.findall(reg, s))
+print(re.search(reg, s).group())
+# [('28', '02', '2024')]
 
-# s = "28-02-2024"
-# reg = "([0-2][0-9]|3[01])-([0-9][0-9])-([0-9][0-9][0-9][0-9])"
-# print(re.findall(reg, s))
-# print(re.search(reg, s).group())
 
 
 # ----------------------------------------------------------------
@@ -5892,3 +5908,323 @@ print(re.findall(r"\w\+", text, re.DEBUG))
 #
 #
 # print(sum_list([1, 3, 5, 7, 9]))
+
+
+#
+# ----------------------------------------------------------------
+# Урок №20 Python от 04.03.2024
+# Урок №1
+# -----------------------------------------------
+
+
+# def to_str(n, base):
+#     convert = "0123456789ABCDEF"
+#     if n < base:
+#         return convert[n]
+#     else:
+#         return to_str(n // base, base) + convert[n % base]
+#
+#
+# print(to_str(254, 10))  # to_str(254, 16) => FE
+
+
+# names = ["Adam", ["Bob", ["Chet", "Cat"], "Bard", "Bert"], "Alex", ["Bea", "Bill"], "Ann"]
+
+# print(names[0])
+# print(isinstance(names[0], list))
+# print(names[1])
+# print(isinstance(names[1], list))
+# print(names[1][1])
+# print(isinstance(names[1][1], list))
+
+
+# def count_items(item_list):
+#     count = 0
+#     for item in item_list:
+#         if isinstance(item, list):
+#             count += count_items(item)
+#         else:
+#             count += 1
+#     return count
+#
+#
+# print(count_items(names))
+
+
+# def remove(text):
+#     if not text:
+#         return ""
+#     if text[0] == "\n" or text[0] == " ":
+#         return remove(text[1:])
+#     else:
+#         return text[0] + remove(text[1:])
+#
+#
+# print(remove("  Hello\nWorld "))
+
+
+# ФАЙЛЫ
+# f = open("test.txt")
+# print(f)
+# print(*f)
+# print(f.closed)
+# f.close()
+
+
+# ...............
+
+# f = open("test.txt", "r")
+# f = open(r"D:\Python317\317\test.txt", "r")  # такого документа нет
+# print(f.read(3))
+# print(f.read())
+# print(f.read())
+# f.close()
+
+
+# ...............
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# f = open("test2.txt", "r")
+# print(f.readlines(16))
+# print(f.readlines(26))  # возвращает список строк
+# f.close()
+
+
+# f = open("test2.txt", "r")
+# for line in f:
+#     print(line, end="")
+# f.close()
+
+# Задача:
+# Определите количество строк в файле
+# f = open("test2.txt", "r")
+# print(len(f.readlines()))
+# f.close()
+
+
+# f = open("test2.txt", "r")
+# count = 0
+# for line in f:
+#     print(line, end="")
+#     count += 1
+# f.close()
+# print(count)
+
+
+# f = open("xyz.")
+#
+# # ...............
+#
+#
+# f = ope
+
+
+# НУИХУЯЯЯЯЯЯЯ
+
+
+#
+# ----------------------------------------------------------------
+# Урок №21 Python от 06.03.2024
+# Урок №1
+# -----------------------------------------------
+
+# **********************************
+
+# Домашка за 04.03.2024:
+
+# def negative_numbers(n):
+#     if not n:
+#         return 0
+#     count = 0
+#     if n[0] < 0:
+#         count += 1
+#     return count + negative_numbers(n[1:])
+#
+#
+# lst = [-2, 3, 8, -11, -4, 6]
+# print(negative_numbers(lst))
+
+# lst = [-2, 3, 8, -11, -4, 6]
+# print(bool(lst))  # True
+
+
+# **********************************
+
+
+# Возвращаемся к файлам:
+# file_name = "res.txt"
+# lst = [4.5, 2.8, 3.9, 1.0, 0.3, 4.33, 7.777]
+#
+#
+# # print(str(lst))
+#
+# def get_line(lt):
+#     lt = list(map(str, lt))  # ['4.5', '2.8', '3.9', '1.0', '0.3', '4.33', '7.777']
+#     return ' '.join(lt)
+#
+#
+# with open(file_name, 'w') as f:
+#     f.write(get_line(lst))
+#     # f.write(str(lst))
+#     # f.write(get_line(lst))
+#     # print(get_line(lst))
+#
+# with open(file_name, 'r') as f:
+#     st = f.read()
+#
+# print(st)
+# print(type(st))
+#
+# nums = list(map(float, st.split()))
+# print(nums)
+# print(type(nums[0]))
+
+
+#  В Питоне область видимости закрывается только на уровне функций
+# a = 5
+#
+# if a == 5:
+#     b = 10
+#
+#
+# # for i in range(12):
+# #     b = 10
+#
+# def func():
+#     b = 10
+#
+#
+# func()
+# print(b)
+
+
+# Задача:
+# Написать функцию, которая выводит слово из файла, имеющего максимальную длину
+
+# def longest_worlds(file):
+#     with open(file, 'r', encoding="utf-8") as text:
+#         w = text.read().split()
+#         print(w)
+#         max_length = len(max(w, key=len))
+#         print(max_length)
+#         res = [i for i in w if len(i) == max_length]
+#         if len(res) == 1:
+#             return res[0]
+#         return res
+#
+#
+# print(longest_worlds('test.txt'))
+
+
+# f = open("test2.txt")
+# print(f.write("111"))
+# ...
+
+
+# text = "Строка №1\nСтрока №2\nСтрока №3\nСтрока №4\nСтрока №5\nСтрока №6\nСтрока №7\nСтрока №8\nСтрока №9\nСтрока №10\n"
+# with open('one.txt', 'w', encoding="utf-8") as f:
+#     f.write(text)
+
+# with open('one.txt', 'r', encoding="utf-8") as fr, open('two.txt', 'w', encoding="utf-8") as fw:
+#     for line in fr:
+#         line = line.replace("Строка", "Линия -")
+#         fw.write(line)
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# Модуль OS, OS.PATH
+import os
+
+# print(os.getcwd())  # возвращает текущую директорию
+# print(os.listdir())  # список директорий и файлов
+# print(os.listdir(".."))
+
+# os.mkdir("folder1")  # придумываем и запускаем папку (1 раз создается папка, не документ)
+# os.mkdir("nested1/nested2/nested3")  # FileExistsError: [WinError 183] Невозможно создать файл,
+# так как он уже существует: 'folder1'
+# os.makedirs("nested1/nested2/nested3")  # создает и конечную и промежуточные директории
+
+# os.rmdir("folder1") # удаление пустой папки
+# os.rmdir("nested1/nested2/nested3")
+# os.remove("xyz1.txt")
+
+# os.rename("xyz.txt", "new.txt")  # переименование файла и папки
+# os.rename("", "new.txt")
+
+# os.rename("two.txt", "nested1/two1.txt)
+
+
+# for root, dirs, files in os.walk("nested1", topdown=True):
+#     print("Root: ", root)
+#     print("\tSubdirs: ", dirs)
+#     print("\t\tFiles: ", files)
+
+
+# Задача:
+#
+# def remove_empty_dirs(root_tree):
+#     print(f"Удаление пустых директорий в ветви {root_tree}")
+#     print('-' * 50)
+#     for root, dirs, files in os.walk(root_tree):
+#         if not os.listdir(root):
+#             os.rmdir(root)
+#             print(f"Директория {root} удалена.")
+#
+#     print('-' * 50)
+#
+#
+# remove_empty_dirs("nested1")
+
+# УДАЛИЛИ ВСЕ ПУСТЫЕ ПАПКИ
+# Удаление пустых директорий в ветви nested1
+# --------------------------------------------------
+# Директория nested1\Folder1 удалена.
+# Директория nested1\nested2\Folder2 удалена.
+# Директория nested1\nested3\Folder3 удалена.
+# --------------------------------------------------
+
+import os
+
+import os.path
+
+# print(os.path.split(r"D:\Python3.12\nested1\nested4\text.txt")[0]) # [0] - путь к документу - D:\Python3.12\nested1\nested4
+# [1] - метод  - text.txt
+# ('D:\\Python3.12\\nested1\\nested4', 'text.txt')
+# ....
+
+
+# Задача:
+#
+
+# dirs = [r"Work\F1", r"Work\F2\F21"]
+# for d in dirs:
+#     os.makedirs(d)
+#
+# files = {
+#     "Work": ["w.txt"],
+#     r"Work\F1": ["f11.txt", "f12.txt", "f13.txt"],
+#     r"Work\F2\F21": ["f211.txt", "f212.txt"]
+# }
+#
+# for dir1, files in files.items():
+#     for file in files:
+#         file_path = os.path.join(dir1, file)
+#         print(file_path, 'w').close()
+#
+# file_with_text = [r"Work\w.txt", r"Work\F1\f12.txt", r"Work\F2\F21\f211.txt", r"Work\F2\F21\f212.txt"]
+
+# Work\F1\f11.txt
+# Work\F1\f12.txt
+# Work\F1\f13.txt
+# Work\F2\F21\f211.txt
+# Work\F2\F21\f212.txt
+
+
+# ........додлеать
