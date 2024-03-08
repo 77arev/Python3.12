@@ -357,20 +357,38 @@ import re
 # Проверка соответствия пароля. Он должен состоять из цифр, букв английского алфавита, дефис, собака и
 # подчеркивание. Длина пароля от 6 до 18 символов.
 
-import re
+# import re
+#
+# s = "my-p@ssword, rdjjk_1, 123798@, 7 (499) 456 45 78, *nhgk*, urttrryuuyuyyyurtrrtrtr-trrr"
+# reg = r"[a-zA-Z0-9\_\-\@]{6,18}"
+# print(re.findall(reg, s))
 
-s = "my-p@ssword, rdjjk_1, 123798@, 7 (499) 456 45 78, *nhgk*, urttrryuuyuyyyurtrrtrtr-trrr"
-reg = r"[a-zA-Z0-9\_\-\@]{6,18}"
-print(re.findall(reg, s))
+
+# while True:
+#     password = input('Input a strong password: ')
+#     if re.match(r'[A-Za-z0-9@#$%^&+=]{8,16}', password):
+#         print('Very nice password. Much secure')
+#         break
+#     else:
+#         print('Not a valid password')
 
 
-while True:
-    password = input('Input a strong password: ')
-    if re.match(r'[A-Za-z0-9@#$%^&+=]{8,16}', password):
-        print('Very nice password. Much secure')
-        break
-    else:
-        print('Not a valid password')
+# ДЗ №20 от 04.03.2024
+# Задача:
+# Вычислить количество отрицательных чисел в массиве с помощью рекурсии:
+
+def negative_numbers(n):
+    if not n:
+        return 0
+    count = 0
+    if n[0] < 0:
+        count += 1
+    return count + negative_numbers(n[1:])
+
+
+lst = [-2, 3, 8, -11, -4, 6]
+print(negative_numbers(lst))
+
 
 
 

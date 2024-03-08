@@ -5817,12 +5817,11 @@ import re
 
 # Задача:
 # Попросите пользователя ввести текущую дату по заданному шаблону и проверьте данные на соответствие
-s = "28-02-2024"
-reg = "(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-(19[0-9][0-9]|20[0-9][0-9])"
-print(re.findall(reg, s))
-print(re.search(reg, s).group())
+# s = "28-02-2024"
+# reg = "(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-(19[0-9][0-9]|20[0-9][0-9])"
+# print(re.findall(reg, s))
+# print(re.search(reg, s).group())
 # [('28', '02', '2024')]
-
 
 
 # ----------------------------------------------------------------
@@ -5831,15 +5830,16 @@ print(re.search(reg, s).group())
 
 
 # s = "28-02-2024"
-# reg = "([0-2][0-9]|3[01])-([0-9][0-9])-([0-9][0-9][0-9][0-9])"
+# reg = "(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-(19[0-9][0-9]|20[0-9][0-9])"
 # print(re.findall(reg, s))
 # print(re.search(reg, s).group())
 # m = re.search(reg, s)
-# print(m[0])
-# print(m[1])
-# print(m[2])
-# print(m[3])
-# print(re.search(reg, s).group(0))
+# print(m[0])  # 28-02-2024 - по нулевому индексу совпадение со всем нашим шаблоном
+# print(m[1])  # 28
+# print(m[2])  # 02
+# print(m[3])  # 2024
+
+# print(re.search(reg, s).group(0))  # это полное совпадение
 # print(re.search(reg, s).group(1))
 # print(re.search(reg, s).group(2))
 # print(re.search(reg, s).group(3))
@@ -5849,7 +5849,7 @@ print(re.search(reg, s).group())
 # Самара
 # Москва
 # Тверь
-# Уфа
+# Цфа
 # Казань
 # """
 # count = 0
@@ -5866,30 +5866,35 @@ print(re.search(reg, s).group())
 
 # s = "Самолет прилетает 10/23/2024. Будем рады вас видеть после 10/24/2024." # 23.10.2024  24.10.2024
 # reg = r"(\d{2})/(\d{2})/(\d{4})"
-# print(re.sub(reg, r"\2.\1.\3", s))
+# print(re.sub(reg, r"\2.\1.\3", s))  # sub - поиск и замена элемента (substitute)
+
 
 # s = "yandex.com and yandex.ru"
 # reg = r"([a-z0-9-]{2,}\.[a-z]{2,4})"
 # print(re.sub(reg, r"http://\1", s))  # http://
 
 
+# *** НОВАЯ ТЕМА ***
 # ПАПКА № 17
 # Рекурсия
+# Функция вызывает саму себя!
 
 # def elevator(n):
-#     if n == 0:  # базовый случай
+#     if n == 0:  # базовый случай, выход из функции (0)
 #         print("Вы в подвале")
 #         return
 #     print("=>", n)
 #     elevator(n - 1)
-#     print(n, end=" ")
+#     print(n, end=" ")  # все данные из стека
 #
 #
-# n1 = int(input("На каком этаже вы сейчас находитесь?"))
+# n1 = int(input("На каком этаже вы сейчас находитесь? "))
 # elevator(n1)
 
 
 # Задача:
+# Надо написать функцию, выводящую сумму элементов списка
+# Вариант №1 - с помощью цикла
 # def sum_list(lst):
 #     res = 0
 #     for i in lst:
@@ -5900,6 +5905,7 @@ print(re.search(reg, s).group())
 # print(sum_list([1, 3, 5, 7, 9]))
 
 
+# Вариант №2 - с помощью рекурсии
 # def sum_list(lst):
 #     if len(lst) == 1:
 #         return lst[0]
@@ -5910,39 +5916,66 @@ print(re.search(reg, s).group())
 # print(sum_list([1, 3, 5, 7, 9]))
 
 
+# def func(n):
+#     return n * 2
 #
+#
+# print(func(5))  # 10
+
+
+# Более наглядное представление со стрелочкой
+# def sum_list(lst):  # [9]
+#     if len(lst) == 1:
+#         print(lst, "=> lst[0]:", lst[0])
+#         return lst[0]  # 9
+#     else:
+#         print(lst, "=> lst[0]:", lst[0])
+#         return lst[0] + sum_list(lst[1:])  # 1 + 3 + 5 + 7 +
+#
+#
+# print(sum_list([1, 3, 5, 7, 9]))  # 25
+#
+
+
 # ----------------------------------------------------------------
 # Урок №20 Python от 04.03.2024
 # Урок №1
 # -----------------------------------------------
 
 
-# def to_str(n, base):
+# Задачка:
+# Функция, которая будет нам переводить число в любую систему исчисления
+# def to_str(n, base):  # (2, 10) n - число, base - основание системы исчисления
 #     convert = "0123456789ABCDEF"
 #     if n < base:
-#         return convert[n]
+#         return convert[n]  # convert[15] = 'F'
 #     else:
-#         return to_str(n // base, base) + convert[n % base]
+#         return to_str(n // base, base) + convert[n % base]  # convert[14] = 'E'
 #
 #
 # print(to_str(254, 10))  # to_str(254, 16) => FE
 
 
-# names = ["Adam", ["Bob", ["Chet", "Cat"], "Bard", "Bert"], "Alex", ["Bea", "Bill"], "Ann"]
+# Задача:
+# Массив и несколько уровней вложенности
+# names = ["Adam", ["Bob", ["Chet", "Cat", ["1", ["2", ["3"]]]], "Bard", "Bert"], "Alex", ["Bea", "Bill"], "Ann"]
+# print(len(names))
 
-# print(names[0])
-# print(isinstance(names[0], list))
-# print(names[1])
-# print(isinstance(names[1], list))
+# print(names[0]) # Adam (str)
+# print(isinstance(names[0], list))  # isinstance - каким типом данных является элемент, list? - False
+# print(names[1])  # ['Bob', ['Chet', 'Cat', ['1', ['2', ['3']]]], 'Bard', 'Bert']
+# print(isinstance(names[1], list))  # list? - True
 # print(names[1][1])
 # print(isinstance(names[1][1], list))
 
 
+# names = ["Adam", ["Bob", ["Chet", "Cat", ["1", ["2", ["3"]]]], "Bard", "Bert"], "Alex", ["Bea", "Bill"], "Ann"]
+
 # def count_items(item_list):
-#     count = 0
+#     count = 0  # 10
 #     for item in item_list:
 #         if isinstance(item, list):
-#             count += count_items(item)
+#             count += count_items(item)  # count += 2
 #         else:
 #             count += 1
 #     return count
@@ -5951,19 +5984,21 @@ print(re.search(reg, s).group())
 # print(count_items(names))
 
 
-# def remove(text):
-#     if not text:
-#         return ""
-#     if text[0] == "\n" or text[0] == " ":
-#         return remove(text[1:])
-#     else:
-#         return text[0] + remove(text[1:])
-#
-#
-# print(remove("  Hello\nWorld "))
+def remove(text):  # ""
+    if not text:  # text = ""
+        return ""
+    if text[0] == "\n" or text[0] == " ":
+        return remove(text[1:])  # ""
+    else:
+        return text[0] + remove(text[1:])  # "HelloWorld" + ""
 
 
+print(remove("  Hello\nWorld "))
+
+
+# *** НОВАЯ ТЕМА ***
 # ФАЙЛЫ
+
 # f = open("test.txt")
 # print(f)
 # print(*f)
