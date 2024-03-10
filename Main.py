@@ -5984,48 +5984,67 @@ import re
 # print(count_items(names))
 
 
-def remove(text):  # ""
-    if not text:  # text = ""
-        return ""
-    if text[0] == "\n" or text[0] == " ":
-        return remove(text[1:])  # ""
-    else:
-        return text[0] + remove(text[1:])  # "HelloWorld" + ""
-
-
-print(remove("  Hello\nWorld "))
+# def remove_t(text):  # ""
+#     if not text:  # text = ""
+#         return ""
+#     if text[0] == "\n" or text[0] == " ":
+#         return remove_t(text[1:])  # "" remove_t - это просто название нашей функции, мы сами в начале ее так назвали
+#     else:
+#         return text[0] + remove_t(text[1:])  # "HelloWorld" + "" - здесь идет сохранение в стек
+#
+#
+# print(remove_t("  Hel lo\nWorld "))
 
 
 # *** НОВАЯ ТЕМА ***
 # ФАЙЛЫ
 
-# f = open("test.txt")
-# print(f)
-# print(*f)
-# print(f.closed)
+# f = open("test.txt", "r", encoding="utf-8")  # open - открывает файл, 1 парам - сам файл, 2 парам -
+# режим открытия (r для чтения, w - для записи)
+# print(f)  # информация для чтения
+# <_io.TextIOWrapper name='test.txt' mode='r' encoding='cp1251'>
+# print(*f)  # распаковали сам объект - Hello!
+# f.close() # когда мы с файлом поработали, мы должны его закрыть
+
+# Атрибуты файлового объекта:
+# print(f.closed) # до закрытия атрибут f.closed - False
+# f.close()
+# print(f.closed) # Теперь - True
+
+# print(f.mode)  # r
+# print(f.name)  # test.txt
+# print(f.encoding)  # utf-8
+
+
+# f = open("test.txt", "r", encoding="utf-8")
+# # print(f.read())  # считывает всю информацию
+# print(f.read(3)) # если 3, то выведет только первые 3 символа
+# print(f.read())  # повторно print(f.read()) - почитал до конца, не беря в расчет первые 3 символа
 # f.close()
 
 
-# ...............
-
-# f = open("test.txt", "r")
+# f = open(r"C:\Python3.12\test.txt", "r", encoding="utf-8")
+# print(f.read())
 # f = open(r"D:\Python317\317\test.txt", "r")  # такого документа нет
-# print(f.read(3))
 # print(f.read())
-# print(f.read())
+
+
+# f = open("test2.txt", "r")
+# # print(f.read())  # считывает всю информацию
+# print(f.readline())  # считывает построчно - This is line 1.
+# print(f.readline(8))
+# print(f.readline())
 # f.close()
 
 
-# ...............
-
-
+#
 # ----------------------------------------------------------------
 # Урок №2
 # ----------------------------
 
 # f = open("test2.txt", "r")
-# print(f.readlines(16))
-# print(f.readlines(26))  # возвращает список строк
+# print(f.readlines(16))  # возвращает список из заданного количества строк
+# print(f.readlines())
 # f.close()
 
 
@@ -6034,13 +6053,15 @@ print(remove("  Hello\nWorld "))
 #     print(line, end="")
 # f.close()
 
+
 # Задача:
 # Определите количество строк в файле
+# Вариант №1
 # f = open("test2.txt", "r")
 # print(len(f.readlines()))
 # f.close()
 
-
+# Вариант №2
 # f = open("test2.txt", "r")
 # count = 0
 # for line in f:
@@ -6050,15 +6071,104 @@ print(remove("  Hello\nWorld "))
 # print(count)
 
 
-# f = open("xyz.")
-#
-# # ...............
-#
-#
-# f = ope
+# Режим записи - w
+# w - если файл существует, он будет очищен, если нет, будет создан
+# f = open("xyz.txt", "w")  # пишем несуществующий файл
+# f.write("Hello\nWorld!\n")
+# f.close()
+
+# Режим дозаписи - a
+# a - если файл существует, то данные добавляются в конец файла, данные не затираются
+# f = open("xyz.txt", "a")
+# f.write("New text.\n")
+# f.close()
+
+# f = open("xyz1.txt", "a")  # если файла не было, a - создаст
+# f.close()
+
+# f = open("xyz.txt", "a")
+# lines = ['\nThis is line 1', '\nThis is line 2']  # добавили записи в "xyz.txt" ниже
+# f.writelines(lines)
+# f.close()
 
 
-# НУИХУЯЯЯЯЯЯЯ
+# f = open("xyz.txt", "w")
+# lst = [str(i) + " " for i in range(1, 20)]
+# print(lst)
+# # for index in lst:
+# #     f.write(index + "\t")
+# f.writelines(lst)
+# f.close()
+
+
+# Задача:
+# Замените строку в текстовом файле
+# f = open("test3.txt", "w")
+# f.write("Замена строки в текстовом файле;\nизменить строку в списке;\nзаписать список в файл\n")
+# f.close()
+#
+# f = open('test3.txt', 'r')  # открыли файл на чтение, данные считались, мы их изменили, но не сохранили
+# read_file = f.readlines()
+# print(read_file) # список из 3х строк
+# read_file[1] = "Hello world!\n"  # read_file[1] - это 2ая строка у нас в списке
+# print(read_file)
+# f.close()
+#
+# f = open("test3.txt", "w")  # теперь нужно эти данные записать и сохранить
+# f.writelines(read_file)
+# f.close()
+
+
+# Задача:
+# Удалите строки из файла по ее индексу
+# f = open("test3.txt", "w")
+# f.write("Замена строки в текстовом файле;\nизменить строку в списке;\nзаписать список в файл\n")
+# f.close()
+#
+# f = open("test3.txt", 'r')
+# read_file = f.readlines()
+# pos = int(input("Введите индекс строки для удаления: "))
+# if 0 <= pos < len(read_file):
+#     del_pos = read_file.pop(pos)
+# else:
+#     print("Индекс введен неверно")
+# f.close()
+#
+# f = open("test3.txt", 'w')
+# f.writelines(read_file)
+# f.close()
+
+
+# f = open("test.txt", "r", encoding="utf-8")
+# print(f.read(3))
+# print(f.tell())  # возвращает (говорит) текущую позицию условного курсора в файле
+# print(f.seek(1))  # перемещает (находит) условный курсор в заданную позицию
+# print(f.read())
+# print(f.tell())
+# f.close()
+
+# f = open("test.txt", "r+")  # (+) это обновление, чтение и запись
+# "r+" - затер данные
+# print(f.write("I am learning Python\n"))
+# print(f.seek(3))
+# print(f.write("-new string-"))
+# print(f.tell())
+# f.close()
+
+
+# f = open("test2.txt", "a+")
+# print(f.write("1111 I am learning Python 1111"))
+# print(f.read())
+# f.close()
+
+# with open("test2.txt", 'w+') as f:
+#     print(f.write('01234\n56789'))
+# print(f.closed)
+
+
+# with open("test2.txt", 'r') as f:
+#     for line in f:
+#         print(line[:3])
 
 
 #
@@ -6093,9 +6203,8 @@ print(remove("  Hello\nWorld "))
 # Возвращаемся к файлам:
 # file_name = "res.txt"
 # lst = [4.5, 2.8, 3.9, 1.0, 0.3, 4.33, 7.777]
-#
-#
 # # print(str(lst))
+#
 #
 # def get_line(lt):
 #     lt = list(map(str, lt))  # ['4.5', '2.8', '3.9', '1.0', '0.3', '4.33', '7.777']
@@ -6112,7 +6221,7 @@ print(remove("  Hello\nWorld "))
 #     st = f.read()
 #
 # print(st)
-# print(type(st))
+# print(type(st))  # <class 'str'>
 #
 # nums = list(map(float, st.split()))
 # print(nums)
@@ -6141,8 +6250,8 @@ print(remove("  Hello\nWorld "))
 # Написать функцию, которая выводит слово из файла, имеющего максимальную длину
 
 # def longest_worlds(file):
-#     with open(file, 'r', encoding="utf-8") as text:
-#         w = text.read().split()
+#     with open(file, 'r', encoding="utf-8") as text:  # , encoding="utf-8" - если русский текст
+#         w = text.read().split()  # .split - метод для создания списка из строковых значений
 #         print(w)
 #         max_length = len(max(w, key=len))
 #         print(max_length)
@@ -6155,15 +6264,20 @@ print(remove("  Hello\nWorld "))
 # print(longest_worlds('test.txt'))
 
 
-# f = open("test2.txt")
-# print(f.write("111"))
-# ...
+# f = open("test2.txt", "w")  # wb - бинарный, не можем на него посмотреть
+# print(f.write("1111 I am learning Python 1111"))
+# f.close()
 
 
-# text = "Строка №1\nСтрока №2\nСтрока №3\nСтрока №4\nСтрока №5\nСтрока №6\nСтрока №7\nСтрока №8\nСтрока №9\nСтрока №10\n"
+# Задачка:
+# ***  ***  ***
+# text = ("Строка №1\nСтрока №2\nСтрока №3\nСтрока №4\nСтрока №5\nСтрока №6\nСтрока №7\n"
+#         "Строка №8\nСтрока №9\nСтрока №10\n")
+#
 # with open('one.txt', 'w', encoding="utf-8") as f:
 #     f.write(text)
-
+#
+#
 # with open('one.txt', 'r', encoding="utf-8") as fr, open('two.txt', 'w', encoding="utf-8") as fw:
 #     for line in fr:
 #         line = line.replace("Строка", "Линия -")
@@ -6175,86 +6289,122 @@ print(remove("  Hello\nWorld "))
 # ----------------------------
 
 # Модуль OS, OS.PATH
-import os
+import os.path
 
-# print(os.getcwd())  # возвращает текущую директорию
-# print(os.listdir())  # список директорий и файлов
-# print(os.listdir(".."))
+# print(os.getcwd())  # возвращает текущую директорию - cwd - current working directory (папку) - C:\Python3.12
+# print(os.listdir())  # список директорий и файлов - listdir - Returns a list containing the names of the files
+# in the directory
+# ['.git', '.gitignore', '.idea', '.venv', 'Domashka', 'Folder', 'Main.py', 'nested1', 'Newwork.py',
+# 'one.txt', 'readme.md', 'res.txt', 'Selfwork.py', 'test.txt', 'test2.txt', 'test3.txt', 'Text1.txt',
+# 'two.txt', 'Work', 'xyz.txt', 'xyz1.txt']
+# print(os.listdir(".."))  # на шаг выше, что лежит на папку выше
+
 
 # os.mkdir("folder1")  # придумываем и запускаем папку (1 раз создается папка, не документ)
-# os.mkdir("nested1/nested2/nested3")  # FileExistsError: [WinError 183] Невозможно создать файл,
-# так как он уже существует: 'folder1'
-# os.makedirs("nested1/nested2/nested3")  # создает и конечную и промежуточные директории
+# mkdir - make dir - Create a directory.
+# FileExistsError: [WinError 183] Невозможно создать файл, так как он уже существует: 'folder1'
+# os.mkdir("nested1/nested2/nested3") # здесь не может создать много папок
+# os.makedirs("nested1/nested2/nested3")  # makedirs - а он может создасть и конечную и промежуточные директории
 
-# os.rmdir("folder1") # удаление пустой папки
+
+# os.rmdir("folder1") # удаление пустой папки - rmdir - Remove a directory.
 # os.rmdir("nested1/nested2/nested3")
-# os.remove("xyz1.txt")
+# os.rmdir("folder")  # OSError: [WinError 145] Папка не пуста: 'folder'
 
-# os.rename("xyz.txt", "new.txt")  # переименование файла и папки
-# os.rename("", "new.txt")
-
-# os.rename("two.txt", "nested1/two1.txt)
+# os.remove("xyz1.txt")  # удаление файла
 
 
-# for root, dirs, files in os.walk("nested1", topdown=True):
+# os.rename("xyz.txt", "new.txt")  # переименование файла и папки (2 параметра, что на что)
+# os.rename("folder", "new")
+
+# os.rename("two.txt", "nested1/two1.txt")  # можно не только переименовать, но и переместить!
+# os.renames("test.txt", "nested1/nested3/two.txt")  # переименование файла и папки, перемещает документы,
+# создавая промежуточные директории
+
+
+# Метод - walk - Directory tree generator.
+# walk - возвращает кортеж из 3 элементов
+# for root, dirs, files in os.walk("nested1", topdown=True):  # nested1 - папка, по которой мы хотим пройтись
+#     # , topdown=False - обход дерева наоборот
+#     # папка (nested1) находится на том же уровне
 #     print("Root: ", root)
 #     print("\tSubdirs: ", dirs)
-#     print("\t\tFiles: ", files)
+#     print("\tFiles: ", files)
+
+# for root, dirs, files in os.walk("../Python3.12", topdown=True):  # "../Python3.12" - поднимаемся на уровень выше
+#     print("Root: ", root)
+#     print("\tSubdirs: ", dirs)
+#     print("\tFiles: ", files)
 
 
 # Задача:
-#
-# def remove_empty_dirs(root_tree):
-#     print(f"Удаление пустых директорий в ветви {root_tree}")
-#     print('-' * 50)
-#     for root, dirs, files in os.walk(root_tree):
-#         if not os.listdir(root):
-#             os.rmdir(root)
-#             print(f"Директория {root} удалена.")
-#
-#     print('-' * 50)
-#
-#
-# remove_empty_dirs("nested1")
+# Удаление пустых директорий в ветви Work
+def remove_empty_dirs(root_tree):  # remove_empty_dirs - просто название функции
+    print(f"Удаление пустых директорий в ветви {root_tree}")
+    print('-' * 50)
+    for root, dirs, files in os.walk(root_tree):
+        if not os.listdir(root):  # Return a list containing the names of the files in the directory. -
+            # если список пустой, то папку можно удалять
+            os.rmdir(root)
+            print(f"Директория {root} удалена.")
+
+    print('-' * 50)
+
+
+remove_empty_dirs("nested1")  # передали сюда - в root_tree - папку nested1
+
 
 # УДАЛИЛИ ВСЕ ПУСТЫЕ ПАПКИ
 # Удаление пустых директорий в ветви nested1
 # --------------------------------------------------
-# Директория nested1\Folder1 удалена.
-# Директория nested1\nested2\Folder2 удалена.
-# Директория nested1\nested3\Folder3 удалена.
+# Директория nested1\folder1 удалена.
+# Директория nested1\nested2\folder2 удалена.
+# Директория nested1\nested3\folder3 удалена.
+# Директория nested1\nested4\folder4 удалена.
+# Директория nested1\new\folder5 удалена.
 # --------------------------------------------------
 
 import os
 
-import os.path
+# import os.path
 
-# print(os.path.split(r"D:\Python3.12\nested1\nested4\text.txt")[0]) # [0] - путь к документу - D:\Python3.12\nested1\nested4
-# [1] - метод  - text.txt
-# ('D:\\Python3.12\\nested1\\nested4', 'text.txt')
-# ....
+
+# print(os.path.split(r"C:\Python3.12\nested1\nested4\text.txt"))  # [1] split - вернул кортеж из 2 элементов
+# ('C:\\Python3.12\\nested1\\nested4', 'text.txt')
+
+# print(os.path.join(r"C:\Python3.12", "nested1", "nested4", "text.txt"))  # join - путь
+# создает по частям
+# C:\Python3.12\nested1\nested4\text.txt
 
 
 # Задача:
-#
+# Нужна программа, которая создаст приведенное на рисунке дерево директорий и файлов
 
-# dirs = [r"Work\F1", r"Work\F2\F21"]
+# dirs = [r'Work\F1', r'Work\F2\F21']
 # for d in dirs:
 #     os.makedirs(d)
-#
+
 # files = {
-#     "Work": ["w.txt"],
-#     r"Work\F1": ["f11.txt", "f12.txt", "f13.txt"],
-#     r"Work\F2\F21": ["f211.txt", "f212.txt"]
+#     'Work': ['w.txt'],
+#     r'Work\F1': ['f11.txt', 'f12.txt', 'f13.txt'],
+#     r'Work\F2\F21': ['f211.txt', 'f212.txt']
 # }
 #
 # for dir1, files in files.items():
 #     for file in files:
 #         file_path = os.path.join(dir1, file)
-#         print(file_path, 'w').close()
+#         open(file_path, 'w').close()
 #
-# file_with_text = [r"Work\w.txt", r"Work\F1\f12.txt", r"Work\F2\F21\f211.txt", r"Work\F2\F21\f212.txt"]
+#
+# file_with_text = [r'Work\w.txt', r'Work\F1\f12.txt', r'Work\F2\F21\f211.txt', r'Work\F2\F21\f212.txt']
+#
+# for file in file_with_text:
+#     with open(file, 'w') as f:
+#         f.write(f"Текст в файле {file}")
 
+
+# Результат:
+# Work\w.txt
 # Work\F1\f11.txt
 # Work\F1\f12.txt
 # Work\F1\f13.txt
@@ -6262,4 +6412,5 @@ import os.path
 # Work\F2\F21\f212.txt
 
 
-# ........додлеать
+
+
