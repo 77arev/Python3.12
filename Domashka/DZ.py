@@ -394,10 +394,60 @@ import re
 # Задача:
 # Выведите на экран сначала все файлы, а затем все директории, расположенные в корневой директории дерева.
 # ['files\\one.txt', 'files\\three.txt', 'files\\two.txt', 'files\\dir']
-import os
-import os.path
+# import os
+# import os.path
+#
+# for root, dirs, files in os.walk("../nested1", topdown=False):
+#     a = os.listdir(root)
+#     print(a)
 
-for root, dirs, files in os.walk("../nested1", topdown=False):
-    a = os.listdir(root)
-    print(a)
+
+# root = r"nested1\nested2"
+# objs = os.listdir(root)
+# print(objs)
+# print(sorted(os.listdir("Work"), reverse=True))
+
+
+# ДЗ №22 от 11.03.2024
+# Задача:
+# Реализуйте класс "Автомобиль"
+class Auto:
+    model = "series number"
+    year = "0000"
+    manufacturer = "name"
+    power = "000 h.p."
+    color = "color"
+    price = "00000000"
+
+    def print_info(self):
+        print(" Данные автомобиля ".center(40, "*"))
+        print(f"Название модели: {self.model}\nГод выпуска: {self.year}\nПроизводитель: {self.manufacturer}\n"
+              f"Мощность двигателя: {self.power}\nЦвет машины: {self.color}\nЦена: {self.price}")
+        print("=" * 40)
+
+    def input_info(self, model, year, manufacturer, power, color, price):
+        self.model = model
+        self.year = year
+        self.manufacturer = manufacturer
+        self.power = power
+        self.color = color
+        self.price = price
+
+    def set_manufacturer(self, manufacturer):  # меняем производителя
+        self.manufacturer = manufacturer
+
+    def get_manufacturer(self):
+        return self.manufacturer
+
+
+a1 = Auto()
+a1.print_info()
+a1.input_info("X7 M50i", "2021", "BMW", "530 л.с.", "white", "10790000")
+a1.print_info()
+a1.set_manufacturer("Mercedes")
+a1.print_info()
+print((a1.get_manufacturer()))
+
+
+
 
