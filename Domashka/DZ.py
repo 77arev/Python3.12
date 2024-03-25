@@ -343,6 +343,7 @@ from math import pi
 
 import re
 
+
 # ДЗ №18 от 26.02.2024
 # Задача:
 # Найти номер телефона в формате +7хххххххххх или 7хххххххххх
@@ -411,43 +412,154 @@ import re
 # ДЗ №22 от 11.03.2024
 # Задача:
 # Реализуйте класс "Автомобиль"
-class Auto:
-    model = "series number"
-    year = "0000"
-    manufacturer = "name"
-    power = "000 h.p."
-    color = "color"
-    price = "00000000"
+# Вариант №1
+# class Auto:
+#     model = "series number"
+#     year = "0000"
+#     manufacturer = "name"
+#     power = "000 h.p."
+#     color = "color"
+#     price = "00000000"
+#
+#     def print_info(self):
+#         print(" Данные автомобиля ".center(40, "*"))
+#         print(f"Название модели: {self.model}\nГод выпуска: {self.year}\nПроизводитель: {self.manufacturer}\n"
+#               f"Мощность двигателя: {self.power}\nЦвет машины: {self.color}\nЦена: {self.price}")
+#         print("=" * 40)
+#
+#     def input_info(self, model, year, manufacturer, power, color, price):
+#         self.model = model
+#         self.year = year
+#         self.manufacturer = manufacturer
+#         self.power = power
+#         self.color = color
+#         self.price = price
+#
+#     def set_manufacturer(self, manufacturer):  # меняем производителя
+#         self.manufacturer = manufacturer
+#
+#     def get_manufacturer(self):
+#         return self.manufacturer
+#
+#
+# a1 = Auto()
+# a1.print_info()
+# a1.input_info("X7 M50i", "2021", "BMW", "530 л.с.", "white", "10790000")
+# a1.print_info()
+# a1.set_manufacturer("Mercedes")
+# a1.print_info()
+# print((a1.get_manufacturer()))
 
-    def print_info(self):
-        print(" Данные автомобиля ".center(40, "*"))
-        print(f"Название модели: {self.model}\nГод выпуска: {self.year}\nПроизводитель: {self.manufacturer}\n"
-              f"Мощность двигателя: {self.power}\nЦвет машины: {self.color}\nЦена: {self.price}")
-        print("=" * 40)
 
-    def input_info(self, model, year, manufacturer, power, color, price):
-        self.model = model
-        self.year = year
-        self.manufacturer = manufacturer
-        self.power = power
-        self.color = color
-        self.price = price
+# Вариант №2
+# class Auto:
+#
+#     def __init__(self, model, year, manufacturer, power, color, price):
+#         self.model = model
+#         self.year = year
+#         self.manufacturer = manufacturer
+#         self.power = power
+#         self.color = color
+#         self.price = price
+#
+#     def print_info(self):
+#         print(" Данные автомобиля ".center(40, "*"))
+#         print(f"Название модели: {self.model}\nГод выпуска: {self.year}\nПроизводитель: {self.manufacturer}\n"
+#               f"Мощность двигателя: {self.power}\nЦвет машины: {self.color}\nЦена: {self.price}")
+#         print("=" * 40)
+#
+#     def set_model(self, model):
+#         self.model = model
+#
+#     def set_year(self, year):
+#         self.year = year
+#
+#     def set_manufacturer(self, manufacturer):
+#         self.manufacturer = manufacturer
+#
+#     def set_power(self, power):
+#         self.power = power
+#
+#     def set_color(self, color):
+#         self.color = color
+#
+#     def set_price(self, price):
+#         self.price = price
+#
+#     def get_model(self):
+#         return self.model
+#
+#     def get_manufacturer(self):
+#         return self.manufacturer
+#
+#
+# a1 = Auto("X7 M50i", "2021", "BMW", "530 л.с.", "white", "10790000")
+# a1.print_info()
+#
+# # сеттеры
+# a1.set_model("benz c-class")
+# a1.set_year("2024")
+# a1.set_manufacturer("Mercedes")
+# a1.set_power("204 л.с.")
+# a1.set_color("red")
+# a1.set_price("142.000$")
+# a1.print_info()
+#
+# # геттеры
+# print((a1.get_model()))
+# print((a1.get_manufacturer()))
 
-    def set_manufacturer(self, manufacturer):  # меняем производителя
-        self.manufacturer = manufacturer
 
-    def get_manufacturer(self):
-        return self.manufacturer
+# ДЗ №23 от 13.03.2024
+# Задача:
+# Создать класс Person c двумя закрытыми свойствами в Python: имя и возраст. С использованием декоратора @property
+# создать возможность изменения и удаления этих свойств.
+
+class Person:
+    def __init__(self, name, age):
+        self.__name = name
+        self.__age = age
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, new_name):
+        self.__name = new_name
+
+    @name.deleter
+    def name(self):
+        del self.__name
+
+    @property
+    def age(self):
+        return self.__age
+
+    @age.setter
+    def age(self, new_age):
+        self.__age = new_age
+
+    @age.deleter
+    def age(self):
+        del self.__age
 
 
-a1 = Auto()
-a1.print_info()
-a1.input_info("X7 M50i", "2021", "BMW", "530 л.с.", "white", "10790000")
-a1.print_info()
-a1.set_manufacturer("Mercedes")
-a1.print_info()
-print((a1.get_manufacturer()))
+person = Person("Виктор", 30)
+print(person.name)  # Вывод: Виктор
+print(person.age)  # Вывод: 30
+print(person.__dict__)  # {'_Person__name': 'Виктор', '_Person__age': 30}
 
+person.name = "Елена"
+person.age = 25
 
+print(person.name)  # Вывод: Елена
+print(person.age)  # Вывод: 25
+print(person.__dict__)  # {'_Person__name': 'Елена', '_Person__age': 25}
 
+del person.name
+# print(person.name)  # Будет вызвано исключение AttributeError
+print(person.__dict__)  # {'_Person__age': 25}
 
+del person.age
+# print(person.age)   # Будет вызвано исключение AttributeError
