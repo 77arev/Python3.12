@@ -6367,7 +6367,6 @@ import os.path
 
 import os
 
-
 # import os.path
 
 
@@ -6981,30 +6980,57 @@ import os
 
 # Задача:
 # Создать класс для преобразования килограмм в фунты
-class KgToPounds:
-    def __init__(self, kg):
-        self.__kg = kg
+# class KgToPounds:
+#     def __init__(self, kg):
+#         self.__kg = kg
+#
+#     @property
+#     def kg(self):
+#         return self.__kg
+#
+#     @kg.setter
+#     def kg(self, new_kg):
+#         if isinstance(new_kg, (int, float)):
+#             self.__kg = new_kg
+#         else:
+#             print("Килограммы задаются только числами")
+#
+#     def to_pound(self):
+#         return self.__kg * 2.205
+#
+#
+# weight = KgToPounds(12)
+# print(weight.kg, "кг =>", weight.to_pound(), "фунтов")  # 12 кг => 26.46 фунтов
+# weight.kg = 41
+# print(weight.kg, "кг =>", weight.to_pound(), "фунтов")  # 41 кг => 90.405 фунтов
+# weight.kg = "два"  # Килограммы задаются только числами
 
-    @property
-    def kg(self):
-        return self.__kg
 
-    @kg.setter
-    def kg(self, new_kg):
-        if isinstance(new_kg, (int, float)):
-            self.__kg = new_kg
-        else:
-            print("Килограммы задаются только числами")
+#
+# СТАТИЧЕСКИЕ МЕТОДЫ:
+# def method() - метод и пустые скобки
 
-    def to_pound(self):
-        return self.__kg * 2.205
+class Point:
+    __count = 0
+
+    def __init__(self, x=0, y=0):
+        self.__x = x
+        self.__y = y
+        Point.__count += 1
+
+    @staticmethod
+    def get_count():
+        return Point.__count
 
 
-weight = KgToPounds(12)
-print(weight.kg, "кг =>", weight.to_pound(), "фунтов")  # 12 кг => 26.46 фунтов
-weight.kg = 41
-print(weight.kg, "кг =>", weight.to_pound(), "фунтов")  # 41 кг => 90.405 фунтов
-weight.kg = "два"  # Килограммы задаются только числами
+p1 = Point()
+p2 = Point()
+p3 = Point()
+p4 = Point()
+p5 = Point()
+
+print(Point.get_count())
+
 
 #
 # ****************************************
@@ -7013,58 +7039,67 @@ weight.kg = "два"  # Килограммы задаются только чи�
 # Урок №1
 # -----------------------------------------------
 
-# class Change:
-#     @staticmethod
-#     def inc(x):
-#         return x + 1
-#
-#     @staticmethod
-#     def dec(x):
-#         return x - 1
-#
-#
-# ch = Change()
-# print(ch.inc(10), Change.dec(10))
+# 01 июня 2023 г. Статический метод в Python — это метод, который связан с классом, а не с его экземплярами.
+# Чтобы быть вызванным, он не требует создания экземпляра класса и не имеет доступа к экземпляру.
+# Статические методы в Python объявляются с использованием декоратора @staticmethod.
+
+# Остановились мы на статических методах - def method() - метод и пустые скобки
+class Change:
+    @staticmethod
+    def inc(x):
+        return x + 1
+
+    @staticmethod
+    def dec(x):
+        return x - 1
+
+
+# print(Change.inc(10), Change.dec(10))  # 11 9 - обращение через класс
+ch = Change()
+print(ch.inc(10), Change.dec(10))
 
 
 # Задача:
-# Создайте класс, статические методы
-# class Fact:
-#
-#     @staticmethod
-#     def max(*args):
-#         return max(args)
-#
-#     @staticmethod
-#     def min(*args):
-#         return min(args)
-#
-#     @staticmethod
-#     def fact(arg):
-#         factor = 1
-#         for i in range(1, arg + 1):
-#             # 5! = 1 * 2 * 3 * 4 * 5
-#             factor *= i
-#         return factor
-#
-#     @staticmethod
-#     def avg(*args):
-#         avg = sum(args) / len(args)
-#         return avg
-#
-#
-# print(Fact.max(3, 5, 7, 9))
-# print(Fact.min(3, 5, 7, 9))
-# print(Fact.fact(5))
-# print(Fact.avg(3, 5, 7, 9))
+# Создайте класс, статические методы.
+# Создайте класс для подсчета максимума из четырех аргументов (3, 5, 7, 9), минимума из четырех аргументов.
+# Среднеарифметического из четырех аргументов, факториала аргумента (5). Через статические методы.
+class Fact:
+
+    @staticmethod
+    def max(*args):
+        return max(args)
+
+    @staticmethod
+    def min(*args):
+        return min(args)
+
+    @staticmethod
+    def fact(arg):
+        factor = 1
+        for i in range(1, arg + 1):
+            # 5! = 1 * 2 * 3 * 4 * 5
+            factor *= i
+        return factor
+
+    @staticmethod
+    def avg(*args):
+        avg = sum(args) / len(args)
+        return avg
 
 
+print(Fact.max(3, 5, 7, 9))  # обращаемся к def max(*args)
+print(Fact.min(3, 5, 7, 9))
+print(Fact.fact(5))
+print(Fact.avg(3, 5, 7, 9))
+
+
+# Задача:
 # Проверка дат на валидность
-# class Date:
-#     def __init__(self, day, month, year):
-#         self.day = day
-#         self.month = month
-#         self.year = year
+class Date:
+    def __init__(self, day, month, year):
+        self.day = day
+        self.month = month
+        self.year = year
 #
 #     @classmethod
 #     def from_string(cls, string_date):
@@ -7685,3 +7720,194 @@ weight.kg = "два"  # Килограммы задаются только чи�
 # line.draw_line()  # Рисование линии: (1, 2), (10, 20), red, 1
 # line.set_coord(Point(12, 18), Point(100, 200))
 # line.draw_line()
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №26 Python от 25.03.2024
+# Урок №1
+# -----------------------------------------------
+
+# class Point:
+#     def __init__(self, x, y):
+#         self.__x = x
+#         self.__y = y
+#
+#     def __str__(self):
+#         return f"({self.__x}, {self.__y})"
+#
+#
+# class Prop:
+#     def __init__(self, sp: Point, ep: Point, color: str = "red", width: int = 1):
+#         self._sp = sp
+#         self._ep = ep
+#         self._color = color
+#         self._width = width
+#
+#     def draw(self):
+#         raise NotImplementedError("В дочернем классе должен быть реализован метод draw()")
+#
+#
+# class Line(Prop):
+#     def draw(self):
+#         print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
+#
+#
+# class Rect(Prop):
+#     def draw(self):
+#         print(f"Рисование прямоугольника: {self._sp}, {self._ep}, {self._color}, {self._width}")
+#
+#
+# class Ellipse(Prop):
+#     def draw(self):
+#         print(f"Рисование эллипса: {self._sp}, {self._ep}, {self._color}, {self._width}")
+#
+#
+# figs = list()
+# figs.append(Line(Point(0, 0), Point(10, 10)))
+# figs.append(Line(Point(10, 10), Point(10, 20)))
+# figs.append(Rect(Point(50, 50), Point(100, 100)))
+# figs.append(Ellipse(Point(-10, -10), Point(30, 30)))
+#
+#
+# for f in figs:
+#     f.draw()
+
+# Абстрактные методы
+# Абстрактные классы
+
+# from abc import ABC, abstractmethod
+#
+#
+# class Chess(ABC):  # абстрактный класс
+#     def draw(self):
+#         print("Нарисовал шахматную фигуру")
+#
+#     @abstractmethod
+#     def move(self): # абстрактный метод
+#         print("Метод move() в базовом классе")
+#
+#
+# class Queen(Chess):
+#     def move(self):
+#         super().move()
+#         print("Ферзь перемещен на e2e4")
+#
+# # q = Chess()
+# q = Queen()
+# q.draw()
+# q.move()
+
+
+# from math import pi
+
+#
+# Задача:
+# Создайте базовый класс "Стол"
+
+# class Table:
+#     def __init__(self, width=None, length=None, radius=None):
+#         if radius is None:
+#             if length is None:
+#                 self._width = self._length = width
+#             else:
+#                 self._width = width
+#                 self._length = length
+#         else:
+#             self._radius = radius
+#
+#     def calc_area(self):  # абстрактный метод
+#         raise NotImplementedError("В дочернем классе должен быть определен метод calc_area()")
+#
+#
+# class SqTable(Table):
+#     def calc_area(self):
+#         return self._width * self._length
+#
+#
+# class RoundTable(Table):
+#     def calc_area(self):
+#         return pi * self._radius ** 2
+#
+#
+# t = SqTable(20, 10)
+# print(t.__dict__)  # {'_width': 20, '_length': 10, '_radius': None}
+# print(t.calc_area())  # 200
+#
+# t1 = SqTable(20)
+# print(t1.__dict__)  #
+# print(t1.calc_area())  #
+#
+# t2 = RoundTable(radius=20)
+# print(t2.__dict__)
+# print(t2.calc_area())
+
+
+# from abc import ABC, abstractmethod
+#
+# Задача:
+# Создайте базовый абстрактный класс "Валюта"
+#
+# from abc import ABC, abstractmethod
+#
+#
+# class Currency(ABC):
+#     suffix = "RUB"
+#
+#     def __init__(self, value):
+#         self.value = value
+#
+#     @abstractmethod
+#     def convert_to_rub(self):
+#         pass
+#
+#     @abstractmethod
+#     def print_value(self):
+#         print(self.value, end=" ")
+#
+#     def show(self):
+#         print(f"= {self.convert_to_rub():.2f} {Currency.suffix}")
+#
+#
+# class Dollar(Currency):
+#     rate_to_rub = 74.16
+#     suffix = "USD"
+#
+#     def convert_to_rub(self):
+#         return self.value * Dollar.rate_to_rub
+#
+#     def print_value(self):
+#         super().print_value()
+#         print(Dollar.suffix, end=" ")
+#
+#
+# class Euro(Currency):
+#     rate_to_rub = 90.14
+#     suffix = "EUR"
+#
+#     def convert_to_rub(self):
+#         return self.value * Euro.rate_to_rub
+#
+#     def print_value(self):
+#         super().print_value()
+#         print(Euro.suffix, end=" ")
+#
+#
+# d = [Dollar(5), Dollar(10), Dollar(50), Dollar(100)]
+# e = [Euro(5), Euro(10), Euro(50), Euro(100)]
+# print("*" * 50)
+# for elem in d:
+#     elem.print_value()
+#     elem.show()
+#
+# print("*" * 50)
+# for elem in e:
+#     elem.print_value()
+#     elem.show()
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# ДОДЕЛЛААААТЬЬЬ

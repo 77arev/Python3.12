@@ -515,51 +515,101 @@ import re
 # Создать класс Person c двумя закрытыми свойствами в Python: имя и возраст. С использованием декоратора @property
 # создать возможность изменения и удаления этих свойств.
 
-class Person:
-    def __init__(self, name, age):
-        self.__name = name
-        self.__age = age
+# class Person:
+#     def __init__(self, name, age):
+#         self.__name = name
+#         self.__age = age
+#
+#     @property  # Функция property() возвращает атрибут свойства из заданного геттера, сеттера и делитера.
+#     def name(self):
+#         return self.__name
+#
+#     @name.setter
+#     def name(self, new_name):
+#         self.__name = new_name
+#
+#     @name.deleter
+#     def name(self):
+#         del self.__name
+#
+#     @property
+#     def age(self):
+#         return self.__age
+#
+#     @age.setter
+#     def age(self, new_age):
+#         self.__age = new_age
+#
+#     @age.deleter
+#     def age(self):
+#         del self.__age
+#
+#
+# person = Person("Виктор", 30)
+# print(person.name)  # Вывод: Виктор
+# print(person.age)  # Вывод: 30
+# print(person.__dict__)  # {'_Person__name': 'Виктор', '_Person__age': 30}
+#
+# person.name = "Елена"
+# person.age = 25
+#
+# print(person.name)  # Вывод: Елена
+# print(person.age)  # Вывод: 25
+# print(person.__dict__)  # {'_Person__name': 'Елена', '_Person__age': 25}
+#
+# del person.name
+# # print(person.name)  # Будет вызвано исключение AttributeError
+# print(person.__dict__)  # {'_Person__age': 25}
+#
+# del person.age
+# # print(person.age)   # Будет вызвано исключение AttributeError
 
-    @property
-    def name(self):
-        return self.__name
 
-    @name.setter
-    def name(self, new_name):
-        self.__name = new_name
+# ДЗ №24 от 18.03.2024
+# Задача:
+# Создайте класс для подсчета площади геометрических фигур в Python. Класс должен предоставлять
+# функциональность для подсчета площади треугольника по разным формулам (площадь треугольника по формуле Герона,
+# площадь треугольника через основание и высоту), площади прямоугольника, площади квадрата. Методы класса
+# для подсчета площади должны быть реализованы с помощью статических методов. Также класс должен считать
+# количество подсчетов площади и возвращать это значение с помощью статического метода.
 
-    @name.deleter
-    def name(self):
-        del self.__name
+class Point:
+    __count = 0  # Статическая переменная для отслеживания количества подсчетов
 
-    @property
-    def age(self):
-        return self.__age
+    @staticmethod
+    def triangle_heron(a, b, c):
+        s = (a + b + c) / 2
+        area = (s * (s - a) * (s - b) * (s - c)) ** 0.5
+        Point.__count += 1
+        return area
 
-    @age.setter
-    def age(self, new_age):
-        self.__age = new_age
+    @staticmethod
+    def triangle_base_height(base, height):
+        area = 0.5 * base * height
+        Point.__count += 1
+        return area
 
-    @age.deleter
-    def age(self):
-        del self.__age
+    @staticmethod
+    def square(side):
+        area = side * side
+        Point.__count += 1
+        return area
+
+    @staticmethod
+    def rectangle(width, height):
+        area = width * height
+        Point.__count += 1
+        return area
+
+    @staticmethod
+    def get_count():  # get_count() позволяет получить общее количество подсчетов площади
+        return Point.__count
 
 
-person = Person("Виктор", 30)
-print(person.name)  # Вывод: Виктор
-print(person.age)  # Вывод: 30
-print(person.__dict__)  # {'_Person__name': 'Виктор', '_Person__age': 30}
+print("Площадь треугольника по формуле Герона:", Point.triangle_heron(3, 4, 5))
+print("Площадь треугольника через основание и высоту:", Point.triangle_base_height(6, 7))
+print("Площадь квадрата:", Point.square(7))
+print("Площадь прямоугольника:", Point.rectangle(2, 6))
 
-person.name = "Елена"
-person.age = 25
-
-print(person.name)  # Вывод: Елена
-print(person.age)  # Вывод: 25
-print(person.__dict__)  # {'_Person__name': 'Елена', '_Person__age': 25}
-
-del person.name
-# print(person.name)  # Будет вызвано исключение AttributeError
-print(person.__dict__)  # {'_Person__age': 25}
-
-del person.age
-# print(person.age)   # Будет вызвано исключение AttributeError
+# Получение количества подсчетов
+print("Количество подсчетов площади:", Point.get_count())  # Ожидаемое значение: 4
