@@ -6367,6 +6367,7 @@ import os.path
 
 import os
 
+
 # import os.path
 
 
@@ -7010,26 +7011,26 @@ import os
 # СТАТИЧЕСКИЕ МЕТОДЫ:
 # def method() - метод и пустые скобки
 
-class Point:
-    __count = 0
-
-    def __init__(self, x=0, y=0):
-        self.__x = x
-        self.__y = y
-        Point.__count += 1
-
-    @staticmethod
-    def get_count():
-        return Point.__count
-
-
-p1 = Point()
-p2 = Point()
-p3 = Point()
-p4 = Point()
-p5 = Point()
-
-print(Point.get_count())
+# class Point:
+#     __count = 0
+#
+#     def __init__(self, x=0, y=0):
+#         self.__x = x
+#         self.__y = y
+#         Point.__count += 1
+#
+#     @staticmethod
+#     def get_count():
+#         return Point.__count
+#
+#
+# p1 = Point()
+# p2 = Point()
+# p3 = Point()
+# p4 = Point()
+# p5 = Point()
+#
+# print(Point.get_count())
 
 
 #
@@ -7044,77 +7045,89 @@ print(Point.get_count())
 # Статические методы в Python объявляются с использованием декоратора @staticmethod.
 
 # Остановились мы на статических методах - def method() - метод и пустые скобки
-class Change:
-    @staticmethod
-    def inc(x):
-        return x + 1
-
-    @staticmethod
-    def dec(x):
-        return x - 1
-
-
+# class Change:
+#     @staticmethod
+#     def inc(x):
+#         return x + 1
+#
+#     @staticmethod
+#     def dec(x):
+#         return x - 1
+#
+#
 # print(Change.inc(10), Change.dec(10))  # 11 9 - обращение через класс
-ch = Change()
-print(ch.inc(10), Change.dec(10))
+# ch = Change()
+# print(ch.inc(10), Change.dec(10))
 
 
 # Задача:
 # Создайте класс, статические методы.
 # Создайте класс для подсчета максимума из четырех аргументов (3, 5, 7, 9), минимума из четырех аргументов.
 # Среднеарифметического из четырех аргументов, факториала аргумента (5). Через статические методы.
-class Fact:
+# class Fact:
+#
+#     @staticmethod
+#     def max(*args):
+#         return max(args)
+#
+#     @staticmethod
+#     def min(*args):
+#         return min(args)
+#
+#     @staticmethod
+#     def fact(arg):
+#         factor = 1
+#         for i in range(1, arg + 1):
+#             # 5! = 1 * 2 * 3 * 4 * 5
+#             factor *= i
+#         return factor
+#
+#     @staticmethod
+#     def avg(*args):
+#         avg = sum(args) / len(args)
+#         return avg
+#
+#
+# print(Fact.max(3, 5, 7, 9))  # обращаемся к def max(*args)
+# print(Fact.min(3, 5, 7, 9))
+# print(Fact.fact(5))
+# print(Fact.avg(3, 5, 7, 9))
 
-    @staticmethod
-    def max(*args):
-        return max(args)
 
-    @staticmethod
-    def min(*args):
-        return min(args)
+# НОВАЯ ТЕМА - методы класса - def method(cls) - @classmethod
+# Самые непонятные для восприятия
 
-    @staticmethod
-    def fact(arg):
-        factor = 1
-        for i in range(1, arg + 1):
-            # 5! = 1 * 2 * 3 * 4 * 5
-            factor *= i
-        return factor
+# В Python есть три типа методов: методы экземпляра, методы класса и статические методы.
+# Методы экземпляра класса — это методы, которые работают с отдельными экземплярами класса. Эти методы
+# имеют доступ к данным, связанным с конкретным экземпляром класса, и могут изменять эти данные.
 
-    @staticmethod
-    def avg(*args):
-        avg = sum(args) / len(args)
-        return avg
-
-
-print(Fact.max(3, 5, 7, 9))  # обращаемся к def max(*args)
-print(Fact.min(3, 5, 7, 9))
-print(Fact.fact(5))
-print(Fact.avg(3, 5, 7, 9))
+# Метод класса - как можно заметить, метод класса вместо того, чтобы принимать аргумент (self),
+# принимает аргумент (cls). При вызове метода этот аргумент указывает на сам класс, а не на экземпляр класса.
+# Эти методы меняют не сам класс, а свойства внутри класса.
 
 
 # Задача:
 # Проверка дат на валидность
-class Date:
-    def __init__(self, day, month, year):
-        self.day = day
-        self.month = month
-        self.year = year
+# class Date:
+#     def __init__(self, day, month, year):
+#         self.day = day
+#         self.month = month
+#         self.year = year
 #
 #     @classmethod
 #     def from_string(cls, string_date):
 #         day, month, year = map(int, string_date.split("."))
-#         date1 = cls(day, month, year)
-#         return date1
+#         # date1 = cls(day, month, year)  # эта строка создает нам экземпляр класса
+#         return cls(day, month, year)
 #
-#     @staticmethod
+#     @staticmethod  # проверка на валидность с помощью статического метода
 #     def is_date_valid(date_as_string):
 #         if date_as_string.count('.') == 2:
 #             day, month, year = map(int, date_as_string.split("."))
 #             return day <= 31 and month <= 12 and year <= 3999
 #
-#     def string_to_db(self):
-#         return f"{self.year}-{self.month}-{self.day}"
+#     def string_to_db(self):  # обычный метод, метод экземпляра класса
+#         return f"{self.year}-{self.month}-{self.day}"  # здесь задали формат
 #
 #
 # dates = [
@@ -7132,27 +7145,32 @@ class Date:
 #         print("Неправильная дата или формат строки с датой")
 #
 #
-# date2 = Date.from_string("23.10.2023")
-# print(date2.string_to_db())
+# date2 = Date.from_string("23.10.2023")  # Обратились к имени класса (Date) и вызываем метод класса .from_string
+# print(date2.string_to_db())  # 2023-10-23
+#
 # date3 = Date.from_string("15.15.2024")
-# print(date3.string_to_db())
+# print(date3.string_to_db()) # 2024-15-15
 #
 # string_date = "23.10.2023"
-# day, month, year = map(int, string_date.split("."))  # 23 10 2023
+# day, month, year = map(int, string_date.split("."))  # 23 10 2023 - парсинг строки
+# date = Date(day, month, year)
 # print(day, month, year)
-# print(date.string_to_db())
+# # print(date.string_to_db())
 
 
 # Задача:
 # *** Новая большая задача ***
+# Создать класс "Account", представляющий собой банковский счет
+
 # class Account:
-#     rate_usd = 0.013
+#     rate_usd = 0.013  # статические переменные, статические свойства
 #     rate_eur = 0.011
 #     suffix = "RUB"
 #     suffix_usd = "USD"
 #     suffix_eur = "EUR"
 #
-#     def __init__(self, surname, num, percent, value):
+#     def __init__(self, surname, num, percent, value):  # что принимает инициализатор, это динамические свойства,
+#         # которые будем менять и их можно изменить
 #         self.surname = surname
 #         self.num = num
 #         self.percent = percent
@@ -7164,7 +7182,7 @@ class Date:
 #         print("*" * 50)
 #         print(f"Счет #{self.num} принадлежащий {self.surname} был закрыт.")
 #
-#     @classmethod
+#     @classmethod  # метод класса
 #     def set_usd_rate(cls, rate):
 #         cls.rate_usd = rate
 #
@@ -7172,15 +7190,13 @@ class Date:
 #     def set_eur_rate(cls, rate):
 #         cls.rate_eur = rate
 #
-#     def print_balance(self):
-#         print(f"Текущий баланс {self.value} {Account.suffix}")
-#
-#     @staticmethod
+#     @staticmethod  # статический метод
 #     def convert(value, rate):
 #         return value * rate
 #
 #     def covert_to_usd(self):
-#         usd_val = Account.convert(self.value, Account.rate_usd)
+#         usd_val = Account.convert(self.value, Account.rate_usd)  # сюда передаем существующее динамическое
+#         # свойство (self.value) и существующее статическое свойство (Account.rate_usd)
 #         print(f"Состояние счета: {usd_val} {Account.suffix_usd}.")
 #
 #     def covert_to_eur(self):
@@ -7208,11 +7224,15 @@ class Date:
 #         print(f"{val} {Account.suffix} было успешно добавлено!")
 #         self.print_balance()
 #
-#     def print_info(self):
+#     def print_balance(self):  # обращение к экземпляру класса
+#         print(f"Текущий баланс {self.value} {Account.suffix}")
+#
+#     def print_info(self):  # обращение к экземпляру класса
 #         print("Информация о счете:")
 #         print("-" * 30)
 #         print(f"#{self.num}")
 #         print(f"Владелец: {self.surname}")
+#         self.print_balance()
 #         print(f"Проценты: {self.percent:.0%}")
 #         print("-" * 30)
 #
@@ -7245,138 +7265,48 @@ class Date:
 #
 # acc.add_money(5000)
 # print()
+#
+# acc.withdraw_money(3000)
+# print()
 
+
+#
 # ----------------------------------------------------------------
 # Урок №2
 # ----------------------------
 
 # Задача:
-# *** Наша же задача *** меняем местами
-# class Account:
-#     rate_usd = 0.013
-#     rate_eur = 0.011
-#     suffix = "RUB"
-#     suffix_usd = "USD"
-#     suffix_eur = "EUR"
-#
-#     def __init__(self, surname, num, percent, value):
-#         self.surname = surname
-#         self.num = num
-#         self.percent = percent
-#         self.value = value
-#         print(f"Счет #{self.num} принадлежащий {self.surname} был открыт.")
-#         print("*" * 50)
-#
-#     def __del__(self):
-#         print("*" * 50)
-#         print(f"Счет #{self.num} принадлежащий {self.surname} был закрыт.")
-#
-#     @classmethod
-#     def set_usd_rate(cls, rate):
-#         cls.rate_usd = rate
-#
-#     @classmethod
-#     def set_eur_rate(cls, rate):
-#         cls.rate_eur = rate
-#
-#     @staticmethod
-#     def convert(value, rate):
-#         return value * rate
-#
-#     def covert_to_usd(self):
-#         usd_val = Account.convert(self.value, Account.rate_usd)
-#         print(f"Состояние счета: {usd_val} {Account.suffix_usd}.")
-#
-#     def covert_to_eur(self):
-#         eur_val = Account.convert(self.value, Account.rate_eur)
-#         print(f"Состояние счета: {eur_val} {Account.suffix_eur}.")
-#
-#     def edit_owner(self, surname):
-#         self.surname = surname
-#
-#     def add_percents(self):
-#         self.value += self.value * self.percent
-#         print("Проценты были успешно начислены!")
-#         self.print_balance()
-#
-#     def withdraw_money(self, val):
-#         if val > self.value:
-#             print(f"К сожалению, у вас нет {val} {Account.suffix}")
-#         else:
-#             self.value -= val
-#             print(f"{val} {Account.suffix} было успешно снято!")
-#         self.print_balance()
-#
-#     def add_money(self, val):
-#         self.value += val
-#         print(f"{val} {Account.suffix} было успешно добавлено!")
-#         self.print_balance()
-#
-#     def print_balance(self):
-#         print(f"Текущий баланс {self.value} {Account.suffix}")
-#
-#     def print_info(self):
-#         print("Информация о счете:")
-#         print("-" * 30)
-#         print(f"#{self.num}")
-#         print(f"Владелец: {self.surname}")
-#         print(f"Проценты: {self.percent:.0%}")
-#         print("-" * 30)
-#
-#
-# acc = Account("Долгих", "12345", 0.03, 1000)
-# acc.print_balance()
-# acc.print_info()
-# acc.covert_to_usd()
-# acc.covert_to_eur()
-# print()
-#
-# Account.set_usd_rate(2)
-# acc.covert_to_usd()
-# Account.set_eur_rate(3)
-# acc.covert_to_eur()
-# print()
-#
-# acc.edit_owner("Дюма")
-# acc.print_info()
-# print()
-#
-# acc.add_percents()
-# print()
-#
-# acc.withdraw_money(3000)
-# print()
-#
-# acc.withdraw_money(100)
-# print()
-#
-# acc.add_money(5000)
-# print()
+# *** Наша же задача *** меняем местами расположение методов
 
-
+# Задача:
 # class UserDate:
 #     def __init__(self, fio, old, ps, weight):
 #         # self.verify_fio(fio)
 #         # self.verify_old(old)
-#         # self.verify_weight(weight)
 #         # self.verify_ps(ps)
+#         # self.verify_weight(weight)
 #
 #         self.fio = fio
 #         self.old = old
-#         self.__password = ps
-#         self.__weight = weight
+#         self.password = ps
+#         self.weight = weight
 #
 #     @staticmethod
 #     def verify_fio(fio):
 #         if not isinstance(fio, str):
 #             raise TypeError("ФИО должно быть строкой")
-#         f = fio.split()  # ['Волков', 'Игорь', 'Николаевич']
-#         if len(f) != 3:
+#         f = fio.split()  # ['Волков', 'Игорь', 'Николаевич'] - Метод split() в Python разделяет
+#         # строку на список подстрок по разделителю.
+#         if len(f) != 3:  # если кол-во элементов не 3
 #             raise TypeError("Неверный формат ФИО")
-#         # ['В', 'о', 'л', 'к', 'о', 'в', 'И', 'г', 'о', 'р', 'ь', 'Н', 'и', 'к', 'о', 'л', 'а', 'е', 'в', 'и', 'ч']
-#         letters = "".join(re.findall('[a-zа-яё-]', fio, re.IGNORECASE))  # ВолковИгорьНиколаевич
+#         letters = "".join(re.findall('[a-zа-яё-]', fio, re.IGNORECASE))  # ВолковИгорьНиколаевич -
+#         # re.IGNORECASE - поиск без учета регистра
+#         # В Python, когда перед методом join() стоят кавычки и точка, например, "".join(), это означает, что
+#         # строка между кавычками будет использована в качестве разделителя между элементами,
+#         # которые объединяются.
 #         for s in f:
-#             if len(s.strip(letters)) != 0:
+#             if len(s.strip(letters)) != 0:  # Метод strip() — удаляет символы, как слева так и справа,
+#                 # на основе переданного аргумента
 #                 raise TypeError("В ФИО можно использовать только буквы и дефис")
 #
 #     @staticmethod
@@ -7419,8 +7349,13 @@ class Date:
 #         self.__old = old
 #
 #     @property
-#     def old(self):
-#         return self.old
+#     def password(self):
+#         return self.__password
+#
+#     @password.setter
+#     def password(self, value):
+#         self.verify_ps(value)
+#         self.__password = value
 #
 #     @property
 #     def weight(self):
@@ -7431,20 +7366,12 @@ class Date:
 #         self.verify_weight(value)
 #         self.__weight = value
 #
-#     @property
-#     def password(self):
-#         return self.__password
 #
-#     @password.setter
-#     def password(self, value):
-#         self.verify_password(value)
-#         self.__password = value
+# p1 = UserDate("Волков Игорь Николаевич", 26, "1234 567890", 80.8)
+# # "Волков Игорь Николаевич"
 #
-#
-# p1 = UserDate("Волков Игорь Николаевич", 26, "1234 567890", 80.8)  # "Волков Игорь Николаевич"
-#
-# p1.fio = "Соболев Игорь Николаевич"
-# print(p1.fio)
+# p1.fio = "Соболев Игорь Николаевич"  # здесь отрабатывает сеттер
+# print(p1.fio)  # здесь отрабатывает геттер - получить
 # print(p1.__dict__)
 
 
@@ -7455,17 +7382,21 @@ class Date:
 # -----------------------------------------------
 
 # НАСЛЕДОВАНИЕ
+# Задача:
+# Начальная стадия, повторяется (__init__) инициализатор, принцип DRY (do not repeat yourself)
+# Пока создаем просто отдельные классы
+
 # class Point:
 #     def __init__(self, x, y):
 #         self.__x = x
 #         self.__y = y
 #
-#     def __str__(self):
+#     def __str__(self):  # Returns str(self)
 #         # return "(" + str(self.__x) + ", " + str(self.__y) + ")"
-#         return f"({self.__x}, {self.__y})"
+#         return f"({self.__x}, {self.__y})"  # f - строка по умолчанию нам возвращает строковое представление
 #
 #
-# class Line:
+# class Line:  # линия
 #     def __init__(self, sp: Point, ep: Point, color: str = "red", width: int = 1):
 #         self._sp = sp
 #         self._ep = ep
@@ -7476,42 +7407,48 @@ class Date:
 #         print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
 #
 #
-# class Rect:
+# class Rect:  # прямоугольник
 #     def __init__(self, sp: Point, ep: Point, color: str = "red", width: int = 1):
 #         self._sp = sp
 #         self._ep = ep
 #         self._color = color
 #         self._width = width
 #
-#     def draw_rect(self) -> None:
+#     def draw_rect(self):  # -> None
 #         print(f"Рисование прямоугольника: {self._sp}, {self._ep}, {self._color}, {self._width}")
-#         # print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
-#         # return f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}"
 #
 #
 # line = Line(Point(1, 2), Point(10, 20))
 # # line = Line(45, Point(10, 20), "yellow", 5)
 # line.draw_line()
+#
 # rect = Rect(Point(30, 40), Point(70, 80))
 # rect.draw_rect()
 
 
-# Родительский класс
-# class Point:  # (object)
+# Задача:
+# Та же задача, но с добавлением класса родительского класса (Prop), будем создавать родительский класс и
+# дочерние (Line) и (Rect)
+# Родительский класс (Prop), от него будут заимствования в другие классы
+
+# (object) - это один общий родитель для всех!  является базовым классом для всех объектов в Python.
+
+# class Point:  # класс (Point) наследуется от класса (object)
 #     def __init__(self, x, y):
 #         self.__x = x
 #         self.__y = y
 #
-#     def __str__(self):
+#     def __str__(self):  # Returns str(self)
 #         # return "(" + str(self.__x) + ", " + str(self.__y) + ")"
 #         return f"({self.__x}, {self.__y})"
 #
 #
-# print(issubclass(Point, object))  # True
-# print(issubclass(Point, str))  # False
+# print(issubclass(Point, object))  # True - ответы на вопросы, наследуется ли класс (Point) от класса (object), да
+# print(issubclass(Point, str))  # False - наследуется ли класс (Point) от класса (str), нет
 #
 #
-# class Prop:
+# class Prop:  # Prop(object) - Родительский класс (Prop), можно и без (object) - сюда переносим наш общий
+#     # инициализатор со всеми сходными данными
 #     def __init__(self, sp: Point, ep: Point, color: str = "red", width: int = 1):
 #         self._sp = sp
 #         self._ep = ep
@@ -7519,73 +7456,81 @@ class Date:
 #         self._width = width
 #
 #
-# class Line(Prop):
+# class Line(Prop):  # Дочерний класс - Line(Prop)
 #     def draw_line(self):  # -> None
 #         print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
 #
 #
-# class Rect(Prop):
+# class Rect(Prop):  # Дочерний класс - Rect(Prop)
 #     def draw_rect(self):  # -> None
 #         print(f"Рисование прямоугольника: {self._sp}, {self._ep}, {self._color}, {self._width}")
 #
 #
 # line = Line(Point(1, 2), Point(10, 20), "yellow", 5)
 # line.draw_line()
+#
 # rect = Rect(Point(30, 40), Point(70, 80))
 # rect.draw_rect()
-
-# print(issubclass(Line, Prop))  # True
-# print(issubclass(Line, Rect))  # False
+#
+# print(issubclass(Line, Prop))  # True - наследуется ли класс (Line) от класса (Prop), да
+# print(issubclass(Line, Rect))  # False - наследуется ли класс (Line) от класса (Rect), нет
+#
 # print(Point.__dict__)
 # print(Line.__dict__)
+# print(Prop.__dict__)
 
 
 # Новенькое ***
-# class Point:  # (object)
+# Это мы все работали с переменными с одним нижним подчеркиванием (protected) в инициализаторе родительского
+# класса, а чтобы работать с двумя нижними подчеркиваниями при наследовании, нам нужны геттеры и сеттеры
+
+# Та же задача, с добавлением геттеров и сеттеров
+
+# class Point:  # класс (Point) наследуется от класса (object)
 #     def __init__(self, x, y):
 #         self.__x = x
 #         self.__y = y
 #
-#     def __str__(self):
+#     def __str__(self):  # Returns str(self)
 #         # return "(" + str(self.__x) + ", " + str(self.__y) + ")"
 #         return f"({self.__x}, {self.__y})"
 #
 #
-# print(issubclass(Point, object))  # True
-# print(issubclass(Point, str))  # False
-#
-#
-# class Prop:
-#     def __init__(self, sp: Point, ep: Point, color: str = "red", width: int = 1):
+# class Prop:  # Prop(object) - Родительский класс (Prop), можно и без (object) - сюда переносим наш общий
+#     # инициализатор со всеми сходными данными
+#     def __init__(self, sp: Point, ep: Point, color: str = "red", width: int = 1):  # при наследовании,
+#         # чтобы не использовать геттеры, лучше использовать одно нижнее подчеркивание
 #         self._sp = sp
 #         self._ep = ep
 #         self._color = color
-#         self._width = width
+#         self.__width = width  # здесь добавили второе нижнее подчеркивание
+#         print("Переопределенный инициализатор Prop")
 #
-#     def get_width(self):
+#     def get_width(self):  # геттер на получение ширины
 #         return self.__width
 #
 #
-# class Line(Prop):
+# class Line(Prop):  # Дочерний класс - Line(Prop), если в дочернем укажем инициализатор
 #     def __init__(self, *args):
+#         super().__init__(*args)  # вместо нижнего добавили super() и (self) не передаем
 #         print("Переопределенный инициализатор Line")
-#         Prop.__init__(self, *args)
+#         # Prop.__init__(self, *args)  # после этого инита Line, мы внутри этого инициализатора вызываем инициализатор
+#         # родительского класса (Prop)
 #
 #     def draw_line(self):  # -> None
-#         print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
+#         print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self.get_width()}")  # и здесь!
 #
 #
-# # class Rect(Prop):
+# # class Rect(Prop):  # Дочерний класс - Rect(Prop)
 # #     def draw_rect(self):  # -> None
 # #         print(f"Рисование прямоугольника: {self._sp}, {self._ep}, {self._color}, {self._width}")
 #
 #
 # line = Line(Point(1, 2), Point(10, 20), "yellow", 5)
 # line.draw_line()
-# print(line._color)
+#
 # # rect = Rect(Point(30, 40), Point(70, 80))
 # # rect.draw_rect()
-# ДОДЕЛАТЬЬЬ
 
 
 # ----------------------------------------------------------------
@@ -7593,18 +7538,20 @@ class Date:
 # ----------------------------
 
 # Новая задача:
-# class Figure:
-#     def __init__(self, color):
+# class Figure:  # мы на основе этого класса (Фигур) будем делать дочерние классы (прямоугольники)
+#     def __init__(self, color):  # общее свойство для всех фигур - это цвет, и все классы, которые будут
+#         # наследоваться у этого класса (Figure), будут брать это свойство (color) у родительского класса
 #         self.color = color
 #
 #
-# class Rectangle(Figure):
+# class Rectangle(Figure):  # дочерний класс
 #     def __init__(self, width, height, color):
-#         super().__init__(color)
-#         self.__width = width
+#         self.__width = width  # тут свойства мы сделаем закрытыми и сделаем проверку, чтобы не передавали
+#         # строки и негативные числа
 #         self.__height = height
+#         super().__init__(color)
 #
-#     @property
+#     @property  # делаем property, геттеры и сеттеры только на __width и __height, потому что они у нас закрытые
 #     def width(self):
 #         return self.__width
 #
@@ -7626,7 +7573,8 @@ class Date:
 #         else:
 #             raise ValueError("Высота должны быть положительным числом")
 #
-#     def area(self):
+#
+#     def area(self):  # находим площадь фигуры
 #         print(f"Площадь {self.color} прямоугольника", end=" ")
 #         return self.__width * self.__height
 #
@@ -7636,46 +7584,52 @@ class Date:
 #
 # # rect.width = 50
 # # print(rect.width)
-# print(rect.area())
+# print(rect.area())  # Площадь green прямоугольника 200
 
 
 # Задача:
-# class Rect:
-#     def __init__(self, width, height):
-#         self.width = width
-#         self.height = height
-#
-#     def show_rect(self):
-#         print(f"Прямоугольник:\nШирина: {self.width}\nВысота: {self.height}")
-#
-#
-# class RectFon(Rect):
-#     def __init__(self, width, height, background):
-#         super().__init__(width, height)
-#         self.fon = background
-#
-#     def show_rect(self):
-#         super().show_rect()
-#         print("Фон: ", self.fon)
-#
-#
-# class RectBorder(Rect):
-#     def __init__(self, width, height, px, solid, red):
-#         super().__init__(width, height)
-#         self.px = px
-#         self.solid = solid
-#         self.red = red
-#
-#     def show_rect(self):
-#         super().show_rect()
-#         print(f"Рамка: {self.px} {self.solid} {self.red}")
-#
-#
-# shape1 = RectFon(400, 200, "yellow")
-# shape1.show_rect()
-# print()
-# shape2 = RectBorder(600, 300, "1px", "solid", "red")
-# shape2.show_rect()
+class Rect:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def show_rect(self):
+        print(f"Прямоугольник:\nШирина: {self.width}\nВысота: {self.height}")
+
+
+class RectFon(Rect):  # цвет фона
+    def __init__(self, width, height, background):  # сюда добавили ширину и высоту из родительского класса,
+        # и плюс цвет фона (background)
+        super().__init__(width, height)  # синхронизировали с родительским классом
+        self.background = background
+
+    def show_rect(self):
+        super().show_rect()  # одинаковые названия -  def show_rect(self), поэтому мы используем super(), чтобы
+        # получить данные из родительского класса
+        print("Фон: ", self.background)
+
+
+class RectBorder(Rect):
+    def __init__(self, width, height, px, solid, red):
+        super().__init__(width, height)
+        self.px = px
+        self.solid = solid
+        self.red = red
+
+    def show_rect(self):
+        super().show_rect()
+        print(f"Рамка: {self.px} {self.solid} {self.red}")
+
+
+shape1 = RectFon(400, 200, "yellow")
+shape1.show_rect()
+print()
+
+shape2 = RectBorder(600, 300, "1px", "solid", "red")
+shape2.show_rect()
+
+
+# *************   ТУТЬ  ТУТЬ  ТУТЬ *********************
 
 
 # Задача:
@@ -7720,7 +7674,7 @@ class Date:
 # line.draw_line()  # Рисование линии: (1, 2), (10, 20), red, 1
 # line.set_coord(Point(12, 18), Point(100, 200))
 # line.draw_line()
-
+# ДОДЕЛАТЬЬЬ
 
 #
 # ****************************************
@@ -7910,4 +7864,12 @@ class Date:
 # Урок №2
 # ----------------------------
 
-# ДОДЕЛЛААААТЬЬЬ
+# ДОДЕЛЛААААТЬЬЬ - вообще не проходила второй урок
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №27 Python от 27.03.2024
+# Урок №1
+# -----------------------------------------------

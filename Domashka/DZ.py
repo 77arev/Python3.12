@@ -343,7 +343,6 @@ from math import pi
 
 import re
 
-
 # ДЗ №18 от 26.02.2024
 # Задача:
 # Найти номер телефона в формате +7хххххххххх или 7хххххххххх
@@ -562,7 +561,7 @@ import re
 # print(person.__dict__)  # {'_Person__age': 25}
 #
 # del person.age
-# # print(person.age)   # Будет вызвано исключение AttributeError
+# print(person.age)   # Будет вызвано исключение AttributeError
 
 
 # ДЗ №24 от 18.03.2024
@@ -573,43 +572,103 @@ import re
 # для подсчета площади должны быть реализованы с помощью статических методов. Также класс должен считать
 # количество подсчетов площади и возвращать это значение с помощью статического метода.
 
-class Point:
-    __count = 0  # Статическая переменная для отслеживания количества подсчетов
+# class Point:
+#     __count = 0  # Статическая переменная для отслеживания количества подсчетов
+#
+#     @staticmethod
+#     def triangle_heron(a, b, c):
+#         s = (a + b + c) / 2
+#         area = (s * (s - a) * (s - b) * (s - c)) ** 0.5
+#         Point.__count += 1
+#         return area
+#
+#     @staticmethod
+#     def triangle_base_height(base, height):
+#         area = 0.5 * base * height
+#         Point.__count += 1
+#         return area
+#
+#     @staticmethod
+#     def square(side):
+#         area = side * side
+#         Point.__count += 1
+#         return area
+#
+#     @staticmethod
+#     def rectangle(width, height):
+#         area = width * height
+#         Point.__count += 1
+#         return area
+#
+#     @staticmethod
+#     def get_count():  # get_count() позволяет получить общее количество подсчетов площади
+#         return Point.__count
+#
+#
+# print("Площадь треугольника по формуле Герона:", Point.triangle_heron(3, 4, 5))
+# print("Площадь треугольника через основание и высоту:", Point.triangle_base_height(6, 7))
+# print("Площадь квадрата:", Point.square(7))
+# print("Площадь прямоугольника:", Point.rectangle(2, 6))
+#
+# # Получение количества подсчетов
+# print("Количество подсчетов площади:", Point.get_count())  # Ожидаемое значение: 4
 
-    @staticmethod
-    def triangle_heron(a, b, c):
-        s = (a + b + c) / 2
-        area = (s * (s - a) * (s - b) * (s - c)) ** 0.5
-        Point.__count += 1
-        return area
 
-    @staticmethod
-    def triangle_base_height(base, height):
-        area = 0.5 * base * height
-        Point.__count += 1
-        return area
+# ДЗ №25 от 20.03.2024
+# Задача:
+# Создать класс "Pair" (пара чисел) в Python со свойствами: числа A и B, — и методами: изменение чисел,
+# вычисление их произведения и суммы. Определить производный класс "Right Triangle" (прямоугольный треугольник)
+# со свойствами: катеты A и B, — и методами: вычисление гипотенузы и площади треугольника, вывод информации
+# о фигуре на экран. Продемонстрировать работу класса - наследника и всех его методов.
 
-    @staticmethod
-    def square(side):
-        area = side * side
-        Point.__count += 1
-        return area
-
-    @staticmethod
-    def rectangle(width, height):
-        area = width * height
-        Point.__count += 1
-        return area
-
-    @staticmethod
-    def get_count():  # get_count() позволяет получить общее количество подсчетов площади
-        return Point.__count
+import math
 
 
-print("Площадь треугольника по формуле Герона:", Point.triangle_heron(3, 4, 5))
-print("Площадь треугольника через основание и высоту:", Point.triangle_base_height(6, 7))
-print("Площадь квадрата:", Point.square(7))
-print("Площадь прямоугольника:", Point.rectangle(2, 6))
+class Pair:  # родительский класс
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
 
-# Получение количества подсчетов
-print("Количество подсчетов площади:", Point.get_count())  # Ожидаемое значение: 4
+    def change_numbers(self, new_a, new_b):  # метод изменения чисел
+        self.a = new_a
+        self.b = new_b
+
+    def product(self):  # произведение
+        return self.a * self.b
+
+    def sum(self):  # сумма
+        return self.a + self.b
+
+
+class RightTriangle(Pair):  # дочерний класс
+    def __init__(self, a, b):
+        super().__init__(a, b)
+
+    def hypotenuse(self):  # вычисление гипотенузы
+        return round(math.sqrt(self.a ** 2 + self.b ** 2), 2)
+
+    def area(self):  # площадь треугольника
+        return 0.5 * self.a * self.b
+
+    def display_info(self):  # вывод информации о фигуре на экран
+        print("*" * 30)
+        print(f"Первое число: {self.a}")
+        print(f"Второе число: {self.b}")
+        print("Произведение:", pair.product())
+        print("Сумма:", pair.sum())
+        print(f"Катет A: {self.a}")
+        print(f"Катет B: {self.b}")
+        print("Гипотенуза:", triangle.hypotenuse())
+        print("Площадь треугольника:", triangle.area())
+        print("*" * 30)
+
+
+pair = Pair(5, 8)
+# print("Произведение:", pair.product())
+# print("Сумма:", pair.sum())
+
+triangle = RightTriangle(5, 8)
+# print("Гипотенуза:", triangle.hypotenuse())
+# print("Площадь треугольника:", triangle.area())
+
+triangle.display_info()
