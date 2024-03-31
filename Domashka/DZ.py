@@ -343,6 +343,7 @@ from math import pi
 
 import re
 
+
 # ДЗ №18 от 26.02.2024
 # Задача:
 # Найти номер телефона в формате +7хххххххххх или 7хххххххххх
@@ -621,54 +622,81 @@ import re
 # со свойствами: катеты A и B, — и методами: вычисление гипотенузы и площади треугольника, вывод информации
 # о фигуре на экран. Продемонстрировать работу класса - наследника и всех его методов.
 
-import math
+# import math
+#
+#
+# class Pair:  # родительский класс
+#     def __init__(self, a, b):
+#         self.a = a
+#         self.b = b
+#
+#     def change_numbers(self, new_a, new_b):  # метод изменения чисел
+#         self.a = new_a
+#         self.b = new_b
+#
+#     def product(self):  # произведение
+#         return self.a * self.b
+#
+#     def sum(self):  # сумма
+#         return self.a + self.b
+#
+#
+# class RightTriangle(Pair):  # дочерний класс
+#     def __init__(self, a, b):
+#         super().__init__(a, b)
+#
+#     def hypotenuse(self):  # вычисление гипотенузы
+#         return round(math.sqrt(self.a ** 2 + self.b ** 2), 2)
+#
+#     def area(self):  # площадь треугольника
+#         return 0.5 * self.a * self.b
+#
+#     def display_info(self):  # вывод информации о фигуре на экран
+#         print("*" * 30)
+#         print(f"Первое число: {self.a}")
+#         print(f"Второе число: {self.b}")
+#         print("Произведение:", pair.product())
+#         print("Сумма:", pair.sum())
+#         print(f"Катет A: {self.a}")
+#         print(f"Катет B: {self.b}")
+#         print("Гипотенуза:", triangle.hypotenuse())
+#         print("Площадь треугольника:", triangle.area())
+#         print("*" * 30)
+#
+#
+# pair = Pair(5, 8)
+# # print("Произведение:", pair.product())
+# # print("Сумма:", pair.sum())
+#
+# triangle = RightTriangle(5, 8)
+# # print("Гипотенуза:", triangle.hypotenuse())
+# # print("Площадь треугольника:", triangle.area())
+#
+# triangle.display_info()
 
 
-class Pair:  # родительский класс
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
+# ДЗ №26 от 25.03.2024
+# Задача:
+# Создать класс Student, который будет содержать имя и распечатывать информацию. А так же вложенный класс,
+# который будет содержать информацию о ноутбуке с техническими характеристиками: модель, процессор и память
 
-    def change_numbers(self, new_a, new_b):  # метод изменения чисел
-        self.a = new_a
-        self.b = new_b
+class Student:
+    def __init__(self, name, model, processor, memory):
+        self.name = name
+        self.laptop = self.Laptop(model, processor, memory)
 
-    def product(self):  # произведение
-        return self.a * self.b
+    def display_info(self):
+        print(f"{self.name} => {self.laptop.model}, {self.laptop.processor}, {self.laptop.memory}")
 
-    def sum(self):  # сумма
-        return self.a + self.b
-
-
-class RightTriangle(Pair):  # дочерний класс
-    def __init__(self, a, b):
-        super().__init__(a, b)
-
-    def hypotenuse(self):  # вычисление гипотенузы
-        return round(math.sqrt(self.a ** 2 + self.b ** 2), 2)
-
-    def area(self):  # площадь треугольника
-        return 0.5 * self.a * self.b
-
-    def display_info(self):  # вывод информации о фигуре на экран
-        print("*" * 30)
-        print(f"Первое число: {self.a}")
-        print(f"Второе число: {self.b}")
-        print("Произведение:", pair.product())
-        print("Сумма:", pair.sum())
-        print(f"Катет A: {self.a}")
-        print(f"Катет B: {self.b}")
-        print("Гипотенуза:", triangle.hypotenuse())
-        print("Площадь треугольника:", triangle.area())
-        print("*" * 30)
+    class Laptop:
+        def __init__(self, model, processor, memory):
+            self.model = model
+            self.processor = processor
+            self.memory = memory
 
 
-pair = Pair(5, 8)
-# print("Произведение:", pair.product())
-# print("Сумма:", pair.sum())
+student1 = Student("Roman", "HP", "i7", "16")
+student1.display_info()
 
-triangle = RightTriangle(5, 8)
-# print("Гипотенуза:", triangle.hypotenuse())
-# print("Площадь треугольника:", triangle.area())
-
-triangle.display_info()
+student2 = Student("Vladimir", "HP", "i7", "16")
+student2.display_info()

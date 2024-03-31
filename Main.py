@@ -7191,7 +7191,7 @@ import os
 #         cls.rate_eur = rate
 #
 #     @staticmethod  # статический метод
-#     def convert(value, rate):
+#     def convert(value, rate):  # приниматься будет новый курс (rate)
 #         return value * rate
 #
 #     def covert_to_usd(self):
@@ -7588,54 +7588,66 @@ import os
 
 
 # Задача:
-class Rect:
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
+# class Rect:
+#     def __init__(self, width, height):
+#         self.width = width
+#         self.height = height
+#
+#     def show_rect(self):  # метод рисует (показывает нам) прямоугольник, его ширину и высоту
+#         print(f"Прямоугольник:\nШирина: {self.width}\nВысота: {self.height}")
+#
+#
+# class RectFon(Rect):  # цвет фона
+#     def __init__(self, width, height, background):  # сюда добавили ширину и высоту из родительского класса,
+#         # и плюс цвет фона (background)
+#         super().__init__(width, height)  # синхронизировали с родительским классом, передали ширину и высоту
+#         self.background = background  # дополнительное свойство - background
+#
+#     def show_rect(self):
+#         super().show_rect()  # одинаковые названия -  def show_rect(self), поэтому мы используем super(), чтобы
+#         # получить данные из родительского класса
+#         print("Фон: ", self.background)
+#
+#
+# class RectBorder(Rect):
+#     def __init__(self, width, height, px, solid, red):
+#         super().__init__(width, height)
+#         self.px = px
+#         self.solid = solid
+#         self.red = red
+#
+#     def show_rect(self):
+#         super().show_rect()
+#         print(f"Рамка: {self.px} {self.solid} {self.red}")
+#
+#
+# shape1 = RectFon(400, 200, "yellow")
+# shape1.show_rect()
+# print()
+#
+# shape2 = RectBorder(600, 300, "1px", "solid", "red")
+# shape2.show_rect()
 
-    def show_rect(self):
-        print(f"Прямоугольник:\nШирина: {self.width}\nВысота: {self.height}")
 
-
-class RectFon(Rect):  # цвет фона
-    def __init__(self, width, height, background):  # сюда добавили ширину и высоту из родительского класса,
-        # и плюс цвет фона (background)
-        super().__init__(width, height)  # синхронизировали с родительским классом
-        self.background = background
-
-    def show_rect(self):
-        super().show_rect()  # одинаковые названия -  def show_rect(self), поэтому мы используем super(), чтобы
-        # получить данные из родительского класса
-        print("Фон: ", self.background)
-
-
-class RectBorder(Rect):
-    def __init__(self, width, height, px, solid, red):
-        super().__init__(width, height)
-        self.px = px
-        self.solid = solid
-        self.red = red
-
-    def show_rect(self):
-        super().show_rect()
-        print(f"Рамка: {self.px} {self.solid} {self.red}")
-
-
-shape1 = RectFon(400, 200, "yellow")
-shape1.show_rect()
-print()
-
-shape2 = RectBorder(600, 300, "1px", "solid", "red")
-shape2.show_rect()
-
-
-# *************   ТУТЬ  ТУТЬ  ТУТЬ *********************
+# Результат:
+# Прямоугольник:
+# Ширина: 400
+# Высота: 200
+# Фон: yellow
+#
+# Прямоугольник:
+# Ширина: 600
+# Высота: 300
+# Рамка: 1px solid red
 
 
 # Задача:
-# class Vector(list):
-#     def __str__(self):
-#         return " ".join(map(str, self))
+# Наследование от встроенных элементов
+# class Vector(list):  # от list - списка
+#     def __str__(self):  # мы сейчас получили строковое представление list - 1 2 3
+#         return " ".join(map(str, self))  # метод .join не будет работать с числами, работает только со строками,
+#         # поэтому мы вначале преобразовали все в строки с помощью map(str, self), а потом только применили метод
+#         # (.join)
 #
 #
 # v = Vector([1, 2, 3])
@@ -7665,16 +7677,30 @@ shape2.show_rect()
 #     def draw_line(self):
 #         print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
 #
-#     def set_coord(self, sp: Point, ep: Point):
-#         self._sp = sp
-#         self._ep = ep
+#     def set_coord(self, sp: Point = None, ep: Point = None):  # Перегрузка методов
+#         if ep is None:
+#             self._sp = sp
+#         elif sp is None:
+#             self._ep = ep
+#         else:
+#             self._sp = sp
+#             self._ep = ep
 #
 #
 # line = Line(Point(1, 2), Point(10, 20))
-# line.draw_line()  # Рисование линии: (1, 2), (10, 20), red, 1
+# line.draw_line()
+#
 # line.set_coord(Point(12, 18), Point(100, 200))
 # line.draw_line()
-# ДОДЕЛАТЬЬЬ
+#
+# line.set_coord(Point(-10, -20))  # здесь мы передали только первую координату, которая придет в (sp), а (ep) примет
+# # на себя значение (None), как несуществующая
+# line.draw_line()
+#
+# line.set_coord(ep=Point(500, 700))  # теперь мы хотим, чтобы перезаписалось второе значение, то есть (ep), и
+# # его сразу же в условии и запишем ep=Point
+# line.draw_line()
+
 
 #
 # ****************************************
@@ -7699,8 +7725,9 @@ shape2.show_rect()
 #         self._color = color
 #         self._width = width
 #
-#     def draw(self):
-#         raise NotImplementedError("В дочернем классе должен быть реализован метод draw()")
+#     def draw(self):  # это абстрактный метод (без реализации) и он теперь должен быть реализован и во всех
+#         # других дочерних классах, наследуемых от (Prop)
+#         raise NotImplementedError("В дочернем классе должен быть реализован метод draw()")  # Нереализованная ошибка
 #
 #
 # class Line(Prop):
@@ -7728,9 +7755,15 @@ shape2.show_rect()
 # for f in figs:
 #     f.draw()
 
-# Абстрактные методы
+
+# НОВАЯ ТЕМА ***
+# Абстрактные методы - это методы без реализации
 # Абстрактные классы
 
+# Абстрактным называется класс, который содержит один и более абстрактных методов. Абстрактным называется
+# объявленный, но не реализованный метод. Абстрактные классы не могут быть инстанциированы, от них нужно
+# унаследовать, реализовать все их абстрактные методы и только тогда можно создать экземпляр такого класса.
+#
 # from abc import ABC, abstractmethod
 #
 #
@@ -7739,50 +7772,54 @@ shape2.show_rect()
 #         print("Нарисовал шахматную фигуру")
 #
 #     @abstractmethod
-#     def move(self): # абстрактный метод
+#     def move(self):  # абстрактный метод
 #         print("Метод move() в базовом классе")
 #
 #
-# class Queen(Chess):
+# class Queen(Chess):  # класс Queen наследуется от родительского класса (Chess), он должен реализовать все
+#     # абстрактные методы своего родительского класса
 #     def move(self):
 #         super().move()
 #         print("Ферзь перемещен на e2e4")
 #
-# # q = Chess()
+#
+# # q = Chess()  # К абстрактному классу мы не можем создать экземпляр класса
 # q = Queen()
 # q.draw()
 # q.move()
 
 
 # from math import pi
-
 #
-# Задача:
-# Создайте базовый класс "Стол"
-
+#
+#
+# # Задача:
+# # Создайте базовый класс "Стол" с использованием абстрактного метода
+#
 # class Table:
-#     def __init__(self, width=None, length=None, radius=None):
-#         if radius is None:
+#     def __init__(self, width=None, length=None, radius=None):  # radius=None - чтобы не передавать третий элемент
+#         if radius is None:  # если у нас радиус имеет значение None, то тогда мы будем инициализировать только
+#             # self._width и self._length
 #             if length is None:
 #                 self._width = self._length = width
 #             else:
 #                 self._width = width
 #                 self._length = length
-#         else:
+#         else:  # а иначе, мы будем инициализировать только значение радиус
 #             self._radius = radius
 #
-#     def calc_area(self):  # абстрактный метод
+#     def calc_area(self):  # абстрактный метод без декоратора и создания абстрактного класса
 #         raise NotImplementedError("В дочернем классе должен быть определен метод calc_area()")
 #
 #
-# class SqTable(Table):
-#     def calc_area(self):
+# class SqTable(Table):  # наследуется от класса (Table)
+#     def calc_area(self):  # здесь находим площадь прямоугольного стола
 #         return self._width * self._length
 #
 #
-# class RoundTable(Table):
-#     def calc_area(self):
-#         return pi * self._radius ** 2
+# class RoundTable(Table):  # наследуется от класса (Table)
+#     def calc_area(self):  # здесь находим площадь круглого стола
+#         return round(pi * self._radius ** 2, 2)
 #
 #
 # t = SqTable(20, 10)
@@ -7799,10 +7836,10 @@ shape2.show_rect()
 
 
 # from abc import ABC, abstractmethod
-#
+
 # Задача:
-# Создайте базовый абстрактный класс "Валюта"
-#
+# Создайте базовый абстрактный класс "Валюта" c @abstractmethod
+
 # from abc import ABC, abstractmethod
 #
 #
@@ -7860,12 +7897,154 @@ shape2.show_rect()
 #     elem.print_value()
 #     elem.show()
 
+
 # ----------------------------------------------------------------
 # Урок №2
 # ----------------------------
 
-# ДОДЕЛЛААААТЬЬЬ - вообще не проходила второй урок
 
+# НОВАЯ ТЕМА ***
+# Интерфейсы.
+# Интерфейсы - это какой-то класс, в котором есть ТОЛЬКО абстрактные методы, там нет других свойств,
+# нет других методов
+# То есть, абстрактный класс - это класс, который говорит, ЧТО должно быть в дочерних классах
+
+# from abc import ABC, abstractmethod
+#
+#
+# class Father(ABC):
+#     @abstractmethod
+#     def display1(self):
+#         pass
+#
+#     @abstractmethod
+#     def display2(self):
+#         pass
+#
+#
+# class Child(Father):
+#     def display1(self):
+#         print("Child Class")
+#
+#
+# class GrandChild(Child):
+#     def display2(self):
+#         print("GrandChild Class")
+#
+#
+# ch = GrandChild()
+# ch.display1()
+# ch.display2()
+
+
+# Вложенные классы
+
+# Вложенные классы, также известные как внутренние классы, являются классами, определенными внутри
+# других классов. В Python, вложенные классы могут быть использованы для повышения читаемости и
+# организации кода, а также для создания более сложных структур данных.
+
+# Вложенные классы - это когда класс лежит внутри другого класса
+
+# class MyOuter:
+#     age = 18  # статическое свойство
+#
+#     def __init__(self, name):
+#         self.name = name
+#
+#     @staticmethod  # статический метод
+#     def outer_method():
+#         print("outer_method")
+#
+#     def instance_method(self):
+#         print("instance_method")
+#
+#     class MyInner:
+#         def __init__(self, inner_name, obj): # obj - здесь мы хотим передать экземпляр класса MyOuter,
+#             # то есть (out)
+#             self.inner_name = inner_name
+#             self.obj = obj
+#
+#         def inner_method(self):
+#             print("Вложенный метод", MyOuter.age, MyOuter.outer_method(), self.obj.instance_method(),
+#                   self.obj.name)  # MyOuter.age - получили доступ к статическому свойству (age = 18) и к
+#             # статическому методу MyOuter.outer_method(), а к динамическим методам, нужно по другому поступать.
+#             # Нужно добавить в методе (obj), инициализировать и обращаться с помощью (self)
+#
+#
+# out = MyOuter('внешний')  # экземпляр наружного класса мы создали без проблем
+# print(out.name)  # (out.) - это и есть наш (self.)
+# inner = out.MyInner('внутренний', out)  # => MyOuter.MyInner("внутренний")
+# print(inner.inner_name)  # внутренний
+# inner.inner_method()
+
+
+# Задача:
+
+class Color:  # основной класс
+    def __init__(self):
+        self.name = "Green"
+        self.lg = self.LightGreen()  # получаем доступ к вложенному классу
+        self.dg = self.DarkGreen()  # и здесь
+
+    def show(self):
+        print("Name:", self.name)
+
+    class LightGreen:  # вложенный класс
+        def __init__(self):
+            self.name = "Light Green"
+
+        def display(self):
+            print("Name:", self.name)
+
+    class DarkGreen:
+        def __init__(self):
+            self.name = "Dark Green"
+
+        def display(self):
+            print("Name:", self.name)
+
+
+outer = Color()
+outer.show()
+g = outer.lg
+g.display()
+g2 = outer.dg
+g2.display()
+print(g2.name)
+
+
+# Задача:
+# class Computer:
+#     def __init__(self):
+#         self.name = "PC001"
+#         # self.os = self.OS()  # теперь за счет этих двух свойств у нас есть доступ ко всем методам, которые
+#         # # есть во вложенных классах
+#         # self.cpu = self.CPU()
+#
+#     class OS:
+#         def system(self):
+#             return "Windows 10"
+#
+#     class CPU:
+#         def make(self):
+#             return "Intel"
+#
+#         def model(self):
+#             return "Core-i7"
+#
+#
+# comp = Computer()
+# # my_os = comp.os
+# # my_cpu = comp.cpu
+#
+# my_os = Computer().OS()
+# my_cpu = Computer().CPU()
+#
+# print(comp.name)
+# print(my_os.system())
+#
+# print(my_cpu.make())
+# print(my_cpu.model())
 
 #
 # ****************************************
@@ -7873,3 +8052,286 @@ shape2.show_rect()
 # Урок №27 Python от 27.03.2024
 # Урок №1
 # -----------------------------------------------
+
+
+# class Cat:
+#     def __init__(self, name):
+#         self.name = name
+#
+#     def __repr__(self):  # для разработчика
+#         return f"{self.__class__}: {self.name}"
+#
+#     def __str__(self):  # для пользователя
+#         return f"{self.name}"
+#
+#
+# cat = [Cat("Пушок"), Cat("Пушок")]
+# print(cat)
+
+# Маленькие магические методы
+
+# class Point:
+#     def __init__(self, *args):
+#         self.coord = args  # () tuple
+#         self.color = "red"
+#         self.width = 2
+#
+#     def __len__(self):
+#         return len(self.coord)
+#
+#
+# p = Point(1, 2)
+# print(len(p))
+#
+# s = list([1, 2])
+# print(len(s))  # 2
+
+# import math
+
+
+# class Point:
+#     __slots__ = ('x', 'y', '__length')
+#
+#     def __init__(self, x, y):
+#         self.x = x
+#         self.y = y
+#         self.length = math.sqrt(x * x + y * y)
+#
+#     @property
+#     def length(self):
+#         return self.__length
+#
+#     @length.setter
+#     def length(self, value):
+#         self.__length = value
+#
+#
+# p1 = Point(10, 20)
+# print(p1.x, p1.y)
+# # p1.z = 30
+# # print(p1.z)
+# p1.length = 20
+# print(p1.length)
+
+
+# class Point:
+#     __slots__ = ('x', 'y')
+#
+#     def __init__(self, x, y):
+#         self.x = x
+#         self.y = y
+#
+#
+# class Point2:
+#     def __init__(self, x, y):
+#         self.x = x
+#         self.y = y
+#
+#
+# pt1 = Point(1, 2)
+# pt2 = Point2(1, 2)
+# # print(pt2.__dict__)
+# print("pt1 =", pt1.__sizeof__())  # pt1 = 32
+# print("pt2 =", pt2.__sizeof__() + pt2.__dict__.__sizeof__())  # pt2 = 296
+
+
+# class Point:
+#     __slots__ = ('x', 'y')
+#
+#     def __init__(self, x, y):
+#         self.x = x
+#         self.y = y
+#
+#
+# class Point3D(Point):
+#     __slots__ = ('z')
+#
+#     def __init__(self, x, y, z):
+#         super().__init__(x, y)
+#         self.z = z
+#
+#
+# pt1 = Point(1, 2)
+# pt3 = Point3D(10, 20)
+# # pt3.z = 3
+# print(pt3.z)
+# # print(pt3.__dict__)
+
+
+# НОВАЯ ТЕМА:
+# Множественное наследование
+
+# class Creature:
+#     def __init__(self, name):
+#         self.name = name
+#
+#
+# class Animal(Creature):
+#     def sleep(self):
+#         print(self.name + "is sleeping")
+#
+#
+# class Pet(Creature):
+#     def play(self):
+#         print(self.name + " is playing")
+#
+#
+# class Dog(Animal, Pet):
+#     def bark(self):
+#         print(self.name + " is barking")
+#
+#
+# beast = Dog("Buddy")
+# beast.bark()
+# beast.sleep()
+# beast.play()
+
+
+# class A:
+#     def __init__(self):
+#         print("Инициализатор класса A")
+#
+#
+# class AA:
+#     def __init__(self):
+#         print("Инициализатор класса AA")
+#
+#
+# class B(A):
+#     def __init__(self):
+#         print("Инициализатор класса B")
+#
+#
+# class C(AA):
+#     def __init__(self):
+#         print("Инициализатор класса C")
+#
+#
+# class D(B, C):
+#     def __init__(self):
+#         print("Инициализатор класса D")
+#         B.__init__(self)
+#         C.__init__(self)
+#
+#
+# d = D()
+# print(D.mro())  # [<class '__main__.D'>, <class 'object'>]
+# print(D.__mro__)  # (<class '__main__.D'>, <class 'object'>)
+
+
+# class Point:
+#
+#     def __init__(self, x, y):
+#         self.x = x
+#         self.y = y
+#
+#     def __str__(self):
+#         return f"({self.x}, {self.y})"
+#
+#
+# class Styles:
+#     def __init__(self, color="red", width=1):
+#         print("Инициализатор Styles")
+#         self._color = color
+#         self._width = width
+#
+#
+# class Pos:
+#     def __init__(self, sp: Point, ep: Point):
+#         print("Инициализатор Pos")
+#         self._sp = sp
+#         self._ep = ep
+#
+#
+# class Line(Pos, Styles):
+#     def draw(self):
+#         print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
+#
+#
+# l1 = Line(Point(10, 10), Point(100, 100), "green", 5)
+# l1.draw()
+
+#  ******** ДОДЕЛАТЬ ********
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# МИКСИНЫ
+
+# class Goods:
+#     def __init__(self, name, weight, price):
+#         print("Init Goods")
+#         self.name = name
+#         self.weight = weight
+#         self.price = price
+#         super.__init__()
+#
+#     def print_info(self):
+#         print(f"{self.name}, {self.weight}, {self.price}")
+#
+#
+# class MixinLog:
+#     ID = 0
+#
+#     def __init__(self):
+#         print("Init Mixin")
+#         MixinLog.ID += 1
+#         self.id = MixinLog.ID
+#
+#     def save_sell_log(self):
+#         print(f"{self.id}: товар был продан в 00:00 часов")
+#
+#
+# class NoteBook(Goods, MixinLog):
+#     pass
+#
+#
+# n = NoteBook("HP", 1.5, 35000)
+# n.print_info()
+# n.save_sell_log()
+#
+# n = NoteBook("HP", 1.5, 35000)
+# n.save_sell_log()
+
+#  ******** ДОДЕЛАТЬ ********
+
+
+# Перегрузка оператора
+
+# 24 * 60 * 60 = 86400 - число секунд в одном дне
+
+# class Clock:
+#     __DAY = 86400
+#
+#     def __init__(self, sec: int):
+#         if not isinstance(sec, int):
+#             raise ValueError("Секунды должны быть целым числом")
+#         self.sec = sec % self.__DAY
+#         print(self.sec)
+#
+#     def get_format_time(self):
+#         s = self.sec % 60
+#         m = (self.sec // 60) % 60
+#         h = (self.sec // 3600) % 24
+#         return f"{Clock.get_form(h)}:{Clock.get_form(m)}:{Clock.get_form(s)}"
+#
+#     @staticmethod
+#     def get_form(x):
+#         return x if x > 9 else 0 + x
+#
+#     def __add__(self, other):
+#         return Clock(self.sec + other.sec)
+#
+#
+# c1 = Clock(100)
+# c2 = Clock(200)
+# print(c1.get_format_time())
+# print(c2.get_format_time())
+# c3 = c1 + c2
+# print(c3.get_format_time())
+#
+
+
+# доделаалаатттттьь
