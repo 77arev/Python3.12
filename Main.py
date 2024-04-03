@@ -6367,7 +6367,6 @@ import os.path
 
 import os
 
-
 # import os.path
 
 
@@ -7980,37 +7979,37 @@ import os
 
 # Задача:
 
-class Color:  # основной класс
-    def __init__(self):
-        self.name = "Green"
-        self.lg = self.LightGreen()  # получаем доступ к вложенному классу
-        self.dg = self.DarkGreen()  # и здесь
-
-    def show(self):
-        print("Name:", self.name)
-
-    class LightGreen:  # вложенный класс
-        def __init__(self):
-            self.name = "Light Green"
-
-        def display(self):
-            print("Name:", self.name)
-
-    class DarkGreen:
-        def __init__(self):
-            self.name = "Dark Green"
-
-        def display(self):
-            print("Name:", self.name)
-
-
-outer = Color()
-outer.show()
-g = outer.lg
-g.display()
-g2 = outer.dg
-g2.display()
-print(g2.name)
+# class Color:  # основной класс
+#     def __init__(self):
+#         self.name = "Green"
+#         self.lg = self.LightGreen()  # получаем доступ к вложенному классу
+#         self.dg = self.DarkGreen()  # и здесь
+#
+#     def show(self):
+#         print("Name:", self.name)
+#
+#     class LightGreen:  # вложенный класс
+#         def __init__(self):
+#             self.name = "Light Green"
+#
+#         def display(self):
+#             print("Name:", self.name)
+#
+#     class DarkGreen:
+#         def __init__(self):
+#             self.name = "Dark Green"
+#
+#         def display(self):
+#             print("Name:", self.name)
+#
+#
+# outer = Color()
+# outer.show()
+# g = outer.lg
+# g.display()
+# g2 = outer.dg
+# g2.display()
+# print(g2.name)
 
 
 # Задача:
@@ -8046,6 +8045,7 @@ print(g2.name)
 # print(my_cpu.make())
 # print(my_cpu.model())
 
+
 #
 # ****************************************
 # ----------------------------------------------------------------
@@ -8054,6 +8054,9 @@ print(g2.name)
 # -----------------------------------------------
 
 
+# Итак, главное отличие между __str__ и __repr__ в Python заключается в их назначении: __str__ предназначен
+# для создания «приятного» для чтения представления объекта, в то время как __repr__ предназначен для
+# создания «официального» представления, которое может быть использовано для воссоздания объекта.
 # class Cat:
 #     def __init__(self, name):
 #         self.name = name
@@ -8068,10 +8071,17 @@ print(g2.name)
 # cat = [Cat("Пушок"), Cat("Пушок")]
 # print(cat)
 
+
 # Маленькие магические методы
 
+# Что такое магические методы?
+# Магические методы, или dunder-методы (double underscore - методы с двойным подчёркиванием в имени), в Python
+# начинаются и заканчиваются двойным подчеркиванием. Они позволяют нам определить специальное поведение
+# для объектов, например, специальный метод __init__ для инициализации нового объекта.
+
+
 # class Point:
-#     def __init__(self, *args):
+#     def __init__(self, *args):  # *args - чтобы не указывать большое количество цифр
 #         self.coord = args  # () tuple
 #         self.color = "red"
 #         self.width = 2
@@ -8084,13 +8094,16 @@ print(g2.name)
 # print(len(p))
 #
 # s = list([1, 2])
-# print(len(s))  # 2
+# print(len(s))  # 2 - смотрим длину списка
+
 
 # import math
-
-
+#
+#
 # class Point:
-#     __slots__ = ('x', 'y', '__length')
+#     __slots__ = ('x', 'y', '__length')  # если поставить просто __slots__ = (), то все свойства будут в классе
+#
+#     # запрещены, если в скобочках написать переменные конкретные, они будут разрешены
 #
 #     def __init__(self, x, y):
 #         self.x = x
@@ -8114,6 +8127,9 @@ print(g2.name)
 # print(p1.length)
 
 
+import math
+
+
 # class Point:
 #     __slots__ = ('x', 'y')
 #
@@ -8132,7 +8148,7 @@ print(g2.name)
 # pt2 = Point2(1, 2)
 # # print(pt2.__dict__)
 # print("pt1 =", pt1.__sizeof__())  # pt1 = 32
-# print("pt2 =", pt2.__sizeof__() + pt2.__dict__.__sizeof__())  # pt2 = 296
+# print("pt2 =", pt2.__sizeof__() + pt2.__dict__.__sizeof__())  # pt2 = 296 - __dict__ - много весит
 
 
 # class Point:
@@ -8144,7 +8160,7 @@ print(g2.name)
 #
 #
 # class Point3D(Point):
-#     __slots__ = ('z')
+#     __slots__ = 'z'
 #
 #     def __init__(self, x, y, z):
 #         super().__init__(x, y)
@@ -8152,14 +8168,16 @@ print(g2.name)
 #
 #
 # pt1 = Point(1, 2)
-# pt3 = Point3D(10, 20)
+# pt3 = Point3D(10, 20, 30)
 # # pt3.z = 3
 # print(pt3.z)
-# # print(pt3.__dict__)
 
 
 # НОВАЯ ТЕМА:
 # Множественное наследование
+# Python поддерживает множественное наследование, то есть один класс может наследовать свойства
+# и методы сразу от нескольких классов-родителей. Для этого достаточно указать их имена через запятую в
+# скобках после имени класса-потомка.
 
 # class Creature:
 #     def __init__(self, name):
@@ -8168,7 +8186,7 @@ print(g2.name)
 #
 # class Animal(Creature):
 #     def sleep(self):
-#         print(self.name + "is sleeping")
+#         print(self.name + " is sleeping")
 #
 #
 # class Pet(Creature):
@@ -8210,23 +8228,22 @@ print(g2.name)
 # class D(B, C):
 #     def __init__(self):
 #         print("Инициализатор класса D")
-#         B.__init__(self)
-#         C.__init__(self)
+#         B.__init__(self)  # вызов родительского класса B - Инициализатор класса B
+#         C.__init__(self)  # вызов родительского класса C - Инициализатор класса C
 #
 #
 # d = D()
 # print(D.mro())  # [<class '__main__.D'>, <class 'object'>]
-# print(D.__mro__)  # (<class '__main__.D'>, <class 'object'>)
+# # print(D.__mro__)  # (<class '__main__.D'>, <class 'object'>)
 
 
 # class Point:
-#
 #     def __init__(self, x, y):
-#         self.x = x
-#         self.y = y
+#         self.__x = x
+#         self.__y = y
 #
 #     def __str__(self):
-#         return f"({self.x}, {self.y})"
+#         return f"({self.__x}, {self.__y})"
 #
 #
 # class Styles:
@@ -8237,10 +8254,12 @@ print(g2.name)
 #
 #
 # class Pos:
-#     def __init__(self, sp: Point, ep: Point):
+#     def __init__(self, sp: Point, ep: Point, color="red", width=1):
 #         print("Инициализатор Pos")
 #         self._sp = sp
 #         self._ep = ep
+#         # Styles.__init__(self, color, width)
+#         super().__init__(color, width) # по иерархии Pos берет свойства выше у Styles
 #
 #
 # class Line(Pos, Styles):
@@ -8248,17 +8267,21 @@ print(g2.name)
 #         print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
 #
 #
-# l1 = Line(Point(10, 10), Point(100, 100), "green", 5)
+# l1 = Line(Point(10, 10), Point(100, 100), "green", 5)   #
 # l1.draw()
+#
+# print(Line.mro())
 
-#  ******** ДОДЕЛАТЬ ********
 
-
+#
 # ----------------------------------------------------------------
 # Урок №2
 # ----------------------------
 
 # МИКСИНЫ
+
+# Они представляют собой простые классы, которые включают набор методов, предназначенных для добавления
+# к другому классу, и позволяют расширять функциональность классов без глубокой иерархии наследования.
 
 # class Goods:
 #     def __init__(self, name, weight, price):
@@ -8266,13 +8289,13 @@ print(g2.name)
 #         self.name = name
 #         self.weight = weight
 #         self.price = price
-#         super.__init__()
+#         super().__init__()  # здесь указали @object
 #
 #     def print_info(self):
 #         print(f"{self.name}, {self.weight}, {self.price}")
 #
 #
-# class MixinLog:
+# class MixinLog:  # этот класс дополнительный, он по факту не имеет особой важности
 #     ID = 0
 #
 #     def __init__(self):
@@ -8292,16 +8315,81 @@ print(g2.name)
 # n.print_info()
 # n.save_sell_log()
 #
-# n = NoteBook("HP", 1.5, 35000)
-# n.save_sell_log()
-
-#  ******** ДОДЕЛАТЬ ********
+# n1 = NoteBook("HP", 1.5, 35000)
+# n1.save_sell_log()
 
 
-# Перегрузка оператора
+# Перегрузка операторов
+
+# Перегрузка операторов в Python – это возможность с помощью специальных методов в классах
+# переопределять различные операторы языка (+, -. =, * и тд). Имена таких методов включают двойное подчеркивание
+# спереди и сзади.
 
 # 24 * 60 * 60 = 86400 - число секунд в одном дне
 
+class Clock:
+    __DAY = 86400  # это количество секунд в одном дне
+
+    def __init__(self, sec: int):  # инициализатор должен принимать кол-во секунд в типе данных int
+        if not isinstance(sec, int):  # если секунды не int
+            raise ValueError("Секунды должны быть целым числом")
+        self.sec = sec % self.__DAY  # это мы нашли кол-во секунд от того количества, которое мы передали
+
+    def get_format_time(self):
+        s = self.sec % 60  # находим секунды
+        m = (self.sec // 60) % 60  # находим минуты
+        h = (self.sec // 3600) % 24  # часы
+        return f"{Clock.get_form(h)}:{Clock.get_form(m)}:{Clock.get_form(s)}"
+
+    @staticmethod  # этот формат пишем просто для удобства
+    def get_form(x):
+        return str(x) if x > 9 else "0" + str(x)
+
+    def __add__(self, other):
+        if not isinstance(other, Clock):
+            raise ArithmeticError("Правый операнд должен быть типом Clock")
+        return Clock(self.sec + other.sec)
+
+    def __eq__(self, other):
+        if not isinstance(other, Clock):
+            raise ArithmeticError("Правый операнд должен быть типом Clock")
+        if self.sec == other.sec:
+            return True
+        return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+
+c1 = Clock(100)
+c2 = Clock(200)
+
+print(c1.get_format_time())
+print(c2.get_format_time())
+
+# c3 = c1 + c2
+# print(c3.get_format_time())
+
+# c4 = Clock(300)
+# print(c4.get_format_time())
+# c3 = c1 + c2 + c4
+
+# c1 += c2
+# print(c1.get_format_time())
+
+if c1 == c2:
+    print("Время равно")
+else:
+    print("Время разное")
+
+if c1 != c2:
+    print("Время разное")
+else:
+    print("Время равно")
+
+
+# Добавили новое с нового урока:
+# Продолжили про перегрузку операторов
 # class Clock:
 #     __DAY = 86400
 #
@@ -8309,7 +8397,6 @@ print(g2.name)
 #         if not isinstance(sec, int):
 #             raise ValueError("Секунды должны быть целым числом")
 #         self.sec = sec % self.__DAY
-#         print(self.sec)
 #
 #     def get_format_time(self):
 #         s = self.sec % 60
@@ -8319,19 +8406,204 @@ print(g2.name)
 #
 #     @staticmethod
 #     def get_form(x):
-#         return x if x > 9 else 0 + x
+#         return str(x) if x > 9 else "0" + str(x)
 #
-#     def __add__(self, other):
-#         return Clock(self.sec + other.sec)
+#     # def __add__(self, other):
+#     #     if not isinstance(other, Clock):
+#     #         raise ArithmeticError("Правый операнд должен быть типом Clock")
+#     #     return Clock(self.sec + other.sec)
+#     #
+#     # def __eq__(self, other):
+#     #     if not isinstance(other, Clock):
+#     #         raise ArithmeticError("Правый операнд должен быть типом Clock")
+#     #     if self.sec == other.sec:
+#     #         return True
+#     #     return False
+#     #
+#     # def __ne__(self, other):
+#     #     return not self.__eq__(other)
+#     def __getitem__(self, item):
+#         if not isinstance(item, str):
+#             raise ValueError("Ключ должен быть строкой")
 #
+#         if item == "hour":
+#             return (self.sec // 3600) % 24
+#         elif item == "min":
+#             return (self.sec // 60) % 60
+#         elif item == "sec":
+#             return self.sec % 60
+#         return "Неверный ключ"
+#
+#     def __setitem__(self, key, value):
+#         if not isinstance(key, str):
+#             raise ValueError("Ключ должен быть строкой")
+#
+#         if not isinstance(value, int):
+#             raise ValueError("Значение должно быть целым числом")
+#
+#         s = self.sec % 60
+#         m = (self.sec // 60) % 60
+#         h = (self.sec // 3600) % 24
+#
+#         if key == "hour":
+#             self.sec = s + 60 * m + value * 3600
+#         if key == "min":
+#             self.sec = s + 60 * value + h * 3600
+#         if key == "sec":
+#             self.sec = value + 60 * m + h * 3600
+#
+#
+# c1 = Clock(80000)
+# print(c1.get_format_time())
+# c1["hour"] = 11
+# c1["min"] = 24
+# c1["sec"] = 59
+# print(c1["hour"], c1["min"], c1["sec"])
+# print(c1.get_format_time())
 #
 # c1 = Clock(100)
 # c2 = Clock(200)
+# # c4 = Clock(300)
 # print(c1.get_format_time())
 # print(c2.get_format_time())
-# c3 = c1 + c2
-# print(c3.get_format_time())
+# # print(c4.get_format_time())
+# # c3 = c1 + c2 + c4
+# # print(c3.get_format_time())
+# # c1 += c2
+# # print(c1.get_format_time())
+# # if c1 == c2:
+# #     print("Время равно")
+# # else:
+# #     print("Время разное")
 #
+# if c1 != c2:
+#     print("Время разное")
+# else:
+#     print("Время равно")
 
 
-# доделаалаатттттьь
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №28 Python от 01.04.2024
+# Урок №1
+# -----------------------------------------------
+
+
+# class Student:
+#     def __init__(self, name, marks):
+#         self.name = name
+#         self.marks = marks
+#
+#     def __getitem__(self, item):
+#         if 0 <= item < len(self.marks):
+#             return self.marks[item]
+#         else:
+#             raise IndexError("Неверный индекс")
+#
+#     def __setitem__(self, key, value):
+#         if not isinstance(key, int) or key < 0:
+#             raise TypeError("Индекс должен быть целым положительным числом")
+#
+#         if key >= len(self.marks):
+#             off = key + 1 - len(self.marks)
+#             self.marks.extend([None] * off)
+#
+#         self.marks[key] = value
+#
+#     def __delitem__(self, key):
+#         if not isinstance(key, int):
+#             raise TypeError("Индекс должен быть целым числом")
+#         del self.marks[key]
+#
+#
+# s1 = Student("Сергей", [5, 5, 3, 4, 5])
+# print(s1.marks[2])
+# # print(s1[2])
+# # print(s1.marks)
+#
+# s1[10] = 4
+# del s1[2]
+# print(s1.marks)
+#
+# # lst = [5, 5, 3, 4, 5]
+# # lst.extend = ([None, None, None, None, None, None])
+# # print(lst)
+
+
+# Перегрузка операторов
+# Взяли задачу с предыдущего урока
+# 24 * 60 * 60 = 86400 - число секунд в одном дне
+
+# class Clock:
+#     __DAY = 86400
+#
+#     def __init__(self, sec: int):
+#         if not isinstance(sec, int):
+#             raise ValueError("Секунды должны быть целым числом")
+#         self.sec = sec % self.__DAY
+#
+#     def get_format_time(self):
+#         s = self.sec % 60
+#         m = (self.sec // 60) % 60
+#         h = (self.sec // 3600) % 24
+#         return f"{Clock.get_form(h)}:{Clock.get_form(m)}:{Clock.get_form(s)}"
+#
+#     @staticmethod
+#     def get_form(x):
+#         return str(x) if x > 9 else "0" + str(x)
+
+# def __add__(self, other):
+#     if not isinstance(other, Clock):
+#         raise ArithmeticError("Правый операнд должен быть типом Clock")
+#     return Clock(self.sec + other.sec)
+#
+# def __eq__(self, other):
+#     if not isinstance(other, Clock):
+#         raise ArithmeticError("Правый операнд должен быть типом Clock")
+#     if self.sec == other.sec:
+#         return True
+#     return False
+#
+# def __ne__(self, other):
+#     return not self.__eq__(other)
+
+#     def __getitem__(self, item):
+#         if not isinstance(item, str):
+#             raise ValueError("Ключ должен быть строкой")
+#
+#         if item == "hour":
+#             return (self.sec // 3600) % 24
+#         elif item == "min":
+#             return (self.sec // 60) % 60
+#         elif item == "sec":
+#             return self.sec % 60
+#
+#
+# c1 = Clock(80000)
+#
+# print(c1.get_format_time())
+# # print(c2.get_format_time())
+#
+# print(c1["hour"], c1["min"], c1["sec"])
+
+# c1 = Clock(100)
+# c2 = Clock(200)
+# c4 = Clock(300)
+# print(c4.get_format_time())
+# c3 = c1 + c2 + c4
+# print(c3.get_format_time())
+# c1 += c2
+# print(c1.get_format_time())
+# if c1 == c2:
+#     print("Время равно")
+# else:
+#     print("Время разное")
+#
+# if c1 != c2:
+#     print("Время разное")
+# else:
+#     print("Время равно")
+
+
+# ДОДЕЛАТЬЬЬЬ
