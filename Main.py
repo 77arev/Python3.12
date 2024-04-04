@@ -8327,67 +8327,121 @@ import math
 
 # 24 * 60 * 60 = 86400 - число секунд в одном дне
 
-class Clock:
-    __DAY = 86400  # это количество секунд в одном дне
-
-    def __init__(self, sec: int):  # инициализатор должен принимать кол-во секунд в типе данных int
-        if not isinstance(sec, int):  # если секунды не int
-            raise ValueError("Секунды должны быть целым числом")
-        self.sec = sec % self.__DAY  # это мы нашли кол-во секунд от того количества, которое мы передали
-
-    def get_format_time(self):
-        s = self.sec % 60  # находим секунды
-        m = (self.sec // 60) % 60  # находим минуты
-        h = (self.sec // 3600) % 24  # часы
-        return f"{Clock.get_form(h)}:{Clock.get_form(m)}:{Clock.get_form(s)}"
-
-    @staticmethod  # этот формат пишем просто для удобства
-    def get_form(x):
-        return str(x) if x > 9 else "0" + str(x)
-
-    def __add__(self, other):
-        if not isinstance(other, Clock):
-            raise ArithmeticError("Правый операнд должен быть типом Clock")
-        return Clock(self.sec + other.sec)
-
-    def __eq__(self, other):
-        if not isinstance(other, Clock):
-            raise ArithmeticError("Правый операнд должен быть типом Clock")
-        if self.sec == other.sec:
-            return True
-        return False
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
-
-
-c1 = Clock(100)
-c2 = Clock(200)
-
-print(c1.get_format_time())
-print(c2.get_format_time())
-
-# c3 = c1 + c2
-# print(c3.get_format_time())
-
-# c4 = Clock(300)
-# print(c4.get_format_time())
-# c3 = c1 + c2 + c4
-
-# c1 += c2
+# class Clock:
+#     __DAY = 86400  # это количество секунд в одном дне
+#
+#     def __init__(self, sec: int):  # инициализатор должен принимать кол-во секунд в типе данных int
+#         if not isinstance(sec, int):  # если секунды не int
+#             raise ValueError("Секунды должны быть целым числом")
+#         self.sec = sec % self.__DAY  # это мы нашли кол-во секунд от того количества, которое мы передали
+#
+#     def get_format_time(self):
+#         s = self.sec % 60  # находим секунды
+#         m = (self.sec // 60) % 60  # находим минуты
+#         h = (self.sec // 3600) % 24  # часы
+#         return f"{Clock.get_form(h)}:{Clock.get_form(m)}:{Clock.get_form(s)}"
+#
+#     @staticmethod  # этот формат пишем просто для удобства
+#     def get_form(x):
+#         return str(x) if x > 9 else "0" + str(x)
+#
+#     def __add__(self, other):
+#         if not isinstance(other, Clock):
+#             raise ArithmeticError("Правый операнд должен быть типом Clock")
+#         return Clock(self.sec + other.sec)
+#
+#     def __eq__(self, other):
+#         if not isinstance(other, Clock):
+#             raise ArithmeticError("Правый операнд должен быть типом Clock")
+#         if self.sec == other.sec:
+#             return True
+#         return False
+#
+#     def __ne__(self, other):
+#         return not self.__eq__(other)
+#
+#
+# c1 = Clock(100)
+# c2 = Clock(200)
+#
 # print(c1.get_format_time())
+# print(c2.get_format_time())
+#
+# # c3 = c1 + c2
+# # print(c3.get_format_time())
+#
+# # c4 = Clock(300)
+# # print(c4.get_format_time())
+# # c3 = c1 + c2 + c4
+#
+# # c1 += c2
+# # print(c1.get_format_time())
+#
+# if c1 == c2:
+#     print("Время равно")
+# else:
+#     print("Время разное")
+#
+# if c1 != c2:
+#     print("Время разное")
+# else:
+#     print("Время равно")
 
-if c1 == c2:
-    print("Время равно")
-else:
-    print("Время разное")
 
-if c1 != c2:
-    print("Время разное")
-else:
-    print("Время равно")
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №28 Python от 01.04.2024
+# Урок №1
+# -----------------------------------------------
 
 
+# class Student:
+#     def __init__(self, name, marks):
+#         self.name = name
+#         self.marks = marks
+#
+#     def __getitem__(self, item):  # метод, позволяющий управлять квадратными скобками и индексами
+#         if 0 <= item < len(self.marks):
+#             return self.marks[item]  # он будет возвращать оценку по индексу [item]
+#         else:
+#             raise IndexError("Неверный индекс")
+#
+#     def __setitem__(self, key, value):  # s1[2] = 4, 2 - попадет в key, 4 - в value
+#         # self.marks[key] = value
+#         if not isinstance(key, int) or key < 0:
+#             raise TypeError("Индекс должен быть целым положительным числом")
+#         if key >= len(self.marks):  # 10 >= 5
+#             off = key + 1 - len(self.marks)  # 10 + 1 - 5 = 6
+#             self.marks.extend([None] * off)  # [5, 5, 3, 4, 5, None, None, None, None, None, None] -
+#             # .extend - добавляет к существующему списку новый список из (None * 6)
+#
+#         self.marks[key] = value  # [5, 5, 3, 4, 5, None, None, None, None, None, 4]
+#
+#     def __delitem__(self, key):  # удаление элемента по индексу, удаляем по (key)
+#         if not isinstance(key, int):
+#             raise TypeError("Индекс должен быть целым числом")
+#         del self.marks[key]
+#
+#
+# s1 = Student("Сергей", [5, 5, 3, 4, 5])
+# # print(s1[2])  # 3 - здесь получили доступ к списку и индексу с помощью метода __getitem__ выше
+# # print(s1.marks[2])  # 3
+#
+# s1.marks[2] = 4
+# print(s1.marks)  # [5, 5, 4, 4, 5]
+#
+# s1[10] = 4
+# del s1[2]  # пытаемся удалить элемент по индексу
+# print(s1.marks)
+#
+# # print([None] * 6)  # объяснение
+# # lst = [5, 5, 3, 4, 5]
+# # lst.extend([None, None, None, None, None, None])
+# # print(lst)
+
+
+# * * * * * * * * * * * * *
 # Добавили новое с нового урока:
 # Продолжили про перегрузку операторов
 # class Clock:
@@ -8422,11 +8476,13 @@ else:
 #     #
 #     # def __ne__(self, other):
 #     #     return not self.__eq__(other)
-#     def __getitem__(self, item):
+#     def __getitem__(self, item):  # Метод __getitem__ делает перегрузку квадратных скобок
+#         # Это мы получаем значение
 #         if not isinstance(item, str):
 #             raise ValueError("Ключ должен быть строкой")
 #
-#         if item == "hour":
+#         if item == "hour":  # если ключи соответствуют указанным нами ранее, мы будем выводить часы, минуты
+#             # и секунды, если нет, прога будет выводить "Неверный ключ"
 #             return (self.sec // 3600) % 24
 #         elif item == "min":
 #             return (self.sec // 60) % 60
@@ -8434,7 +8490,7 @@ else:
 #             return self.sec % 60
 #         return "Неверный ключ"
 #
-#     def __setitem__(self, key, value):
+#     def __setitem__(self, key, value):  # А здесь хотим значение установить
 #         if not isinstance(key, str):
 #             raise ValueError("Ключ должен быть строкой")
 #
@@ -8455,155 +8511,535 @@ else:
 #
 # c1 = Clock(80000)
 # print(c1.get_format_time())
-# c1["hour"] = 11
+# print(c1["hour"], c1["min"], c1["sec"])  # придумали ключи "hour", "min" и "sec", получаем значение
+# c1["hour"] = 11  # хотим установить значение с помощью __setitem__
+# print(c1.get_format_time())
 # c1["min"] = 24
 # c1["sec"] = 59
-# print(c1["hour"], c1["min"], c1["sec"])
-# print(c1.get_format_time())
 #
-# c1 = Clock(100)
-# c2 = Clock(200)
+#
+# # c1 = Clock(100)
+# # c2 = Clock(200)
 # # c4 = Clock(300)
-# print(c1.get_format_time())
-# print(c2.get_format_time())
-# # print(c4.get_format_time())
-# # c3 = c1 + c2 + c4
-# # print(c3.get_format_time())
-# # c1 += c2
 # # print(c1.get_format_time())
-# # if c1 == c2:
-# #     print("Время равно")
-# # else:
-# #     print("Время разное")
+# # print(c2.get_format_time())
+# # print(c4.get_format_time())
+
+
+# from random import choice, randint
 #
-# if c1 != c2:
-#     print("Время разное")
-# else:
-#     print("Время равно")
+#
+# # Задача:
+# # Написать программу разведения котов и кошек, с предполагаемым количеством котят
+# class Cat:
+#     def __init__(self, name, age, pol):
+#         self.name = name
+#         self.age = age
+#         self.pol = pol
+#
+#     def __str__(self):  # и здесь указываем проверку
+#         # __str__ будет срабатывать на один экземпляр класса
+#         if self.pol == "M":
+#             return f"{self.name} is good boy!!!"
+#         elif self.pol == "F":
+#             return f"{self.name} is good girl!!!"
+#         else:
+#             return f"{self.name} is good Kitty!!!"
+#
+#     def __repr__(self):  # если нужно работать с квадратными скобками и количеством значений более одного
+#         return f"Cat(name='{self.name}', age={self.age}, pol='{self.pol}')"
+#
+#     def __add__(self, other):  # для сложения экземпляром класса, self - первый экземпляр, other - второй экземпляр
+#         if self.pol != other.pol:
+#             return [Cat("No name", 0, choice(["M", "F"])) for _ in range(randint(1, 5))]  # 0, 5
+#         else:
+#             raise TypeError("Types are not supported!")
+#
+#
+# cat1 = Cat("Tom", 4, "M")
+# cat2 = Cat("Elsa", 5, "F")
+# cat3 = Cat("Murzik", 3, "M")
+# print(cat1)  # <__main__.Cat object at 0x000001D28954DA00> - пока передает так. Чтобы получить удобочитаемый
+# # формат представления в виде строк и слов, нужно использовать метод __str__ выше
+# print(cat2)
+# print(cat3)
+# print(cat1 + cat2)  # просто так сложить 2 экземпляра класса нельзя с помощью оператора сложения, нужен метод
+# __add__ выше
+
+
+#
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# Полиморфизм
+
+# Полиморфизм в объектно-ориентированном программировании – это возможность обработки разных типов данных,
+# т. е. принадлежащих к разным классам, с помощью "одной и той же" функции, или метода. На самом деле одинаковым
+# является только имя метода, его исходный код зависит от класса.
+
+# class Rectangle:  # прямоугольник
+#     def __init__(self, w, h):
+#         self.w = w
+#         self.h = h
+#
+#     def get_perimetr(self):
+#         return 2 * (self.w + self.h)
+#
+#
+# class Square:  # квадрат
+#     def __init__(self, a):
+#         self.a = a
+#
+#     def get_perimetr(self):
+#         return 4 * self.a
+#
+#
+# class Triangle:  # треугольник
+#     def __init__(self, a, b, c):
+#         self.a = a
+#         self.b = b
+#         self.c = c
+#
+#     def get_perimetr(self):
+#         return self.a + self.b + self.c
+#
+#
+# r1 = Rectangle(1, 2)
+# # print("Периметр прямоугольника №1: ", r1.get_perimetr())
+# r2 = Rectangle(3, 4)
+# # print("Периметр прямоугольника №2: ", r2.get_perimetr())
+#
+# s1 = Square(10)
+# s2 = Square(20)
+#
+# t1 = Triangle(1, 2, 3)
+# t2 = Triangle(4, 5, 6)
+#
+# shape = [r1, r2, s1, s2, t1, t2]  # чтобы не выводить и не вызывать все методы по очереди, мы поместим
+# # все экземпляры класса в список
+# for g in shape:  # А теперь мы пройдемся в цикле по этим экземплярам класса и вызовем метод (get_perimetr())
+#     # для каждого образца
+#     print(g.get_perimetr())
+# Здесь мы используем один и тот же метод для всех классов, поэтому у нас появилась возможность использовать цикл
+
+
+# Следующая задача:
+# Используя полиморфизм создать два класса Cat и Dog. Реализуйте методы info (информация о питомце) и make_sound
+# (какой звук издает данный питомец). Цикле выведите методы класса.
+
+
+# class Cat:
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#
+#     def info(self):
+#         return f"Я кот. Меня зовут {self.name}. Мой возраст {self.age}"
+#
+#     def make_sound(self):
+#         return f"{self.name} мяукает."
+#
+#
+# class Dog:
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#
+#     def info(self):
+#         return f"Я собака. Меня зовут {self.name}. Мой возраст {self.age}"
+#
+#     def make_sound(self):
+#         return f"{self.name} гавкает."
+#
+#
+# c1 = Cat("Пушок", 2.5)
+# d1 = Dog("Мухтар", 4)
+# lst = [c1, d1]
+# for i in lst:
+#     print(i.info())
+#     print(i.make_sound())
+
+
+# Вариант учителя
+
+# from abc import ABC, abstractmethod
+#
+#
+# class Animal(ABC):
+#     def __init__(self, name, age):
+#         self.age = age
+#         self.name = name
+#
+#     @abstractmethod  # абстрактные методы без реализации
+#     def info(self):
+#         pass
+#
+#     @abstractmethod
+#     def make_sound(self):
+#         pass
+#
+#
+# class Cat(Animal):  # Class (Cat) must implement all abstract methods
+#     def info(self):
+#         return f"Я кот. Меня зовут {self.name}. Мой возраст {self.age}"
+#
+#     def make_sound(self):
+#         return f"{self.name} мяукает"
+#
+#
+# class Dog(Animal):
+#
+#     def info(self):
+#         return f"Я Собака. Меня зовут {self.name}. Мой возраст {self.age}"
+#
+#     def make_sound(self):
+#         return f"{self.name} гавкает"
+#
+#
+# cat1 = Cat("Пушок", 2.5)
+# dog1 = Dog("Мухтар", 4)
+#
+# for animal in (cat1, dog1):  # Вариант учителя
+#     print(animal.info())
+#     print(animal.make_sound())
+
+
+# Задача:
+# Создать иерархию классов: Human (Человек), Student (Студент), Teacher (Преподаватель) и Graduate (Дипломник).
+# Создать список группы преподавателей данной иерархии, вывести информацию о каждом участнике.
+# Разные классы, но в каждом классе будет только один метод info(), это и будет полиморфизм
+
+# class Human:  # В родительский общий класс Human (Человек) можно вынести все свойства, которые схожи и будут
+#     # повторяться во всех классах и родительском и дочерних
+#     def __init__(self, last_name, first_name, age):
+#         self.last_name = last_name
+#         self.first_name = first_name
+#         self.age = age
+#
+#     def info(self):
+#         print(f"\n{self.last_name} {self.first_name} {self.age}", end=" ")  # end=" " - так мы убрали
+#         # перенос на другую строчку
+#
+#
+# class Student(Human):
+#     def __init__(self, last_name, first_name, age, speciality, group, rating):
+#         super().__init__(last_name, first_name, age)  # А вот это мы взяли из родительского класса
+#         self.speciality = speciality
+#         self.group = group
+#         self.rating = rating
+#
+#     def info(self):
+#         super().info()  # так же обращаемся к родительскому методу! без этого не будет видна инфа
+#         print(f"{self.speciality} {self.group} {self.rating}", end=" ")
+#
+#
+# class Teacher(Human):
+#     def __init__(self, last_name, first_name, age, speciality, experience):
+#         super().__init__(last_name, first_name, age)
+#         self.speciality = speciality
+#         self.experience = experience  # навык
+#
+#     def info(self):
+#         super().info()
+#         print(f"{self.speciality} {self.experience}", end=" ")
+#
+#
+# class Graduate(Student):  # самый интересный класс, здесь передаем все, что уже есть у (Student)
+#     def __init__(self, last_name, first_name, age, speciality, group, rating, topic):
+#         super().__init__(last_name, first_name, age, speciality, group, rating)  # от Student
+#         self.topic = topic
+#
+#     def info(self):
+#         super().info()
+#         print(f"{self.topic}", end=" ")
+#
+#
+# group = [
+#     Student("Батодалаев", "Даши", 16, "ГК", "Web_011", 5),
+#     Student("Загидуллин", "Линар", 32, "РПО", "PD_011", 5),
+#     Graduate("Шугани", "Сергей", 15, "РПО", "PD_011", 5, "Защита персональных данных"),
+#     Teacher("Даньшин", "Андрей", 38, "Астрофизика", 110),
+#     Student("Маркин", "Даниил", 17, "ГК", "Python_011", 5),
+#     Teacher("Башкиров", "Алексей", 45, "Разработка приложений", 20)
+# ]
+# for i in group:
+#     i.info()
+
+
+# Нарисовать треугольник с помощью функции
+# Вариант №1
+
+def draw_triangle(height):
+    for i in range(1, height + 1):
+        spaces = " " * (height - i)
+        stars = "*" * (2 * i - 1)
+        print(spaces + stars + spaces)
+
+
+triangle_height = 6  # Высота треугольника
+draw_triangle(triangle_height)
+
+
+# Нарисовать треугольник с помощью функции в одну строку
+# Вариант №2
+
+def draw_triangle(height):
+    return '\n'.join([' ' * (height - i) + '*' * (2 * i - 1) + ' ' * (height - i) for i in range(1, height + 1)])
+
+triangle_height = 6  # Высота треугольника
+triangle = draw_triangle(triangle_height)
+print(triangle)
 
 
 #
 # ****************************************
 # ----------------------------------------------------------------
-# Урок №28 Python от 01.04.2024
+# Урок №29 Python от 03.04.2024
 # Урок №1
 # -----------------------------------------------
 
+# ФУНКТОРЫ
+# Функциональные объекты, или функторы в программировании — объекты, которые можно вызывать, подобно функциям.
+# Перегрузка круглых скобок
 
-# class Student:
-#     def __init__(self, name, marks):
+# class Counter:
+#     def __init__(self):
+#         self.__count = 0
+#
+#     def __call__(self, *args, **kwargs):
+#         self.__count += 1
+#         print(self.__count)
+#
+#
+# c1 = Counter()
+# c1()
+# c1()
+# c1()
+
+
+# def string_strip(chars):  # это у нас замыкание
+#     def wrap(string):
+#         if not isinstance(string, str):
+#             raise ValueError("Аргумент должен быть строкой")
+#         return string.strip(chars)  # .strip - удаляет пробелы справа и слева
+#
+#     return wrap  # вызываем функцию (wrap) без круглых скобок
+#
+#
+# s1 = string_strip("?:!.; ")
+# print(s1(" :?.Hello World! "))  # мы вызываем переменную как функцию s1() со скобками
+# Хотим вывести строки без пробелов и лишних символов
+
+
+# class StripChars:
+#     def __init__(self, chars):
+#         self.__chars = chars
+#
+#     def __call__(self, string):
+#         if not isinstance(string, str):
+#             raise ValueError("Аргумент должен быть строкой")
+#
+#         return string.strip(self.__chars)
+#
+#     # def __call__(self, *args, **kwargs):
+#     #     if not isinstance(args[0], str):
+#     #         raise ValueError("Аргумент должен быть строкой")
+#     #
+#     #     return args[0].strip(self.__chars)
+#
+#
+# s2 = StripChars("?:!.; ")
+# print(s2(" :?.Hello World! "))
+
+
+# Класс как декоратор
+
+# class MyDecorator:
+#     def __init__(self, fn):
+#         self.fn = fn
+#
+#     def __call__(self):
+#         print("Перед вызовом функции")
+#         self.fn()
+#         print("После вызова функции")
+#
+#
+# @MyDecorator
+# def func():
+#     print("Hello World")
+#
+#
+# func()
+
+
+# class MyDecorator:
+#     def __init__(self, fn):
+#         self.fn = fn
+#
+#     def __call__(self, x, y):
+#         ...
+#         # print("Перед вызовом функции")
+#         # self.fn(x, y)
+#         # print("После вызова функции")
+#         return f"Перед вызовом функции \n{self.fn(x, y)}\nПосле вызова функции"
+#
+#
+# @MyDecorator
+# def func(a, b):
+#     return a * b
+#
+#
+# print(func(2, 5))
+
+
+# Задача:
+# Создать класс Power
+
+# class Power:
+#
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self, *args):
+#         return f"Результат: {self.func(*args) ** 2}"
+#
+#
+# @Power
+# def func_test(a, b):
+#     return a * b
+#
+#
+# print(func_test(2, 3))
+
+
+# class MyDecorator:
+#     def __init__(self, fn):
+#         self.fn = fn
+#
+#     def __call__(self, *args, **kwargs):
+#         return f"Перед вызовом функции \n{self.fn(*args, **kwargs)}\nПосле вызова функции"
+#
+#
+# @MyDecorator
+# def func(a, b):
+#     return a * b
+#
+#
+# @MyDecorator
+# def func1(a, b, c):
+#     return a * b * c
+#
+#
+# print(func(2, 5))
+# print(func1(2, 5, 2))
+# print(func1(2, c=5, b=2))
+
+
+# class MyDecorator:
+#     def __init__(self, arg):  # arg - какой-то аргумент
+#         self.arg = arg
+#
+#     def __call__(self, fn):
+#         def wrap(*args, **kwargs):
+#             return (f"Перед вызовом функции \n{self.arg} {args[0]} * {args[0]} = {fn(*args, **kwargs)}\nПосле"
+#                     f"вызова функции")
+#
+#         return wrap
+#
+#
+# @MyDecorator("Произведение:")
+# def func(a, b):
+#     return a * b
+#
+#
+# print(func(2, 5))
+
+
+# Задача:
+# Создать класс Power, который будет декорировать функцию.
+
+# class Power:
+#
+#     def __init__(self, power):
+#         self.power = power
+#
+#     def __call__(self, func):
+#         def wrapper(*args, **kwargs):
+#             print("args:", args)
+#             print("kwargs:", kwargs)
+#             return f"Результат: {func(*args, **kwargs) ** self.power}"
+#
+#         return wrapper
+#
+#
+# @Power(3)
+# def func_test(a, b):
+#     return a * b
+#
+#
+# print(func_test(2, 4))
+# print(func_test(b=3, a=5))
+
+
+# @Power(3)
+# def func_test(a, b):
+#     return a * b
+#
+#
+# print(func_test(2, 2))
+
+
+#
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# def dec(fn):
+#     def wrap(*args, **kwargs):
+#         print("*" * 20)
+#         fn(*args, **kwargs)
+#         print("*" * 20)
+#
+#     return wrap
+#
+#
+# class Person:
+#     def __init__(self, name, surname):
 #         self.name = name
-#         self.marks = marks
+#         self.surname = surname
 #
-#     def __getitem__(self, item):
-#         if 0 <= item < len(self.marks):
-#             return self.marks[item]
-#         else:
-#             raise IndexError("Неверный индекс")
-#
-#     def __setitem__(self, key, value):
-#         if not isinstance(key, int) or key < 0:
-#             raise TypeError("Индекс должен быть целым положительным числом")
-#
-#         if key >= len(self.marks):
-#             off = key + 1 - len(self.marks)
-#             self.marks.extend([None] * off)
-#
-#         self.marks[key] = value
-#
-#     def __delitem__(self, key):
-#         if not isinstance(key, int):
-#             raise TypeError("Индекс должен быть целым числом")
-#         del self.marks[key]
+#     @dec
+#     def info(self):
+#         print(f"{self.name} {self.surname}")
 #
 #
-# s1 = Student("Сергей", [5, 5, 3, 4, 5])
-# print(s1.marks[2])
-# # print(s1[2])
-# # print(s1.marks)
-#
-# s1[10] = 4
-# del s1[2]
-# print(s1.marks)
-#
-# # lst = [5, 5, 3, 4, 5]
-# # lst.extend = ([None, None, None, None, None, None])
-# # print(lst)
+# p1 = Person("Виталий", "Некрасов")
+# p1.info()
 
 
-# Перегрузка операторов
-# Взяли задачу с предыдущего урока
-# 24 * 60 * 60 = 86400 - число секунд в одном дне
-
-# class Clock:
-#     __DAY = 86400
+# def decorator(cls):
+#     class Wrapper(cls):
+#         def doubler(self, value):
+#             return value * 2
 #
-#     def __init__(self, sec: int):
-#         if not isinstance(sec, int):
-#             raise ValueError("Секунды должны быть целым числом")
-#         self.sec = sec % self.__DAY
-#
-#     def get_format_time(self):
-#         s = self.sec % 60
-#         m = (self.sec // 60) % 60
-#         h = (self.sec // 3600) % 24
-#         return f"{Clock.get_form(h)}:{Clock.get_form(m)}:{Clock.get_form(s)}"
-#
-#     @staticmethod
-#     def get_form(x):
-#         return str(x) if x > 9 else "0" + str(x)
-
-# def __add__(self, other):
-#     if not isinstance(other, Clock):
-#         raise ArithmeticError("Правый операнд должен быть типом Clock")
-#     return Clock(self.sec + other.sec)
-#
-# def __eq__(self, other):
-#     if not isinstance(other, Clock):
-#         raise ArithmeticError("Правый операнд должен быть типом Clock")
-#     if self.sec == other.sec:
-#         return True
-#     return False
-#
-# def __ne__(self, other):
-#     return not self.__eq__(other)
-
-#     def __getitem__(self, item):
-#         if not isinstance(item, str):
-#             raise ValueError("Ключ должен быть строкой")
-#
-#         if item == "hour":
-#             return (self.sec // 3600) % 24
-#         elif item == "min":
-#             return (self.sec // 60) % 60
-#         elif item == "sec":
-#             return self.sec % 60
-#
-#
-# c1 = Clock(80000)
-#
-# print(c1.get_format_time())
-# # print(c2.get_format_time())
-#
-# print(c1["hour"], c1["min"], c1["sec"])
-
-# c1 = Clock(100)
-# c2 = Clock(200)
-# c4 = Clock(300)
-# print(c4.get_format_time())
-# c3 = c1 + c2 + c4
-# print(c3.get_format_time())
-# c1 += c2
-# print(c1.get_format_time())
-# if c1 == c2:
-#     print("Время равно")
-# else:
-#     print("Время разное")
-#
-# if c1 != c2:
-#     print("Время разное")
-# else:
-#     print("Время равно")
+#     return Wrapper
 
 
-# ДОДЕЛАТЬЬЬЬ
+# @decorator
+# class ActualClass:
+#     def __init__(self):
+#         print("Инициализатор ActualClass")
+#
+#     def quad(self, value):
+#         return value * 4
+#
+#
+# obj = ActualClass
+# print(obj.quad(5))
+# print(obj.doubler(5))
+# доделать
+
+
+# Дескриптор
+# class Person
