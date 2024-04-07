@@ -8770,26 +8770,26 @@ import math
 # Нарисовать треугольник с помощью функции
 # Вариант №1
 
-def draw_triangle(height):
-    for i in range(1, height + 1):
-        spaces = " " * (height - i)
-        stars = "*" * (2 * i - 1)
-        print(spaces + stars + spaces)
-
-
-triangle_height = 6  # Высота треугольника
-draw_triangle(triangle_height)
+# def draw_triangle(height):
+#     for i in range(1, height + 1):
+#         spaces = " " * (height - i)
+#         stars = "*" * (2 * i - 1)
+#         print(spaces + stars + spaces)
+#
+#
+# triangle_height = 6  # Высота треугольника
+# draw_triangle(triangle_height)
 
 
 # Нарисовать треугольник с помощью функции в одну строку
 # Вариант №2
 
-def draw_triangle(height):
-    return '\n'.join([' ' * (height - i) + '*' * (2 * i - 1) + ' ' * (height - i) for i in range(1, height + 1)])
-
-triangle_height = 6  # Высота треугольника
-triangle = draw_triangle(triangle_height)
-print(triangle)
+# def draw_triangle(height):
+#     return '\n'.join([' ' * (height - i) + '*' * (2 * i - 1) + ' ' * (height - i) for i in range(1, height + 1)])
+#
+# triangle_height = 6  # Высота треугольника
+# triangle = draw_triangle(triangle_height)
+# print(triangle)
 
 
 #
@@ -8800,8 +8800,27 @@ print(triangle)
 # -----------------------------------------------
 
 # ФУНКТОРЫ
-# Функциональные объекты, или функторы в программировании — объекты, которые можно вызывать, подобно функциям.
-# Перегрузка круглых скобок
+# Функциональные объекты, или функторы в программировании — в Python обычно используется для обозначения объекта,
+# который может быть вызван как функция. Функтор - это объект, который реализует метод __call__(), что позволяет
+# его экземпляры вызываться как функции.
+# Перегрузка круглых скобок (определение то учителя)
+
+# Пример * * *
+# class MyFunctor:
+#     def __init__(self, x):
+#         self.x = x
+#
+#     def __call__(self, y):
+#         return self.x + y
+#
+#
+# # Создание экземпляра функтора
+# functor = MyFunctor(10)
+#
+# # Вызов функтора
+# result = functor(5)
+# print(result)  # Вывод: 15
+# * * * * * * *  * * * * * *
 
 # class Counter:
 #     def __init__(self):
@@ -8820,9 +8839,11 @@ print(triangle)
 
 # def string_strip(chars):  # это у нас замыкание
 #     def wrap(string):
-#         if not isinstance(string, str):
+#         if not isinstance(string, str):  # то есть, если строка, которая приходит в s1 (print(s1(" :?.Hello World! "))
+#             # - не является строкой, то есть str, то вызовем сообщение об ошибке ValueError
 #             raise ValueError("Аргумент должен быть строкой")
-#         return string.strip(chars)  # .strip - удаляет пробелы справа и слева
+#         return string.strip(chars)  # .strip - удаляет пробелы справа и слева и все остальные символы, указанные
+#         # в перечне s1 = string_strip("?:!.; "), которые нужно удалить
 #
 #     return wrap  # вызываем функцию (wrap) без круглых скобок
 #
@@ -8855,6 +8876,41 @@ print(triangle)
 
 # Класс как декоратор
 
+# Классы в Python можно использовать в качестве декораторов, что представляет собой способ изменения поведения
+# функций или методов без изменения их самих.
+#
+# Чтобы класс мог быть использован в качестве декоратора, он должен реализовать метод __call__(), который будет
+# вызываться при применении декоратора к функции или методу.
+
+# Пример:
+
+# class DecoratorExample:
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self, *args, **kwargs):
+#         print("Вызвана функция:", self.func.__name__)
+#         return self.func(*args, **kwargs)
+#
+#
+# @DecoratorExample
+# def example_function(x, y):
+#     return x + y
+#
+#
+# result = example_function(3, 4)
+# print("Результат:", result)
+
+
+# Это обычная функция
+# def func():
+#     print("Hello World")
+#
+#
+# func()
+
+
+# Теперь эту функцию мы задекорируем классом
 # class MyDecorator:
 #     def __init__(self, fn):
 #         self.fn = fn
@@ -8878,10 +8934,16 @@ print(triangle)
 #         self.fn = fn
 #
 #     def __call__(self, x, y):
-#         ...
 #         # print("Перед вызовом функции")
 #         # self.fn(x, y)
 #         # print("После вызова функции")
+#
+#         # * * * Можно еще так написать, сохранить формулу в переменную, к примеру (res), а потом этот
+#         # (res) вывести * * *
+#         # res = self.fn(x, y)
+#         # return res
+#         # * * * А можно это все собрать в один return
+#
 #         return f"Перед вызовом функции \n{self.fn(x, y)}\nПосле вызова функции"
 #
 #
@@ -8890,19 +8952,20 @@ print(triangle)
 #     return a * b
 #
 #
-# print(func(2, 5))
+# print(func(2, 5))  # None - это значит, что наш print - сейчас не выводит значения, потому что мы в
+# __call__ не возвратили его self.fn(x, y), а с return - возвратили
 
 
 # Задача:
-# Создать класс Power
-
+# Создать класс Power, который будет декорировать функцию в Python. Функция возвращает результат умножения двух
+# чисел (a = 2, b = 3), а класс возводит их в квадрат.
 # class Power:
 #
 #     def __init__(self, func):
 #         self.func = func
 #
-#     def __call__(self, *args):
-#         return f"Результат: {self.func(*args) ** 2}"
+#     def __call__(self, *args):  # или (self, x, y)
+#         return f"Результат: {self.func(*args) ** 2}"  # или {self.func(x, y) ** 2}
 #
 #
 # @Power
@@ -8913,11 +8976,50 @@ print(triangle)
 # print(func_test(2, 3))
 
 
+# * * * * * * * * * * * * * * * * * * * * *
+# ЗАДАЧА:
+# Создать класс Power, который будет декорировать функцию в Python. Функция возвращает результат умножения двух
+# чисел (a = 2, b = 3), а класс возводит их в квадрат.
+
+# Вот пример реализации класса Power, который будет декорировать функцию умножения двух чисел, возводя их в квадрат:
+# class Power:
+#     def __init__(self, func):  # В этом примере класс Power принимает функцию в качестве аргумента
+#         # в конструкторе и сохраняет ее в свойстве self.func.
+#         self.func = func
+#
+#     def __call__(self, a, b):  # Метод __call__() вызывается при вызове декорированной функции multiply().
+#         # В методе __call__() сначала вызывается функция self.func, переданный в конструкторе, затем результат
+#         # умножения возводится в квадрат и возвращается.
+#         result = self.func(a, b)  # Вызываем функцию, переданную в конструктор
+#         return result ** 2  # Возводим результат в квадрат
+#
+#
+# @Power  # декоратор Power применяется к функции multiply, это приводит к тому, что вначале числа умножаются здесь
+# # (a * b), а потом только переходят в def __call__ и возводятся в квадрат
+# def multiply(a, b):
+#     return a * b
+#
+#
+# result = multiply(2, 3)  # # Используем декорированную функцию
+# print("Результат умножения, возведенный в квадрат:", result)
+
+
+# В этом примере класс Power принимает функцию в качестве аргумента в конструкторе и сохраняет ее в свойстве
+# self.func. Метод __call__() вызывается при вызове декорированной функции multiply(). В методе __call__() сначала
+# вызывается функция self.func, переданный в конструкторе, затем результат умножения возводится в квадрат и
+# возвращается.
+#
+# Декоратор @Power применяется к функции multiply, что приводит к тому, что при вызове multiply(2, 3)
+# сначала происходит умножение двух чисел, а затем результат возводится в квадрат.
+# * * * * * * * * * * * * * * * * * * * * *
+
+
 # class MyDecorator:
 #     def __init__(self, fn):
 #         self.fn = fn
 #
-#     def __call__(self, *args, **kwargs):
+#     def __call__(self, *args, **kwargs):  # (self, *args, **kwargs) - это универсальный подход, который работает
+#         # с любым количеством передаваемых значений и 2, и 3 и более
 #         return f"Перед вызовом функции \n{self.fn(*args, **kwargs)}\nПосле вызова функции"
 #
 #
@@ -8933,7 +9035,7 @@ print(triangle)
 #
 # print(func(2, 5))
 # print(func1(2, 5, 2))
-# print(func1(2, c=5, b=2))
+# print(func1(2, c=5, b=2))  # именованные параметры
 
 
 # class MyDecorator:
@@ -8957,7 +9059,8 @@ print(triangle)
 
 
 # Задача:
-# Создать класс Power, который будет декорировать функцию.
+# Создать класс Power, который будет декорировать функцию в Python. Функция возвращает результат умножения двух
+# чисел (a = 2, b = 2), а класс возводит их в степень, которую принимает декоратор.
 
 # class Power:
 #
@@ -8965,10 +9068,10 @@ print(triangle)
 #         self.power = power
 #
 #     def __call__(self, func):
-#         def wrapper(*args, **kwargs):
+#         def wrapper(*args, **kwargs):  # **kwargs - нужен только для именованных значений
 #             print("args:", args)
 #             print("kwargs:", kwargs)
-#             return f"Результат: {func(*args, **kwargs) ** self.power}"
+#             return f"Результат: {func(*args, **kwargs) ** self.power}\n"
 #
 #         return wrapper
 #
@@ -8978,9 +9081,8 @@ print(triangle)
 #     return a * b
 #
 #
-# print(func_test(2, 4))
-# print(func_test(b=3, a=5))
-
+# print(func_test(2, 4))  # args
+# print(func_test(b=3, a=5))  # kwargs
 
 # @Power(3)
 # def func_test(a, b):
@@ -8990,10 +9092,49 @@ print(triangle)
 # print(func_test(2, 2))
 
 
+# * * * * * * * * * * * * * * * * * * * * *
+
+# Задача:
+# Создать класс Power, который будет декорировать функцию в Python. Функция возвращает результат умножения
+# двух чисел (a = 2, b = 2), а класс возводит их в степень, которую принимает декоратор.
+
+# Вот пример реализации класса Power, который будет декорировать функцию умножения двух чисел и возводить
+# результат в указанную степень:
+# class Power:
+#     def __init__(self, power):  # В этом примере класс (Power) принимает степень в качестве аргумента
+#     в конструкторе.
+#         self.power = power
+#
+#     def __call__(self, func):  # Метод __call__() принимает функцию в качестве аргумента и возвращает
+#         # внутреннюю функцию inner, которая будет выполняться при вызове декорированной функции.
+#         def inner(a, b):  # Внутренняя функция (inner) умножает переданные числа и возвращает результат
+#             # возведенный в степень, которую определяет класс Power.
+#             result = func(a, b)  # Вызываем переданную функцию
+#             return result ** self.power  # Возводим результат в указанную степень
+#
+#         return inner
+#
+#
+# @Power(power=3)  # Декоратор @Power(power=3) применяется к функции multiply, что приводит к тому,
+# # что при вызове multiply(2, 2) сначала происходит умножение двух чисел, а затем результат возводится
+# # в степень 3.
+# def multiply(a, b):
+#     return a * b
+#
+#
+# # Используем декорированную функцию
+# result = multiply(2, 2)
+# print("Результат умножения, возведенный в степень:", result)
+
+# * * * * * * * * * * * * * * * * * * * * *
+
+
 #
 # ----------------------------------------------------------------
 # Урок №2
 # ----------------------------
+
+# После перемены мы посмотрим, как можно декорировать методы
 
 # def dec(fn):
 #     def wrap(*args, **kwargs):
@@ -9010,7 +9151,7 @@ print(triangle)
 #         self.surname = surname
 #
 #     @dec
-#     def info(self):
+#     def info(self):  # декорировать метод мы будет простой функцией dec(), указанной выше
 #         print(f"{self.name} {self.surname}")
 #
 #
@@ -9018,15 +9159,21 @@ print(triangle)
 # p1.info()
 
 
-# def decorator(cls):
+# Декоратор в классе
+# Этот код в Python демонстрирует использование класса в качестве декоратора.
+# def decorator(cls):  # Функция decorator(cls) - это функция, которая принимает класс (cls) в качестве аргумента
+#     # и возвращает другой класс Wrapper. Внутри функции создается класс Wrapper, который наследует от
+#     # переданного класса (cls)
 #     class Wrapper(cls):
-#         def doubler(self, value):
+#         def doubler(self, value):  # В данном случае класс Wrapper добавляет новый метод doubler, который
+#             # умножает значение на 2.
 #             return value * 2
 #
 #     return Wrapper
-
-
-# @decorator
+#
+#
+# @decorator  # Декоратор @decorator применяется к классу ActualClass. Это означает, что класс ActualClass
+# # будет передан функции-декоратору decorator, а затем класс Wrapper будет возвращен вместо ActualClass.
 # class ActualClass:
 #     def __init__(self):
 #         print("Инициализатор ActualClass")
@@ -9035,11 +9182,110 @@ print(triangle)
 #         return value * 4
 #
 #
-# obj = ActualClass
-# print(obj.quad(5))
+# obj = ActualClass()  # При создании объекта ActualClass вызывается инициализатор класса Wrapper
+# # (так как ActualClass заменен на Wrapper благодаря декоратору). Затем объект obj будет экземпляром класса
+# # Wrapper, а не ActualClass.
+# print(obj.quad(5))  # Метод quad класса ActualClass доступен через объект obj, потому что класс Wrapper
+# # наследует все методы класса ActualClass.
 # print(obj.doubler(5))
-# доделать
+
+# Новый метод doubler, добавленный в класс Wrapper, также доступен через объект obj.
+# Таким образом, код демонстрирует, как использовать класс в качестве декоратора для расширения
+# функциональности существующего класса.
 
 
+#  * * * Новая тема * * *
 # Дескриптор
-# class Person
+# Пытаемся избавиться от лишних геттеров и сеттеров
+
+# class String:  # Дескриптор
+#     def __init__(self, value=None):
+#         if value:
+#             self.set(value)
+#
+#     def get(self):  # Это общий геттер для всех
+#         return self.__value
+#
+#     def set(self, value):  # Это общий сеттер для всех
+#         if not isinstance(value, str):
+#             raise TypeError(f"{value} должно быть строкой")
+#         self.__value = value
+#
+#
+# class Person:
+#     def __init__(self, name, surname):
+#         self.name = String(name)  # мы сделали, что наш (name) - является экземпляром класса (String)
+#         self.surname = String(surname)  # наш (surname) - является экземпляром класса (String)
+#
+#     # @property  # это у нас геттер, он возвращает закрытое свойство self.__name
+#     # def name(self):
+#     #     return self.__name
+#     #
+#     # @name.setter  # это у нас сеттер
+#     # def name(self, value):
+#     #     if not isinstance(value, str):  # проверка
+#     #         raise TypeError(f"{value} должно быть строкой")
+#     #     self.__name = value
+#     #
+#     # @property
+#     # def surname(self):
+#     #     return self.__surname
+#     #
+#     # @surname.setter
+#     # def surname(self, value):
+#     #     if not isinstance(value, str):
+#     #         raise TypeError(f"{value} должно быть строкой")
+#     #     self.__surname = value
+#
+#
+# p = Person("Иван", "Петров")
+# print(p.name.get())
+# p.name.set("Игорь")
+# print(p.name.get())
+
+
+# Дескриптор (__get__, __set__, __set_name__, __delete__)
+# В дескрипторе мы можем прописывать магические методы
+
+# Этот код в Python демонстрирует использование дескриптора для валидации значений атрибутов в классе Person.
+
+class ValidString:  # Дескриптор - Класс ValidString является дескриптором, который проверяет, является ли
+    # значение атрибута строкой. Он реализует методы __set_name__, __get__, и __set__.
+    def __set_name__(self, owner, name):  # Метод __set_name__ вызывается при создании экземпляра класса,
+        # в котором определен данный дескриптор. Он принимает owner (класс-владелец) и name (имя атрибута) и
+        # сохраняет имя атрибута в приватное свойство __name.
+        print(owner)
+        self.__name = name
+
+    def __get__(self, instance, owner):
+        return instance.__dict__[self.__name]  # __dict__ - это словарь, мы по ключу получаем значение
+        # Метод __get__ вызывается при попытке получить значение атрибута. Он принимает instance (экземпляр класса)
+        # и owner (класс-владелец) и возвращает значение атрибута, хранящееся в словаре экземпляра по ключу,
+        # соответствующему имени атрибута.
+
+    def __set__(self, instance, value):  # Метод __set__ вызывается при попытке установить значение атрибута.
+        # Он проверяет, что устанавливаемое значение является строкой, и если нет, возбуждает исключение
+        # ValueError. Если значение является строкой, оно устанавливается как значение атрибута в словаре
+        # экземпляра.
+        if not isinstance(value, str):
+            raise ValueError(f"{self.__name} должно быть строкой")
+        instance.__dict__[self.__name] = value
+
+
+class Person:  # Класс Person определяет два атрибута name и surname, которые валидируются с помощью дескриптора
+    # ValidString.
+    name = ValidString()
+    surname = ValidString()
+
+    def __init__(self, name, surname):
+        self.name = name
+        self.surname = surname
+
+
+p = Person("Иван", "Петров")
+# p.surname = "Иванов"
+# print(p.name)
+# print(p.surname)
+# При создании экземпляра класса Person, значения атрибутов name и surname устанавливаются в конструкторе
+# __init__. Поскольку они проходят валидацию, никаких исключений не возникает.
+# При печати значений атрибутов name и surname через экземпляр p, будет выведено их текущее значение.
