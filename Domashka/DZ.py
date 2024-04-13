@@ -343,7 +343,6 @@ from math import pi
 
 import re
 
-
 # ДЗ №18 от 26.02.2024
 # Задача:
 # Найти номер телефона в формате +7хххххххххх или 7хххххххххх
@@ -979,36 +978,81 @@ import re
 
 # ДЗ №29 от 03.04.2024
 # Задача:
-# Создать дескриптор для класса Point3D (создание точки в трехмерном пространстве) с проверкой на ввод координат точки
-# только целочисленных значений
+# Создать дескриптор для класса Point3D (создание точки в трехмерном пространстве) с проверкой на ввод
+# координат точки только целочисленных значений
 # Результат: {'_x' : 1, '_y' : 2, '_z' : 3}
 
-class Descriptor:
-    def __set_name__(self, owner, name):
-        self.name = name
+# class Descriptor:
+#     def __set_name__(self, owner, name):
+#         self.name = name
+#
+#     def __get__(self, instance, owner):
+#         return instance.__dict__[self.name]
+#
+#     def __set__(self, instance, value):
+#         if not isinstance(value, int):
+#             raise ValueError(f"{self.name} должен быть целым числом")
+#         instance.__dict__[self.name] = value
+#
+#
+# class Point3D:
+#     _x = Descriptor
+#     _y = Descriptor
+#     _z = Descriptor
+#
+#     def __init__(self, x, y, z):
+#         self._x = x
+#         self._y = y
+#         self._z = z
+#
+#     def __repr__(self):
+#         return f"{{'_x': {self._x}, '_y': {self._y}, '_z': {self._z}}}"
+#
+#
+# point = Point3D(1, 2, 3)
+# print(point)
 
-    def __get__(self, instance, owner):
-        return instance.__dict__[self.name]
 
-    def __set__(self, instance, value):
-        if not isinstance(value, int):
-            raise ValueError(f"{self.name} должен быть целым числом")
-        instance.__dict__[self.name] = value
+# ЗАДАЧА:
+# Создать в дескрипторе класса Order, который задает имя товара, его цену и количество. В дескрипторе должна
+# быть реализована проверка на ввод положительных значений цены и количества товара.
+
+# Рабочую задачку просто пишу сама ***
+# class NonNegative:
+#     def __set_name__(self, owner, name):
+#         self.__name = name
+#
+#     def __get__(self, instance, owner):
+#         return instance.__dict__[self.__name]
+#
+#     def __set__(self, instance, value):
+#         if value < 0:
+#             raise ValueError(f"Значение {self.__name} должно быть положительным")
+#         instance.__dict__[self.__name] = value
+#
+#
+# class Order:
+#     price = NonNegative()
+#     quantity = NonNegative()
+#
+#     def __init__(self, name, price, quantity):
+#         self.name = name
+#         self.price = price
+#         self.quantity = quantity
+#
+#     def total(self):
+#         return self.price * self.quantity
+#
+#
+# apple_order = Order('apple', 5, 10)
+# apple_order.price = 15
+# print(apple_order.total())
+# print(apple_order.__dict__)
 
 
-class Point3D:
-    _x = Descriptor
-    _y = Descriptor
-    _z = Descriptor
+# ДЗ №30 от 08.04.2024
+# Задача:
+#
 
-    def __init__(self, x, y, z):
-        self._x = x
-        self._y = y
-        self._z = z
-
-    def __repr__(self):
-        return f"{{'_x': {self._x}, '_y': {self._y}, '_z': {self._z}}}"
-
-
-point = Point3D(1, 2, 3)
-print(point)
+with open("persons.json", "w", encoding="utf-8") as f:
+    json.dump(persons, f, indent=2)

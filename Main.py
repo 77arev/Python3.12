@@ -2,6 +2,7 @@
 # Урок №1 Python от 18.12.2023
 # Урок №1
 # ----------------------------
+import json
 import sys
 import time
 from random import randint
@@ -8129,7 +8130,6 @@ import os
 
 import math
 
-
 # class Point:
 #     __slots__ = ('x', 'y')
 #
@@ -9249,43 +9249,537 @@ import math
 
 # Этот код в Python демонстрирует использование дескриптора для валидации значений атрибутов в классе Person.
 
-class ValidString:  # Дескриптор - Класс ValidString является дескриптором, который проверяет, является ли
-    # значение атрибута строкой. Он реализует методы __set_name__, __get__, и __set__.
-    def __set_name__(self, owner, name):  # Метод __set_name__ вызывается при создании экземпляра класса,
-        # в котором определен данный дескриптор. Он принимает owner (класс-владелец) и name (имя атрибута) и
-        # сохраняет имя атрибута в приватное свойство __name.
-        print(owner)
-        self.__name = name
-
-    def __get__(self, instance, owner):
-        return instance.__dict__[self.__name]  # __dict__ - это словарь, мы по ключу получаем значение
-        # Метод __get__ вызывается при попытке получить значение атрибута. Он принимает instance (экземпляр класса)
-        # и owner (класс-владелец) и возвращает значение атрибута, хранящееся в словаре экземпляра по ключу,
-        # соответствующему имени атрибута.
-
-    def __set__(self, instance, value):  # Метод __set__ вызывается при попытке установить значение атрибута.
-        # Он проверяет, что устанавливаемое значение является строкой, и если нет, возбуждает исключение
-        # ValueError. Если значение является строкой, оно устанавливается как значение атрибута в словаре
-        # экземпляра.
-        if not isinstance(value, str):
-            raise ValueError(f"{self.__name} должно быть строкой")
-        instance.__dict__[self.__name] = value
-
-
-class Person:  # Класс Person определяет два атрибута name и surname, которые валидируются с помощью дескриптора
-    # ValidString.
-    name = ValidString()
-    surname = ValidString()
-
-    def __init__(self, name, surname):
-        self.name = name
-        self.surname = surname
-
-
-p = Person("Иван", "Петров")
+# class ValidString:  # Дескриптор - Класс ValidString является дескриптором, который проверяет, является ли
+#     # значение атрибута строкой. Он реализует методы __set_name__, __get__, и __set__.
+#     def __set_name__(self, owner, name):  # Метод __set_name__ вызывается при создании экземпляра класса,
+#         # в котором определен данный дескриптор. Он принимает owner (класс-владелец) и name (имя атрибута) и
+#         # сохраняет имя атрибута в приватное свойство __name.
+#         print(owner)
+#         self.__name = name
+#
+#     def __get__(self, instance, owner):
+#         return instance.__dict__[self.__name]  # __dict__ - это словарь, мы по ключу получаем значение
+#         # Метод __get__ вызывается при попытке получить значение атрибута. Он принимает instance (экземпляр класса)
+#         # и owner (класс-владелец) и возвращает значение атрибута, хранящееся в словаре экземпляра по ключу,
+#         # соответствующему имени атрибута.
+#
+#     def __set__(self, instance, value):  # Метод __set__ вызывается при попытке установить значение атрибута.
+#         # Он проверяет, что устанавливаемое значение является строкой, и если нет, возбуждает исключение
+#         # ValueError. Если значение является строкой, оно устанавливается как значение атрибута в словаре
+#         # экземпляра.
+#         if not isinstance(value, str):
+#             raise ValueError(f"{self.__name} должно быть строкой")
+#         instance.__dict__[self.__name] = value
+#
+#
+# class Person:  # Класс Person определяет два атрибута name и surname, которые валидируются с помощью дескриптора
+#     # ValidString.
+#     name = ValidString()
+#     surname = ValidString()
+#
+#     def __init__(self, name, surname):
+#         self.name = name
+#         self.surname = surname
+#
+#
+# p = Person("Иван", "Петров")
 # p.surname = "Иванов"
 # print(p.name)
 # print(p.surname)
 # При создании экземпляра класса Person, значения атрибутов name и surname устанавливаются в конструкторе
 # __init__. Поскольку они проходят валидацию, никаких исключений не возникает.
 # При печати значений атрибутов name и surname через экземпляр p, будет выведено их текущее значение.
+
+
+# ЗАДАЧА:
+# Создать в дескрипторе класса (Order), который задает имя товара, его цену и количество. В дескрипторе должна
+# быть реализована проверка на ввод положительных значений цены и количества товара.
+
+# class NonNegative:
+#     def __set_name__(self, owner, name):
+#         self.name = "_" + name
+#
+#     def __get__(self, instance, owner):
+#         # return instance.__dict__[self.name]
+#         return getattr(instance, self.name)  # getattr -
+#
+#     def __set__(self, instance, value):
+#         if value < 0:
+#             raise ValueError(f"Значение {self.name} должно быть положительным")
+#         # instance.__dict__[self.name] = value
+#         setattr(instance, self.name, value)  # setattr -
+#
+#
+# class Order:  # создаем класс Заказ (Order)
+#     price = NonNegative()
+#     quantity = NonNegative()
+#
+#     def __init__(self, name, price, quantity):  # инициализируем исходные данные (имя товара, цена и кол-во)
+#         self.name = name
+#         self.price = price
+#         self.quantity = quantity
+#
+#     def total(self):  # здесь цену товара нужно умножить на кол-во
+#         return self.price * self.quantity
+#
+#
+# apple_order = Order('apple', 5, 10)  # создали экземпляр класса
+# apple_order.quantity = 15  # обращаемся к экземпляру класса по количеству товара
+# print(apple_order.price)
+# print(apple_order.total())  # обратились по экземпляру класса к методу total()
+# print(apple_order.__dict__)
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №30 Python от 08.04.2024
+# Урок №1
+# -----------------------------------------------
+
+
+# Метаклассы
+
+# Метаклассы в Python - это классы, которые определяют поведение других классов (классы для классов).
+# Классы являются экземплярами метаклассов. По умолчанию в Python используется метакласс type, который является
+# встроенным метаклассом для всех классов.
+
+# class MyMeta(type):
+#     def __new__(cls, name, bases, dct):
+#         # Добавление новой функциональности к классу
+#         dct['my_attribute'] = 42
+#         return super().__new__(cls, name, bases, dct)
+#
+#
+# class MyClass(metaclass=MyMeta):1478
+#     pass
+#
+#
+# print(MyClass.my_attribute)  # Выведет: 42
+
+# В этом примере класс MyMeta является метаклассом, который добавляет атрибут my_attribute ко всем классам,
+# созданным с его использованием. Класс MyClass использует метакласс MyMeta через аргумент metaclass.
+
+
+# a = 5
+# print(type(a))
+# print(type(int))
+
+# class MyList(list):  # создали список и внесли туда 2 значения
+#     def get_length(self):
+#         return len(self)
+#
+#
+# MyList = type(  # использование метакласса
+#     'MyList',
+#     (list,),
+#     dict(get_length=lambda self: len(self))
+# )
+#
+# lst = MyList()
+# lst.append(5)
+# lst.append(7)
+# print(lst, lst.get_length())
+
+
+# * * * * * * * * * * * * * * * *
+
+# НОВАЯ ТЕМА ***
+# СОЗДАНИЕ МОДУЛЕЙ
+
+# Модули в Python - это файлы с расширением .py, которые содержат Python код, такой как определения функций,
+# классов и переменных.
+# Код из одного модуля может быть импортирован в другой модуль с помощью инструкции import.
+
+# Создание модулей
+# Мы сейчас с вами посмотрим, как мы можем сами создать какие-то модули
+
+# У нас есть задачка с тремя классами, мы сейчас создадим 3 отдельных модуля-документа (rect.py, sq.py, trian.py)
+
+# import geometry.rect
+# import geometry.sq
+# import geometry.trian
+
+# Из Python пакета (geometry) - мы импортируем 3 модуля для работы (которые там находятся)
+
+# from geometry import rect, sq, trian  # Так работает ***
+#
+
+# from geometry import *
+
+# from geometry import rect, sq, trian
+#
+
+
+# def run():  # Видим весь код, только если запуск происходит из нашего основного дока Main
+#     r1 = rect.Rectangle(1, 2)  # это мы берем из модуля (rect)
+#     r2 = rect.Rectangle(3, 4)
+#
+#     s1 = sq.Square(10)  # это мы берем из модуля (sq)
+#     s2 = sq.Square(20)
+#
+#     t1 = trian.Triangle(1, 2, 3)  # это мы берем из модуля (trian)
+#     t2 = trian.Triangle(4, 5, 6)
+#
+#     shape = [r1, r2, s1, s2, t1, t2]
+#
+#     for g in shape:
+#         print(g.get_perimetr())
+#
+#
+# if __name__ == '__main__':
+#     run()  # Помогает запускать код в доке (test.py)
+
+
+# if __name__ == '__main__':  # Весь код под (if), при импорте Main как модуля, виден не будет
+#     r1 = rect.Rectangle(1, 2)  # это мы берем из модуля (rect)
+#     r2 = rect.Rectangle(3, 4)
+#
+#     s1 = sq.Square(10)  # это мы берем из модуля (sq)
+#     s2 = sq.Square(20)
+#
+#     t1 = trian.Triangle(1, 2, 3)  # это мы берем из модуля (trian)
+#     t2 = trian.Triangle(4, 5, 6)
+#
+#     shape = [r1, r2, s1, s2, t1, t2]
+#
+#     for g in shape:
+#         print(g.get_perimetr())
+
+
+# if __name__ == '__main__':  # Когда Python запускает скрипт, он устанавливает специальную
+#     # переменную __name__ для этого скрипта в значение "__main__". Это означает, что скрипт
+#     # запущен как основная программа.
+#     run()
+
+# Мы пишем основной код под if __name__ == '__main__': с одной табуляцией, чтобы убедиться,
+# что доступа к нашему коду из внешних источников не произойдет
+
+
+#
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# Задача на 2 уроке №1:
+# Создать класс "Автомобиль" со свойствами бренд, модель, год выпуска и пробег. Работа с классами
+# должна быть организована через пакет и модули.
+
+# from car import electrocar
+#
+# # В Main - мы хотим делать экземпляр дочернего класса (ElectroCar)
+# # То есть в Main(е) мы будем просто вызывать экземпляры класса
+#
+#
+# if __name__ == '__main__':  # А теперь мы застраховали наш код, чтобы его никто не видел
+#     e_car = electrocar.ElectroCar("Tesla", "T", 2018, 99000)
+#     e_car.show_car()
+#     e_car.description_battery()
+
+
+# Задача на уроке №2:
+# Задача, продолжить дома с использованием пакетов питон и модулей:
+# class Employee:  # это у нас базовый родительский класс
+#     def __init__(self, kod, name):
+#         self.id = kod
+#         self.name = name
+#
+#
+# class SalaryEmployee(Employee):  # дочерний от (Employee)
+#     """Административные работники, имеют фиксированную зарплату"""
+#
+#     def __init__(self, kod, name, weekly_salary):
+#         super().__init__(kod, name)  # указали как у родителя, ниже инициализировали доп свойство (weekly_salary)
+#         self.weekly_salary = weekly_salary
+#
+#     def calculate_payroll(self):
+#         return self.weekly_salary
+#
+#
+# class HourlyEmployee(Employee):  # указали как у родителя, ниже инициализировали дополнительные свойства
+#     """Сотрудники с почасовой оплатой"""
+#
+#     def __init__(self, kod, name, hours_worked, hours_rate):
+#         super().__init__(kod, name)
+#         self.hours_worked = hours_worked
+#         self.hours_rate = hours_rate
+#
+#     def calculate_payroll(self):
+#         return self.hours_worked * self.hours_rate
+#
+#
+# class CommissionEmployee(SalaryEmployee):
+#     """Торговые представители, фиксированная зарплата + комиссия"""
+#
+#     def __init__(self, kod, name, weekly_salary, commission):
+#         super().__init__(kod, name, weekly_salary)
+#         self.commission = commission
+#
+#     def calculate_payroll(self):
+#         fixed = super().calculate_payroll()
+#         return fixed + self.commission
+#
+#
+# class PayrollSystem:
+#     def calculate(self, employees):
+#         print("Расчет заработной платы")
+#         print("=" * 50)
+#         for employee in employees:
+#             print(f"Заработная плата: {employee.id} - {employee.name}")
+#             print(f"- Проверить сумму: {employee.calculate_payroll()}")
+#             print()
+
+from employee import salaryemployee, hourlyemployee, commissionemployee, payrollsystem
+
+
+salary_employee = salaryemployee.SalaryEmployee(1, "Валерий Задорожный", 1500)
+hourly_employee = hourlyemployee.HourlyEmployee(2, "Илья Кромин", 40, 15)
+commission_employee = commissionemployee.CommissionEmployee(3, "Николай Хорольский", 1000, 250)
+
+payroll_system = payrollsystem.PayrollSystem()
+payroll_system.calculate([
+    salary_employee,
+    hourly_employee,
+    commission_employee
+])
+
+# --------------------------------
+
+# import pickle
+
+# file_name = "basket.txt"
+#
+# shop_list = {
+#     "фрукты": ("яблоки", "манго"),
+#     "овощи": ["морковь"],
+#     "бюджет": 1000
+# }
+#
+# with open(file_name, "wb") as f:
+#     pickle.dump(shop_list, f)
+#
+#
+# with open(file_name, "rb") as f:
+#     shop_list2 = pickle.load(f)
+#
+# print(shop_list2)
+
+
+# class Text:
+#     num = 35
+#     string = "Привет"
+#     lst = [1, 2, 3]
+#     tpl = (22, 23)
+#
+#     def __str__(self):
+#         return f"Число: {Text.num}\nСтрока: {Text.string}\nСписок: {Text.lst}\nКортеж: {Text.tpl}"
+#
+#
+# obj = Text()
+#
+# my_obj = pickle.dumps(obj)
+# print(my_obj)
+#
+# obj2 = pickle.loads(my_obj)
+# print(obj2)
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №31 Python от 10.04.2024
+# Урок №1
+# -----------------------------------------------
+
+# import pickle
+
+#
+#
+# class Test2:
+#     def __init__(self):
+#         self.a = 35
+#         self.b = "test"
+#         self.c = lambda x: x * x
+#
+#     def __str__(self):
+#         return f"{self.a} {self.b} {self.c(2)}"
+#
+#     def __getstate__(self):
+#         attr = self.__dict__.copy()
+#         del attr['c']
+#         return attr
+#
+#     def __setstate__(self, state):
+#         self.__dict__ = state
+#         self.c = lambda x: x * x
+#
+#
+# item1 = Test2()
+# print(item1)
+# item2 = pickle.dumps(item1)
+# print(item2)
+# item3 = pickle.loads(item2)
+# print(item3.__dict__)
+# print(item3)
+
+
+# Модуль - json
+
+# import json
+#
+#
+# data = {
+#     'name': 'Olga',
+#     'age': 20,
+#     20: None,
+#     True: 1,
+#     'hobbies': ('running', 'singing'),
+#     'children': ['Alica', 'Bob']
+# }
+#
+# with open('data_file.json', 'w') as f:
+#     json.dump(data, f, indent=4)
+#
+# with open('data_file.json', 'r') as f:
+#     data1 = json.load(f)
+#
+# print(data1)
+#
+# json_string = json.dumps(data, ensure_ascii=False)
+# print(json_string)
+# print(type(json_string))
+
+
+# import json
+#
+# def gen_person():
+#     name = ''
+#     tel = ''
+#
+#     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+#     nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+#
+#     while len(name) != 7:
+#         name += choice(letters)
+#     print(name)
+#
+#     while len(tel) != 10:
+#         tel += choice(nums)
+#     print(name)
+#
+#     person = {
+#         'name': name,
+#         'tel': tel
+#     }
+#     return person
+#
+# def write_json(person_dict):
+#
+#
+# persons = []
+# for i in range(5):
+#     persons.append(gen_person())
+#
+# print(persons)
+#
+# with open("persons.json", "w") as f:
+#     json.dump(persons, f, indent=2)
+
+
+# import json
+# from random import choice
+#
+#
+# def gen_person():
+#     name = ''
+#     tel = ''
+#
+#     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+#     nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+#
+#     while len(name) != 7:
+#         name += choice(letters)
+#
+#     while len(tel) != 10:
+#         tel += choice(nums)
+#
+#     person = {
+#         'name': name,
+#         'tel': tel
+#     }
+#
+#     return person
+#
+#
+# def write_json(person_dict):
+#     try:
+#         data = json.load(open('persons.json'))
+#     except FileNotFoundError:
+#         data = []
+#
+#     data.append(person_dict)
+#     with open("persons.json", "w") as f:
+#         json.dump(data, f, indent=2)
+#
+#
+# for i in range(5):
+#     write_json(gen_person())
+
+
+#
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+# import json
+#
+#
+# # from random import choice
+#
+#
+# # Задача:
+# # Работа с файлами, создать класс Студент
+#
+# class Student:
+#     def __init__(self, name, marks):
+#         self.name = name
+#         self.marks = marks
+#
+#     def __str__(self):
+#         # a = ''
+#         # for i in self.marks:
+#         #     a += str(i) + ", "
+#         # return f"Студент: {self.name} => {a[:-2]}"
+#         a = ", ".join(self.marks)
+#         return f"Студент: {self.name} => {a}"
+#
+#     def add_mark(self, mark):
+#         self.marks.append(mark)
+#
+#     def delete_mark(self, index):
+#         self.marks.pop(index)
+#
+#     def edit_mark(self, index, new_mark):
+#         self.marks[index] = new_mark
+#
+#     def average_mark(self):
+#         return round(sum(self.marks) / len(self.marks), 2)
+#
+#     def get_file_name(self):
+#         return self.name.lower() + .json
+#
+#     def dump_to_json(self):
+#         data = {"name": self.name, "marks": self.marks}
+#         with open(self.get_file_name(), "w") as f:
+#             json.dump(data, f, indent=2)
+#
+#
+# st1 = Student('Bodnya', [5, 4, 3, 4, 5, 3])
+# print(st1)
+# st1.add_mark(4)
+# print(st1)
+# st1.edit_mark(2, 5)
+# print(st1)
+# print(st1.average_mark())
+# print(st1)
+# st1.dump_to_json()
+# # ДОДЕЛАТЬЬЬЬ
