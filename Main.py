@@ -9532,15 +9532,16 @@ import math
 from employee import salaryemployee, hourlyemployee, commissionemployee, payrollsystem
 
 
-salary_employee = salaryemployee.SalaryEmployee(1, "Валерий Задорожный", 1500)
-hourly_employee = hourlyemployee.HourlyEmployee(2, "Илья Кромин", 40, 15)
-commission_employee = commissionemployee.CommissionEmployee(3, "Николай Хорольский", 1000, 250)
+if __name__ == '__main__':
+    salary_employee = salaryemployee.SalaryEmployee(1, "Валерий Задорожный", 1500)
+    hourly_employee = hourlyemployee.HourlyEmployee(2, "Илья Кромин", 40, 15)
+    commission_employee = commissionemployee.CommissionEmployee(3, "Николай Хорольский", 1000, 250)
 
-payroll_system = payrollsystem.PayrollSystem()
-payroll_system.calculate([
-    salary_employee,
-    hourly_employee,
-    commission_employee
+    payroll_system = payrollsystem.PayrollSystem()
+    payroll_system.calculate([
+        salary_employee,
+        hourly_employee,
+        commission_employee
 ])
 
 # --------------------------------
