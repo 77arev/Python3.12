@@ -1054,5 +1054,55 @@ import re
 # Задача:
 #
 
-with open("persons.json", "w", encoding="utf-8") as f:
-    json.dump(persons, f, indent=2)
+
+# ДЗ №31 от 10.04.2024
+# Задача:
+# Изменить структуру, чтобы теперь корневым элементом стал словарь с вложенными словарями, а не список с
+# вложенными словарями, как в предыдущем примере, и это сохранить в формате JSON
+
+import json
+from random import choice
+
+
+def gen_person():
+    name = ''
+    tel = ''
+
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+
+    while len(name) != 7:
+        name += choice(letters)
+
+    while len(tel) != 10:
+        tel += choice(nums)
+
+    person = {
+        'name': name,
+        'tel': tel
+    }
+
+    return name, person
+
+
+def write_json(person_dict):
+    try:
+        data = json.load(open('persons2.json'))
+    except FileNotFoundError:
+        data = {}
+
+    data.update(person_dict)
+    with open("persons2.json", "w") as f:
+        json.dump(data, f, indent=2)
+
+
+for _ in range(5):
+    name, person_data = gen_person()
+    person_dict = {name: person_data}
+    write_json(person_dict)
+
+
+
+
+
+

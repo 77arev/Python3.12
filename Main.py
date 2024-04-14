@@ -9529,25 +9529,51 @@ import math
 #             print(f"- Проверить сумму: {employee.calculate_payroll()}")
 #             print()
 
-from employee import salaryemployee, hourlyemployee, commissionemployee, payrollsystem
+
+# ДОМАШНЯЯ РАБОТА
+
+# from employee import salaryemployee, hourlyemployee, commissionemployee, payrollsystem
+#
+#
+# if __name__ == '__main__':
+#     salary_employee = salaryemployee.SalaryEmployee(1, "Валерий Задорожный", 1500)
+#     hourly_employee = hourlyemployee.HourlyEmployee(2, "Илья Кромин", 40, 15)
+#     commission_employee = commissionemployee.CommissionEmployee(3, "Николай Хорольский", 1000, 250)
+#
+#     payroll_system = payrollsystem.PayrollSystem()
+#     payroll_system.calculate([
+#         salary_employee,
+#         hourly_employee,
+#         commission_employee
+# ])
+
+# ---------------------------------------------------
 
 
-if __name__ == '__main__':
-    salary_employee = salaryemployee.SalaryEmployee(1, "Валерий Задорожный", 1500)
-    hourly_employee = hourlyemployee.HourlyEmployee(2, "Илья Кромин", 40, 15)
-    commission_employee = commissionemployee.CommissionEmployee(3, "Николай Хорольский", 1000, 250)
+# НОВАЯ ТЕМА ***
 
-    payroll_system = payrollsystem.PayrollSystem()
-    payroll_system.calculate([
-        salary_employee,
-        hourly_employee,
-        commission_employee
-])
+# Упаковка данных:
+# Сериализация
+# Десериализация
 
-# --------------------------------
+# Сериализация данных в Python - это процесс преобразования объектов Python в поток байтов (обычно для их
+# сохранения в файле или передачи по сети) и обратное преобразование потока байтов обратно в объекты Python.
+
+# В Python для сериализации данных часто используется модуль (pickle) или модуль (json)
+# (для сериализации в формат JSON, который более читаем для людей). Кроме того, есть и другие форматы,
+# такие как YAML, XML и прочие, которые также могут использоваться для сериализации данных в зависимости от
+# конкретных потребностей.
+
+# комп., Майкр.	Pickle (To convert an object to a series of bytes for transmission to another medium)
+# json - текстовый формат обмена данными, основанный на языке JavaScript
+
+# marshal (*.pyc)
+# pickle
+# json
+
 
 # import pickle
-
+#
 # file_name = "basket.txt"
 #
 # shop_list = {
@@ -9556,16 +9582,21 @@ if __name__ == '__main__':
 #     "бюджет": 1000
 # }
 #
-# with open(file_name, "wb") as f:
-#     pickle.dump(shop_list, f)
+# with open(file_name, "wb") as f:  # "wb" - режим записи байты
+#     pickle.dump(shop_list, f)  # dump() - сохраняет данные в открытый файл
 #
-#
-# with open(file_name, "rb") as f:
-#     shop_list2 = pickle.load(f)
+# with open(file_name, "rb") as f:  # "rb" - и считываем в байтовом режиме
+#     shop_list2 = pickle.load(f)  # load() - получает (считывает) данные из открытого файла
 #
 # print(shop_list2)
 
+# dumps() - сохраняет данные в строку
+# loads() - получает (считывает) данные из строки
 
+
+# import pickle
+#
+#
 # class Text:
 #     num = 35
 #     string = "Привет"
@@ -9578,10 +9609,10 @@ if __name__ == '__main__':
 #
 # obj = Text()
 #
-# my_obj = pickle.dumps(obj)
+# my_obj = pickle.dumps(obj)  # dumps() - сохраняет данные в строку
 # print(my_obj)
 #
-# obj2 = pickle.loads(my_obj)
+# obj2 = pickle.loads(my_obj)  # loads() - получает (считывает) данные из строки
 # print(obj2)
 
 
@@ -9593,20 +9624,20 @@ if __name__ == '__main__':
 # -----------------------------------------------
 
 # import pickle
-
 #
 #
 # class Test2:
 #     def __init__(self):
 #         self.a = 35
 #         self.b = "test"
-#         self.c = lambda x: x * x
+#         self.c = lambda x: x * x  # здесь хранятся не данные, а действие
 #
 #     def __str__(self):
 #         return f"{self.a} {self.b} {self.c(2)}"
 #
 #     def __getstate__(self):
-#         attr = self.__dict__.copy()
+#         attr = self.__dict__.copy()  # берем метод .__dict__. и применяем метод .copy(), который
+#         # создает дубликат словаря
 #         del attr['c']
 #         return attr
 #
@@ -9623,14 +9654,23 @@ if __name__ == '__main__':
 # print(item3.__dict__)
 # print(item3)
 
+# __getstate__ что значит этот метод в питон
+# Метод __getstate__ является частью протокола сериализации в Python и используется при сериализации
+# объектов с помощью модуля pickle.
+# Когда объект сериализуется с помощью pickle.dump() или pickle.dumps(), метод __getstate__ вызывается
+# у объекта для определения состояния, которое должно быть сохранено.
+
+# Обычно метод __getstate__ определяет, какие атрибуты объекта должны быть сериализованы. Он должен
+# возвращать словарь, содержащий состояние объекта, которое нужно сохранить. Этот словарь будет передан
+# в метод __setstate__ при десериализации объекта.
+
 
 # Модуль - json
 
 # import json
-#
-#
+
 # data = {
-#     'name': 'Olga',
+#     'name': 'Ольга',
 #     'age': 20,
 #     20: None,
 #     True: 1,
@@ -9639,9 +9679,9 @@ if __name__ == '__main__':
 # }
 #
 # with open('data_file.json', 'w') as f:
-#     json.dump(data, f, indent=4)
+#     json.dump(data, f, indent=4, ensure_ascii=False)
 #
-# with open('data_file.json', 'r') as f:
+# with open("data_file.json", 'r') as f:
 #     data1 = json.load(f)
 #
 # print(data1)
@@ -9649,82 +9689,102 @@ if __name__ == '__main__':
 # json_string = json.dumps(data, ensure_ascii=False)
 # print(json_string)
 # print(type(json_string))
+# data1 = json.loads(json_string)
+# print(data1)
+# print(type(data1))
 
 
-# import json
+# Сама - сама - переделываю за учителем:
+# data = {
+#     'name': 'Ольга',  # русское слово - будут проблемы с кодировкой
+#     'age': 20,
+#     20: None,
+#     True: 1,
+#     'hobbies': ('running', 'singing'),
+#     'children': ['Alica', 'Bob']
+# }
 #
-# def gen_person():
-#     name = ''
-#     tel = ''
+# with open('data_file_file.json', 'w') as f:
+#     json.dump(data, f, indent=4, ensure_ascii=False)  # indent=4 - кол-во отступов на каждой строке для
+#     вложенных объектов
 #
-#     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-#     nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+# with open('data_file_file.json', 'r') as f:
+#     data1 = json.load(f)  # load - считываем, смотрим в консоли результат
 #
-#     while len(name) != 7:
-#         name += choice(letters)
-#     print(name)
-#
-#     while len(tel) != 10:
-#         tel += choice(nums)
-#     print(name)
-#
-#     person = {
-#         'name': name,
-#         'tel': tel
-#     }
-#     return person
-#
-# def write_json(person_dict):
-#
-#
-# persons = []
-# for i in range(5):
-#     persons.append(gen_person())
-#
-# print(persons)
-#
-# with open("persons.json", "w") as f:
-#     json.dump(persons, f, indent=2)
+# print(data1)
+
+# json_string = json.dumps(data, ensure_ascii=False)
+# ensure_ascii=False - позволяет сохранять данные,
+# # даже написанный на русском языке, в читабельном виде
+# # .dumps - сохраняет данные в строку
+# print(json_string)
+# print(type(json_string))  # <class 'str'>
+# data1 = json.loads(json_string)  # это уже словарь будет
+# print(data1)
+# print(type(data1))  # <class 'dict'>
 
 
-# import json
-# from random import choice
-#
-#
-# def gen_person():
-#     name = ''
-#     tel = ''
-#
-#     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-#     nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-#
-#     while len(name) != 7:
-#         name += choice(letters)
-#
-#     while len(tel) != 10:
-#         tel += choice(nums)
-#
-#     person = {
-#         'name': name,
-#         'tel': tel
-#     }
-#
-#     return person
-#
-#
-# def write_json(person_dict):
-#     try:
-#         data = json.load(open('persons.json'))
-#     except FileNotFoundError:
-#         data = []
-#
-#     data.append(person_dict)
-#     with open("persons.json", "w") as f:
-#         json.dump(data, f, indent=2)
-#
-#
-# for i in range(5):
-#     write_json(gen_person())
+# ---------------------------------------------------
+# Этот код создает случайные данные для "людей" и записывает их в файл JSON.
+import json
+from random import choice
+
+
+def gen_person():
+    name = ''
+    tel = ''
+
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+
+    while len(name) != 7:
+        name += choice(letters)
+    # print(name)
+
+    while len(tel) != 10:
+        tel += choice(nums)
+    # print(tel)
+
+    person = {  # это словарь, куда помещаются случайные имена и телефоны людей, которые генерирует
+        # random.choice
+        'name': name,
+        'tel': tel
+    }
+
+    return person  # и возвращаются из функции
+
+
+# Функция gen_person(): Эта функция создает случайные имена и номера телефонов для каждого "человека".
+# Она использует модуль random для выбора случайных символов из списка букв и цифр для генерации
+# имени и номера телефона. Затем эти данные помещаются в словарь person и возвращаются из функции.
+
+def write_json(person_dict):
+    try:
+        data = json.load(open('persons.json'))  # Функция write_json(person_dict) - открывает файл
+        # persons.json, если он существует, и загружает его содержимое в переменную data.
+    except FileNotFoundError:  # Если файл не существует, создается пустой список.
+        data = []
+
+    data.append(person_dict)  # Затем данные о "человеке" добавляются к списку data, и весь список
+    # записывается обратно в файл JSON с отступом в два пробела.
+    with open("persons.json", "w") as f:
+        json.dump(data, f, indent=2)
+
+
+# Функция write_json(person_dict): Эта функция записывает данные о "человеке" (представленные в виде
+# словаря) в файл JSON. Она открывает файл persons.json, если он существует, и загружает его содержимое
+# в переменную data. Если файл не существует, создается пустой список. Затем данные о "человеке"
+# добавляются к списку data, и весь список записывается обратно в файл JSON с отступом в два пробела.
+
+for i in range(5):
+    print(gen_person())
+
+# Цикл for i in range(5): Этот цикл вызывает функцию gen_person() пять раз и выводит результат на экран.
+# Таким образом, он генерирует пять случайных "людей" и выводит их данные на экран.
+
+# Таким образом, после выполнения этого кода в файл persons.json будет записано пять случайных "людей"
+# в формате JSON.
+# ---------------------------------------------------
 
 
 #
