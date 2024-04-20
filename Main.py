@@ -9727,48 +9727,48 @@ import math
 # ---------------------------------------------------
 # Этот код создает случайные данные для "людей" и записывает их в файл JSON.
 import json
-from random import choice
-
-
-def gen_person():
-    name = ''
-    tel = ''
-
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-    nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-
-    while len(name) != 7:
-        name += choice(letters)
-    # print(name)
-
-    while len(tel) != 10:
-        tel += choice(nums)
-    # print(tel)
-
-    person = {  # это словарь, куда помещаются случайные имена и телефоны людей, которые генерирует
-        # random.choice
-        'name': name,
-        'tel': tel
-    }
-
-    return person  # и возвращаются из функции
+# from random import choice
+#
+#
+# def gen_person():
+#     name = ''
+#     tel = ''
+#
+#     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+#     nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+#
+#     while len(name) != 7:
+#         name += choice(letters)
+#     # print(name)
+#
+#     while len(tel) != 10:
+#         tel += choice(nums)
+#     # print(tel)
+#
+#     person = {  # это словарь, куда помещаются случайные имена и телефоны людей, которые генерирует
+#         # random.choice
+#         'name': name,
+#         'tel': tel
+#     }
+#
+#     return person  # и возвращаются из функции
 
 
 # Функция gen_person(): Эта функция создает случайные имена и номера телефонов для каждого "человека".
 # Она использует модуль random для выбора случайных символов из списка букв и цифр для генерации
 # имени и номера телефона. Затем эти данные помещаются в словарь person и возвращаются из функции.
-
-def write_json(person_dict):
-    try:
-        data = json.load(open('persons.json'))  # Функция write_json(person_dict) - открывает файл
-        # persons.json, если он существует, и загружает его содержимое в переменную data.
-    except FileNotFoundError:  # Если файл не существует, создается пустой список.
-        data = []
-
-    data.append(person_dict)  # Затем данные о "человеке" добавляются к списку data, и весь список
-    # записывается обратно в файл JSON с отступом в два пробела.
-    with open("persons.json", "w") as f:
-        json.dump(data, f, indent=2)
+#
+# def write_json(person_dict):
+#     try:
+#         data = json.load(open('persons.json'))  # Функция write_json(person_dict) - открывает файл
+#         # persons.json, если он существует, и загружает его содержимое в переменную data.
+#     except FileNotFoundError:  # Если файл не существует, создается пустой список.
+#         data = []
+#
+#     data.append(person_dict)  # Затем данные о "человеке" добавляются к списку data, и весь список
+#     # записывается обратно в файл JSON с отступом в два пробела.
+#     with open("persons.json", "w") as f:
+#         json.dump(data, f, indent=2)
 
 
 # Функция write_json(person_dict): Эта функция записывает данные о "человеке" (представленные в виде
@@ -9776,9 +9776,9 @@ def write_json(person_dict):
 # в переменную data. Если файл не существует, создается пустой список. Затем данные о "человеке"
 # добавляются к списку data, и весь список записывается обратно в файл JSON с отступом в два пробела.
 
-for i in range(5):
-    print(gen_person())
-
+# for i in range(5):
+#     print(gen_person())
+#
 # Цикл for i in range(5): Этот цикл вызывает функцию gen_person() пять раз и выводит результат на экран.
 # Таким образом, он генерирует пять случайных "людей" и выводит их данные на экран.
 
@@ -9792,13 +9792,12 @@ for i in range(5):
 # Урок №2
 # ----------------------------
 # import json
+
+# Задача:
+# Работа с файлами, создать класс Студент с возможностью добавления, удаления, изменения оценок и
+# подсчетом среднего балла
+# import json
 #
-#
-# # from random import choice
-#
-#
-# # Задача:
-# # Работа с файлами, создать класс Студент
 #
 # class Student:
 #     def __init__(self, name, marks):
@@ -9806,41 +9805,414 @@ for i in range(5):
 #         self.marks = marks
 #
 #     def __str__(self):
-#         # a = ''
+#         # Первый более длинный вариант
+#         # a = ''  # давайте создадим переменную, и это у нас будет строковое значение
 #         # for i in self.marks:
-#         #     a += str(i) + ", "
-#         # return f"Студент: {self.name} => {a[:-2]}"
-#         a = ", ".join(self.marks)
-#         return f"Студент: {self.name} => {a}"
+#         #     a += str(i) + ", "  # str(i) - мы тоже приводим к строке
+#         # return f"Студент: {self.name} => {a[:-2]}"  # можно убрать запятую через срез
+#
+#         # Второй более короткий вариант
+#         a = ", ".join(map(str, self.marks))
+#         return f"Студент: {self.name} => {a}"  # Студент: Bodnya => 5, 4, 3, 4, 5, 3,
+#
+# # ", ".join(map(str, self.marks)): Эта строка кода преобразует каждый элемент списка (self.marks) в строку с помощью
+# # map(str, self.marks)
+# # , а затем объединяет их с помощью метода join(), разделяя элементы (запятой и пробелом).
+# #
+# # Таким образом, если (self.marks) - это список оценок студента, то эта строка создает строку, содержащую все оценки
+# # студента, разделенные запятой и пробелом.
+# #
+# # f"Студент: {self.name} => {a}": Это форматированная строка (f-строка), которая создает строковое представление объекта.
+# #
+# # В этой строке {self.name} и {a} заменяются на значения имени студента и строкового представления оценок
+# # (которое мы получили выше). Таким образом, в итоговой строке будет содержаться имя студента, затем символ. => и
+# # перечисление его оценок.
+#
 #
 #     def add_mark(self, mark):
-#         self.marks.append(mark)
+#         self.marks.append(mark)  # чтобы добавить доп оценку, обратимся к нашему self.marks - и применим метод
+#         # .append(mark), тк ниже список с оценками
 #
-#     def delete_mark(self, index):
+#     def delete_mark(self, index):  # нужно удалить оценку, используем метод - Удаление по индексу - pop(index)
 #         self.marks.pop(index)
 #
-#     def edit_mark(self, index, new_mark):
+#     def edit_mark(self, index, new_mark):  # нужно изменить оценку (сделаем по индексу), то есть вначале пишем индекс
+#         # оценки, которую мы хотим изменить, а потом новую оценку (new_mark)
 #         self.marks[index] = new_mark
 #
-#     def average_mark(self):
+#     def average_mark(self):  # делаем подсчет среднего балла
 #         return round(sum(self.marks) / len(self.marks), 2)
 #
-#     def get_file_name(self):
-#         return self.name.lower() + .json
+#     def get_file_name(self):  # создадим метод, который нам будет возвращать название файла
+#         return self.name.lower() + ".json"
+#     # метод get_file_name() возвращает строку, которая состоит из имени файла, записанного в нижнем регистре,
+#     # с расширением .json. Например, если self.name содержит "MyFile", метод вернет "myfile.json".
+#     # это промежуточный метод, мы не будем вызывать его за пределами класса
 #
-#     def dump_to_json(self):
-#         data = {"name": self.name, "marks": self.marks}
+#     def dump_to_json(self):  # теперь мы хотим данные о студенте сохранять в файл
+#         data = {"name": self.name, "marks": self.marks}  # соберем данные в словарь
 #         with open(self.get_file_name(), "w") as f:
 #             json.dump(data, f, indent=2)
 #
+#     def load_from_file(self):  # теперь нам нужно данные считать
+#         with open(self.get_file_name(), "r") as f:  # "r" - режим чтения
+#             print(json.load(f))
+#     # with open(self.get_file_name(), "r") as f:: Эта строка открывает файл JSON для чтения
+#     # Он открывается с использованием контекстного менеджера with, который гарантирует, что файл будет корректно
+#     # закрыт после завершения блока with.
+#     # json.load(f): Эта строка загружает содержимое файла JSON из объекта файла f с использованием функции json.load().
+#
+#
+# class Group:
+#     def __init__(self, students, group):
+#         self.students = students
+#         self.group = group
+#
+#     def __str__(self):
+#         a = "\n".join(map(str, self.students))
+#         return f"Группа: {self.group}\n{a}"
+#
+#     def add_student(self, student):  # добавим метод, который будет добавлять студентов
+#         self.students.append(student)
+#
+#     def remove_student(self, index):  # нужен метод для удаления студента
+#         return self.students.pop(index)
+#
+#     @staticmethod
+#     def change_group(gr1, gr2, index):  # метод для перевода студента (по индексу) из одной группы в другую
+#         gr2.add_student(gr1.remove_student(index))
+#
+#     def get_file_name(self): # получить название файла
+#         return self.group.lower().replace(" ", "-") + ".json"  # replace(" ", "-") - ищем в названии файла
+#         # пробельные символы (" ") и заменяем на знак дефиса ("-")
+#
+#     def dump_to_json(self):  # теперь нам надо эти данные сохранять в файл, как? в списке и внутри словарь.
+#         data = [
+#             {'name': student.name, "marks": student.marks} for student in self.students
+#         ]
+#         with open(self.get_file_name(), 'w') as f:  # теперь данные эти мы записываем
+#             json.dump(data, f, indent=2)
+#
+#     def load_from_file(self):  # и теперь мы эти данные считаем
+#         with open(self.get_file_name(), "r") as f:
+#             print(json.load(f))
+#
+#
+# # st1 = Student('Bodnya', [5, 4, 3, 4, 5, 3])
+# # print(st1)  # Студент: Bodnya => 5, 4, 3, 4, 5, 3
+# #
+# # st1.add_mark(4)  # в конец списка добавляем новую оценку (4)
+# # print(st1)  # Студент: Bodnya => 5, 4, 3, 4, 5, 3, 4
+# #
+# # st1.delete_mark(2)  # удаляем оценку по индексу (2)
+# # print(st1)  # Студент: Bodnya => 5, 4, 4, 5, 3, 4
+# #
+# # st1.edit_mark(2, 5)  # изменим оценку по индексу 2 на 5
+# # print(st1)  # Студент: Bodnya => 5, 4, 5, 5, 3, 4
+# #
+# # print(st1.average_mark())  # 4.33
+#
+#
+# # st1.dump_to_json()
+# # st1.load_from_file()  # {'name': 'Bodnya', 'marks': [5, 4, 5, 5, 3, 4]} - считали данные в виде обычного словаря
+# #
+# # st2 = Student('Nikolaenko', [2, 3, 5, 4, 2])
+# # st2.dump_to_json()
+# # st2.load_from_file()  # {'name': 'Nikolaenko', 'marks': [2, 3, 5, 4, 2]}
+# #
+# # st2.add_mark(5)  # Студент: Nikolaenko => 2, 3, 5, 4, 2, 5
+# # print(st2)
+# # st2.dump_to_json()
+# # st2.load_from_file()
+#
 #
 # st1 = Student('Bodnya', [5, 4, 3, 4, 5, 3])
-# print(st1)
-# st1.add_mark(4)
-# print(st1)
-# st1.edit_mark(2, 5)
-# print(st1)
-# print(st1.average_mark())
-# print(st1)
-# st1.dump_to_json()
-# # ДОДЕЛАТЬЬЬЬ
+# st2 = Student('Nikolaenko', [2, 3, 5, 4, 2])
+# st3 = Student('Birukov', [3, 5, 3, 2, 5, 4])
+#
+# sts1 = [st1, st2]
+# group1 = Group(sts1, "ГК Python")
+# # print(group1)  # <__main__.Group object at 0x0000018CC21DC6B0>
+# # print()
+#
+# group1.add_student(st3)
+# # print(group1)
+# # print()
+#
+# group1.remove_student(1)  # удаление студента по индексу
+# # print(group1)
+# # print()
+#
+# sts2 = [st2]
+# group2 = Group(sts2, "ГК Web")
+# print(group2)
+#
+# Group.change_group(group1, group2, 0)  # change_group() - это у нас статический метод, поэтому можем
+# # обратиться по имени класса (Group)
+# print()
+# print(group1)
+# print()
+# print(group2)
+#
+# group2.dump_to_json()
+# group2.load_from_file() # [{'name': 'Nikolaenko', 'marks': [2, 3, 5, 4, 2]}, {'name': 'Bodnya', 'marks':
+# # [5, 4, 3, 4, 5, 3]}]
+#
+# group1.dump_to_json()
+# group1.load_from_file()  # [{'name': 'Birukov', 'marks': [3, 5, 3, 2, 5, 4]}]
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №32 Python от 15.04.2024
+# Урок №1
+# -----------------------------------------------
+
+# доделываем задачу с предыдущего урока
+
+#     def add_db(self):
+#         try:
+#             data = json.load(open('db.json'))
+#         except FileNotFoundError:
+#             data = {}
+#         js = [
+#             {student.name: student.marks} for student in self.students
+#         ]
+#         data[self.group] = js
+#         with open("db.json", "w+") as f:
+#             json.dump(data, f, indent=2)
+#         print(f"Группа {self.group} добавлена в файл")
+#
+#
+#     @staticmethod
+#     def load_groups(file):
+#         with open(file, "r") as f:
+#             print(json.load(f))
+#
+#
+# group1.add_db()
+# group2.add_db()
+#
+# file_name = "db.json"
+# Group.load_groups(file_name)
+
+# все, с этой задачей мы закончили
+
+# Теперь повторяем все, что проходили на всех этих занятиях
+
+
+# Задача:
+# Есть словарь, который хранит названия стран и столиц (как ключ и значение).
+# Необходимо реализовать: добавление, удаление, поиск, редактирование и просмотр данных (используя упаковку
+# и распаковку данных)
+
+# import json
+#
+#
+# class CountryCapital:  # создадим класс, где мы все эти методы будет реализовывать
+#     @staticmethod
+#     def load(file_name):
+#         # data = None
+#         # Мы для каждого метода - данные должны считать
+#         try:
+#             data = json.load(open(file_name))
+#         except FileNotFoundError:
+#             data = {}
+#         finally:
+#             return data
+#
+#     @staticmethod  # Нам здесь проще и удобнее использовать статические методы, чтобы не создавать экземпляры
+#     # класса. Мы можем просто обращаться к имени класса (CountryCapital.) и вызывать нужный нам метод
+#     def add_country(file_name):
+#         new_country = input("Введите название страны: ").lower()  # приводит к нижнему регистру
+#         new_capital = input("Введите название столицы: ").lower()
+#
+#         data = CountryCapital.load(file_name)  # load - это метод или функция, используемая для загрузки
+#         # данных о странах и их столицах из файла с указанным именем (file_name)
+#         # Она выполняет чтение данных из файла и создание объекта (или объектов), представляющих эту информацию,
+#         # которые затем могут быть использованы в программе.
+#
+#         data[new_country] = new_capital  # у нас есть словарь data{}, но нам нужно записать туда new_country -
+#         # ключом, а new_capital - значением
+#
+#         with open(file_name, 'w') as f:  # 'w' - режим записи, создаем файл
+#             json.dump(data, f, indent=2)  # dump - это функция из модуля json, которая используется для записи
+#             # данных в файл в формате JSON.
+#
+#     @staticmethod
+#     def delete_country(file_name):
+#         del_country = input("Введите название страны: ").lower()
+#
+#         data = CountryCapital.load(file_name)
+#
+#         if del_country in data:  # Если название страны есть в нашей базе данных
+#             del data[del_country]
+#
+#             with open(file_name, 'w') as f:
+#                 json.dump(data, f, indent=2)
+#         else:
+#             print("Такой страны в базе нет")
+#
+#     @staticmethod
+#     def search_data(file_name):
+#         country = input("Введите название страны: ").lower()
+#
+#         data = CountryCapital.load(file_name)
+#
+#         if country in data:
+#             print(f"Страна {country.capitalize()} столица {data[country].capitalize()} есть в словаре")
+#         else:
+#             print(f"Страны {country.capitalize()} нет в словаре")
+#
+#     @staticmethod
+#     def edit_data(file_name):
+#         country = input("Введите страну для корректировки: ").lower()
+#
+#         data = CountryCapital.load(file_name)
+#
+#         if country in data:
+#             new_capital = input("Введите новое значение столицы: ").lower()
+#             data[country] = new_capital
+#             with open(file_name, 'w') as f:
+#                 json.dump(data, f, indent=2)
+#         else:
+#             print("Такой страны в базе нет")
+#
+#     @staticmethod
+#     def load_from_file(file_name):  # Открываем файл file_name для чтения.
+#         with open(file_name) as f:
+#             print({k.capitalize(): v.capitalize() for k, v in json.load(f).items()})
+#
+#
+# # Используетcя функция json.load(f), чтобы загрузить данные из файла в формате JSON.
+# # Загруженные данные преобразуются в (словарь Python).
+# # Применяется генератор словарей {k.capitalize(): v.capitalize() for k, v in json.load(f).items()} для обработки
+# # каждой пары ключ-значение из загруженных данных - json.load(f).items()
+# # Внутри генератора словарей каждый ключ k и значение v обрабатываются методом capitalize(), который делает
+# # первую букву каждого слова в строке заглавной, а все остальные буквы - строчными.
+#
+#
+# file = "list_capital.json"
+#
+# while True:
+#     index = input("Выбор действия:\n1 - добавление данных\n2 - удаление данных\n"
+#                   "3 - поиск данных\n4 - редактирование данных\n5 - просмотр данных\n"
+#                   "6 - завершение работы\nВвод: ")  # лучше (int) здесь не указывать, а обращаться к строкам,
+#     # иначе, нам придется обрабатывать исключения с помощью (try, except)
+#     # Поэтому, даже сейчас когда мы вводим (буквы), мы идем по кругу, и ошибки у нас не выскакивают
+#     if index == "1":
+#         CountryCapital.add_country(file)  # так как методы у нас статические, мы обращаемся напрямую через
+#         # имя класса CountryCapital. и название метода (вызываем его)
+#     elif index == "2":
+#         CountryCapital.delete_country(file)
+#     elif index == "3":
+#         CountryCapital.search_data(file)
+#     elif index == "4":
+#         CountryCapital.edit_data(file)
+#     elif index == "5":
+#         CountryCapital.load_from_file(file)
+#     elif index == "6":
+#         break
+#     else:
+#         print("Введен некорректный номер")
+#
+# # Так что у нас повторялось постоянно во всех методах - Чтение файла!
+# # try:
+# #     data = json.load(open(file_name))
+# # except FileNotFoundError:
+# #     data = {}
+
+
+#
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# Мы будем продолжать работать с json объектами, но сейчас рассмотрим дополнительно новый модуль - import requests
+# requests - это модуль в Python, который предоставляет простой и удобный способ взаимодействия с веб-ресурсами.
+# Он позволяет отправлять HTTP-запросы (например, GET, POST, PUT, DELETE и т.д.) и получать ответы от серверов.
+
+import requests
+import json
+
+response = requests.get("https://jsonplaceholder.typicode.com/todos")  # response - это не название
+# переменной, это ответ тела сервера [200]
+# Отправляет GET-запрос на "https://jsonplaceholder.typicode.com/todos" с помощью requests.get().
+# print(response)  # <Response [200]>
+# print(response.text)  # получаем все данные по ссылке с сервера <class 'str'>
+todos = json.loads(response.text)  # Преобразует полученный JSON-ответ в словарь Python с помощью json.loads().
+# print(todos)
+# print(type(todos))  # <class 'list'>
+# print(type(todos[0]))  # <class 'dict'>
+
+todos_by_user = {}  # {1: 11, 2: 8, 3: 7, 4: 6, 5: 12, 6: 6, 7: 9, 8: 11, 9: 8, 10: 12}
+# Создает словарь todos_by_user, в котором ключами будут ID пользователей, а значениями - количество
+# выполненных задач каждым пользователем.
+
+for todo in todos:
+    if todo["completed"]:
+        try:
+            todos_by_user[todo['userId']] += 1  # {1: 2}
+        except KeyError:
+            todos_by_user[todo['userId']] = 1  # {1: 1, 2: 1, 3: 1}
+print(todos_by_user)
+# Результат: {1: 11, 2: 8, 3: 7, 4: 6, 5: 12, 6: 6, 7: 9, 8: 11, 9: 8, 10: 12}
+# Проходит циклом по задачам в todos, проверяя, была ли задача выполнена (todo["completed"]).
+#  Если да, увеличивает соответствующее значение в словаре todos_by_user на 1 или, если такого пользователя
+#  еще нет в словаре, создает новую запись с количеством выполненных задач равным 1.
+
+# Узнаем, кто выполнил максимальное кол-во задач
+
+# top_users = sorted(todos_by_user)  # если так, то получим только список ключей [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+# print(top_users)
+
+top_users = sorted(todos_by_user.items(), key=lambda x: x[1], reverse=True)  # сортировка по значениям
+print(top_users)  # [(5, 12), (10, 12), (1, 11), (8, 11), (7, 9), (2, 8), (9, 8), (3, 7), (4, 6), (6, 6)]
+
+max_complete = top_users[0][1]
+print(max_complete)  # 12
+# Вычисляет максимальное количество выполненных задач (max_complete) - берет первый элемент из top_users
+# (с наибольшим количеством выполненных задач) и его значение.
+
+users = []  # составим список для пользователей, которые выполнили максимальное кол-во задач
+for user, num_complete in top_users:
+    if num_complete < max_complete:  # 11 < 12
+        break
+    users.append(str(user))
+print(users)  # ['5', '10'] - только пользователь 5 и 10
+
+max_users = " and ".join(users)  # join - это метод строк
+print(max_users)
+print(f"Users {max_users} completed {max_complete} Todos")  # Users 5 and 10 completed 12 Todos
+
+
+# max_users_data = []
+#
+# for user, num_complete in top_users:
+#     if num_complete < max_complete:
+#         break
+#     max_users_data.append({"userId": user, "num_complete": num_complete})
+#
+# # Записываем данные в файл JSON
+# with open("max_users.json", "w") as file:
+#     json.dump(max_users_data, file, indent=2)
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №33 Python от 17.04.2024
+# Урок №1
+# -----------------------------------------------
+
+
+def keep(todo):
+    completed = todo["completed"]
+    max_count = str(todo["userId"]) in users
+    return completed and max_count
+
+
+with open("filter_file.json", "w") as f:
+    filtered = list(filter(keep, todos))
+    json.dump(filtered, f, indent=2)

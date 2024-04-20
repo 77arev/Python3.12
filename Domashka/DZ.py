@@ -1060,49 +1060,108 @@ import re
 # Изменить структуру, чтобы теперь корневым элементом стал словарь с вложенными словарями, а не список с
 # вложенными словарями, как в предыдущем примере, и это сохранить в формате JSON
 
+# Чтобы изменить структуру данных так, чтобы корневым элементом был словарь с вложенными словарями, а не список
+# с вложенными словарями, нам нужно изменить способ, которым добавляются данные о "людях" в файл JSON.
+# Вместо того чтобы использовать список для хранения словарей о людях, мы будем использовать словарь,
+# где ключами будут имена людей или другие уникальные идентификаторы, а значениями будут сами словари с данными
+# о каждом человеке.
+
+# import json
+# from random import choice
+#
+#
+# def gen_person():
+#     name = ''
+#     tel = ''
+#
+#     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+#     nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+#
+#     while len(name) != 7:
+#         name += choice(letters)
+#
+#     while len(tel) != 10:
+#         tel += choice(nums)
+#
+#     person = {
+#         'name': name,
+#         'tel': tel
+#     }
+#
+#     return name, person
+#
+#
+# def write_json(person_dict):
+#     try:
+#         data = json.load(open('persons2.json'))
+#     except FileNotFoundError:
+#         data = {}
+#
+#     data.update(person_dict)
+#     with open("persons2.json", "w") as f:
+#         json.dump(data, f, indent=2)
+#
+#
+# for _ in range(5):
+#     name, person_data = gen_person()
+#     person_dict = {name: person_data}
+#     write_json(person_dict)
+
+
+# ДЗ №32 от 15.04.2024
+# Задача:
+# Сохранить в файл json данные пользователей, который выполнили максимальное количество задач (todos).
+
+import requests
 import json
-from random import choice
+
+response = requests.get("https://jsonplaceholder.typicode.com/todos")
+todos = json.loads(response.text)
+
+todos_by_user = {}
+for todo in todos:
+    if todo["completed"]:
+        try:
+            todos_by_user[todo['userId']] += 1  # {1: 2}
+        except KeyError:
+            todos_by_user[todo['userId']] = 1  # {1: 1, 2: 1, 3: 1}
+print(todos_by_user)
+
+top_users = sorted(todos_by_user.items(), key=lambda x: x[1], reverse=True)
+print(top_users)
+
+max_complete = top_users[0][1]
+print(max_complete)  # 12
+
+users = []
+for user, num_complete in top_users:
+    if num_complete < max_complete:
+        break
+    users.append(str(user))
+print(users)
+
+max_users = " and ".join(users)
+print(max_users)
+print(f"Users {max_users} completed {max_complete} Todos")
 
 
-def gen_person():
-    name = ''
-    tel = ''
+# max_users_data = []
+#
+# for user, num_complete in top_users:
+#     if num_complete < max_complete:
+#         break
+#     max_users_data.append({"userId": user, "num_complete": num_complete})
+#
+# # Записываем данные в файл JSON
+# with open("max_users.json", "w") as file:
+#     json.dump(max_users_data, file, indent=2)
 
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-    nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-
-    while len(name) != 7:
-        name += choice(letters)
-
-    while len(tel) != 10:
-        tel += choice(nums)
-
-    person = {
-        'name': name,
-        'tel': tel
-    }
-
-    return name, person
+def keep(todo):
+    completed = todo["completed"]
+    max_count = str(todo["userId"]) in users
+    return completed and max_count
 
 
-def write_json(person_dict):
-    try:
-        data = json.load(open('persons2.json'))
-    except FileNotFoundError:
-        data = {}
-
-    data.update(person_dict)
-    with open("persons2.json", "w") as f:
-        json.dump(data, f, indent=2)
-
-
-for _ in range(5):
-    name, person_data = gen_person()
-    person_dict = {name: person_data}
-    write_json(person_dict)
-
-
-
-
-
-
+with open("filter_file.json", "w") as f:
+    filtered = list(filter(keep, todos))
+    json.dump(filtered, f, indent=2)

@@ -79,3 +79,60 @@
 # сохранить данные для последующего использования.
 
 
+import json
+
+
+class CountryCapital:  # создадим класс, где мы все эти методы будет реализовывать
+    # @staticmethod
+    # def load(file_name):
+    #     # data = None
+    #     try:
+    #         data = json.load(open(file_name))
+    #     except FileNotFoundError:
+    #         data = {}
+    #     finally:
+    #         return data
+
+    @staticmethod  # Нам здесь проще и удобнее использовать статические методы, чтобы не создавать экземпляры
+    # класса. Мы можем просто обращаться к имени класса (CountryCapital.) и вызывать нужный нам метод
+    def add_country(file_name):
+        new_country = input("Введите название страны: ").lower()  # приводит к нижнему регистру
+        new_capital = input("Введите название столицы: ").lower()
+
+        data = CountryCapital.load(file_name)  # load - это метод или функция, используемая для загрузки
+        # данных о странах и их столицах из файла с указанным именем (file_name)
+        # Она выполняет чтение данных из файла и создание объекта (или объектов), представляющих эту информацию,
+        # которые затем могут быть использованы в программе.
+
+        data[new_country] = new_capital  # у нас есть словарь data{}, но нам нужно записать туда new_country -
+        # ключом, а new_capital - значением
+
+        with open(file_name, 'w') as f:  # 'w' - режим записи, создаем файл
+            json.dump(data, f, indent=2)  # dump - это функция из модуля json, которая используется для записи
+            # данных в файл в формате JSON.
+
+
+# import requests
+# ChatGPT
+# requests - это модуль в Python, который предоставляет простой и удобный способ взаимодействия с веб-ресурсами.
+# Он позволяет отправлять HTTP-запросы (например, GET, POST, PUT, DELETE и т.д.) и получать ответы от серверов.
+# После того как вы импортируете модуль requests с помощью команды import requests, вы можете использовать его
+# функциональность для выполнения различных HTTP-запросов. Например:
+
+import requests
+
+# Отправка GET-запроса
+response = requests.get('https://api.example.com/data')
+
+# Отправка POST-запроса с данными
+payload = {'key1': 'value1', 'key2': 'value2'}
+response = requests.post('https://api.example.com/submit', data=payload)
+
+# Проверка успешности запроса и вывод ответа
+if response.status_code == 200:
+    print(response.text)
+else:
+    print('Ошибка:', response.status_code)
+# В этом примере мы импортируем модуль requests и используем его для отправки GET- и POST-запросов на различные
+# URL-адреса. Результаты запросов сохраняются в переменной response, и мы можем анализировать их,
+# проверяя статус-коды и получая текст ответов.
