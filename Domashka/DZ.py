@@ -1112,56 +1112,86 @@ import re
 # Задача:
 # Сохранить в файл json данные пользователей, который выполнили максимальное количество задач (todos).
 
-import requests
-import json
-
-response = requests.get("https://jsonplaceholder.typicode.com/todos")
-todos = json.loads(response.text)
-
-todos_by_user = {}
-for todo in todos:
-    if todo["completed"]:
-        try:
-            todos_by_user[todo['userId']] += 1  # {1: 2}
-        except KeyError:
-            todos_by_user[todo['userId']] = 1  # {1: 1, 2: 1, 3: 1}
-print(todos_by_user)
-
-top_users = sorted(todos_by_user.items(), key=lambda x: x[1], reverse=True)
-print(top_users)
-
-max_complete = top_users[0][1]
-print(max_complete)  # 12
-
-users = []
-for user, num_complete in top_users:
-    if num_complete < max_complete:
-        break
-    users.append(str(user))
-print(users)
-
-max_users = " and ".join(users)
-print(max_users)
-print(f"Users {max_users} completed {max_complete} Todos")
-
-
-# max_users_data = []
+# import requests
+# import json
 #
+# response = requests.get("https://jsonplaceholder.typicode.com/todos")
+# todos = json.loads(response.text)
+#
+# todos_by_user = {}
+# for todo in todos:
+#     if todo["completed"]:
+#         try:
+#             todos_by_user[todo['userId']] += 1  # {1: 2}
+#         except KeyError:
+#             todos_by_user[todo['userId']] = 1  # {1: 1, 2: 1, 3: 1}
+# print(todos_by_user)
+#
+# top_users = sorted(todos_by_user.items(), key=lambda x: x[1], reverse=True)
+# print(top_users)
+#
+# max_complete = top_users[0][1]
+# print(max_complete)  # 12
+#
+# users = []
 # for user, num_complete in top_users:
 #     if num_complete < max_complete:
 #         break
-#     max_users_data.append({"userId": user, "num_complete": num_complete})
+#     users.append(str(user))
+# print(users)
 #
-# # Записываем данные в файл JSON
-# with open("max_users.json", "w") as file:
-#     json.dump(max_users_data, file, indent=2)
+# max_users = " and ".join(users)
+# print(max_users)
+# print(f"Users {max_users} completed {max_complete} Todos")
+#
+#
+# # max_users_data = []
+# #
+# # for user, num_complete in top_users:
+# #     if num_complete < max_complete:
+# #         break
+# #     max_users_data.append({"userId": user, "num_complete": num_complete})
+# #
+# # # Записываем данные в файл JSON
+# # with open("max_users.json", "w") as file:
+# #     json.dump(max_users_data, file, indent=2)
+#
+# def keep(todo):
+#     completed = todo["completed"]
+#     max_count = str(todo["userId"]) in users
+#     return completed and max_count
+#
+#
+# with open("filter_file.json", "w") as f:
+#     filtered = list(filter(keep, todos))
+#     json.dump(filtered, f, indent=2)
 
-def keep(todo):
-    completed = todo["completed"]
-    max_count = str(todo["userId"]) in users
-    return completed and max_count
+
+# ДЗ №33 от 17.04.2024
+# Задача:
+# Нужно взять любой json объект (в json формате), к примеру, тот, который можно найти по данной
+# ссылке - https://jsonplaceholder.typicode.com/todos и преобразовать его в формат csv
+
+import requests
+import csv
+
+# Загружаем данные из JSON-файла
+response = requests.get("https://jsonplaceholder.typicode.com/todos")
+todos = response.json()
+
+with open("todos.csv", "w", newline='') as csvfile:
+    # Создаем объект для записи CSV
+    csv_writer = csv.writer(csvfile)
+
+    # Записываем заголовки столбцов
+    csv_writer.writerow(["userId", "id", "title", "completed"])
+
+    # Записываем данные из JSON в CSV
+    for todo in todos:
+        csv_writer.writerow([todo["userId"], todo["id"], todo["title"], todo["completed"]])
+
+print("Данные успешно записаны в файл todos.csv")
 
 
-with open("filter_file.json", "w") as f:
-    filtered = list(filter(keep, todos))
-    json.dump(filtered, f, indent=2)
+
+

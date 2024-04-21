@@ -10133,58 +10133,58 @@ import json
 # requests - это модуль в Python, который предоставляет простой и удобный способ взаимодействия с веб-ресурсами.
 # Он позволяет отправлять HTTP-запросы (например, GET, POST, PUT, DELETE и т.д.) и получать ответы от серверов.
 
-import requests
-import json
-
-response = requests.get("https://jsonplaceholder.typicode.com/todos")  # response - это не название
-# переменной, это ответ тела сервера [200]
-# Отправляет GET-запрос на "https://jsonplaceholder.typicode.com/todos" с помощью requests.get().
-# print(response)  # <Response [200]>
-# print(response.text)  # получаем все данные по ссылке с сервера <class 'str'>
-todos = json.loads(response.text)  # Преобразует полученный JSON-ответ в словарь Python с помощью json.loads().
-# print(todos)
-# print(type(todos))  # <class 'list'>
-# print(type(todos[0]))  # <class 'dict'>
-
-todos_by_user = {}  # {1: 11, 2: 8, 3: 7, 4: 6, 5: 12, 6: 6, 7: 9, 8: 11, 9: 8, 10: 12}
-# Создает словарь todos_by_user, в котором ключами будут ID пользователей, а значениями - количество
-# выполненных задач каждым пользователем.
-
-for todo in todos:
-    if todo["completed"]:
-        try:
-            todos_by_user[todo['userId']] += 1  # {1: 2}
-        except KeyError:
-            todos_by_user[todo['userId']] = 1  # {1: 1, 2: 1, 3: 1}
-print(todos_by_user)
-# Результат: {1: 11, 2: 8, 3: 7, 4: 6, 5: 12, 6: 6, 7: 9, 8: 11, 9: 8, 10: 12}
-# Проходит циклом по задачам в todos, проверяя, была ли задача выполнена (todo["completed"]).
-#  Если да, увеличивает соответствующее значение в словаре todos_by_user на 1 или, если такого пользователя
-#  еще нет в словаре, создает новую запись с количеством выполненных задач равным 1.
-
-# Узнаем, кто выполнил максимальное кол-во задач
-
-# top_users = sorted(todos_by_user)  # если так, то получим только список ключей [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-# print(top_users)
-
-top_users = sorted(todos_by_user.items(), key=lambda x: x[1], reverse=True)  # сортировка по значениям
-print(top_users)  # [(5, 12), (10, 12), (1, 11), (8, 11), (7, 9), (2, 8), (9, 8), (3, 7), (4, 6), (6, 6)]
-
-max_complete = top_users[0][1]
-print(max_complete)  # 12
-# Вычисляет максимальное количество выполненных задач (max_complete) - берет первый элемент из top_users
-# (с наибольшим количеством выполненных задач) и его значение.
-
-users = []  # составим список для пользователей, которые выполнили максимальное кол-во задач
-for user, num_complete in top_users:
-    if num_complete < max_complete:  # 11 < 12
-        break
-    users.append(str(user))
-print(users)  # ['5', '10'] - только пользователь 5 и 10
-
-max_users = " and ".join(users)  # join - это метод строк
-print(max_users)
-print(f"Users {max_users} completed {max_complete} Todos")  # Users 5 and 10 completed 12 Todos
+# import requests
+# import json
+#
+# response = requests.get("https://jsonplaceholder.typicode.com/todos")  # response - это не название
+# # переменной, это ответ тела сервера [200]
+# # Отправляет GET-запрос на "https://jsonplaceholder.typicode.com/todos" с помощью requests.get().
+# # print(response)  # <Response [200]>
+# # print(response.text)  # получаем все данные по ссылке с сервера <class 'str'>
+# todos = json.loads(response.text)  # Преобразует полученный JSON-ответ в словарь Python с помощью json.loads().
+# # print(todos)
+# # print(type(todos))  # <class 'list'>
+# # print(type(todos[0]))  # <class 'dict'>
+#
+# todos_by_user = {}  # {1: 11, 2: 8, 3: 7, 4: 6, 5: 12, 6: 6, 7: 9, 8: 11, 9: 8, 10: 12}
+# # Создает словарь todos_by_user, в котором ключами будут ID пользователей, а значениями - количество
+# # выполненных задач каждым пользователем.
+#
+# for todo in todos:
+#     if todo["completed"]:
+#         try:
+#             todos_by_user[todo['userId']] += 1  # {1: 2}
+#         except KeyError:
+#             todos_by_user[todo['userId']] = 1  # {1: 1, 2: 1, 3: 1}
+# print(todos_by_user)
+# # Результат: {1: 11, 2: 8, 3: 7, 4: 6, 5: 12, 6: 6, 7: 9, 8: 11, 9: 8, 10: 12}
+# # Проходит циклом по задачам в todos, проверяя, была ли задача выполнена (todo["completed"]).
+# #  Если да, увеличивает соответствующее значение в словаре todos_by_user на 1 или, если такого пользователя
+# #  еще нет в словаре, создает новую запись с количеством выполненных задач равным 1.
+#
+# # Узнаем, кто выполнил максимальное кол-во задач
+#
+# # top_users = sorted(todos_by_user)  # если так, то получим только список ключей [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+# # print(top_users)
+#
+# top_users = sorted(todos_by_user.items(), key=lambda x: x[1], reverse=True)  # сортировка по значениям
+# print(top_users)  # [(5, 12), (10, 12), (1, 11), (8, 11), (7, 9), (2, 8), (9, 8), (3, 7), (4, 6), (6, 6)]
+#
+# max_complete = top_users[0][1]
+# print(max_complete)  # 12
+# # Вычисляет максимальное количество выполненных задач (max_complete) - берет первый элемент из top_users
+# # (с наибольшим количеством выполненных задач) и его значение.
+#
+# users = []  # составим список для пользователей, которые выполнили максимальное кол-во задач
+# for user, num_complete in top_users:
+#     if num_complete < max_complete:  # 11 < 12
+#         break
+#     users.append(str(user))
+# print(users)  # ['5', '10'] - только пользователь 5 и 10
+#
+# max_users = " and ".join(users)  # join - это метод строк
+# print(max_users)
+# print(f"Users {max_users} completed {max_complete} Todos")  # Users 5 and 10 completed 12 Todos
 
 
 # max_users_data = []
@@ -10207,12 +10207,210 @@ print(f"Users {max_users} completed {max_complete} Todos")  # Users 5 and 10 com
 # -----------------------------------------------
 
 
-def keep(todo):
-    completed = todo["completed"]
-    max_count = str(todo["userId"]) in users
-    return completed and max_count
+# def keep(todo):  # Определяется функция keep(todo), которая принимает задачу (todo) в качестве аргумента.
+#     completed = todo["completed"]  # Внутри функции извлекаются значения completed и userId из задачи.
+#     max_count = str(todo["userId"]) in users  # Проверяется, выполнил ли пользователь (userId) максимальное
+#     # количество задач, проверяя, есть ли его ID в списке users.
+#     return completed and max_count
+# # Функция возвращает True, если задача выполнена (completed) и пользователь выполнил максимальное количество
+# # задач (max_count), в противном случае возвращает False.
+#
+#
+# with open("filter_file.json", "w") as f:  # Открывается файл "filter_file.json" для записи.
+#     filtered = list(filter(keep, todos))  # С помощью функции filter() фильтруется список задач todos с
+#     # использованием функции keep. Функция filter() возвращает итератор, содержащий только те задачи, для
+#     # которых функция keep возвращает True.
+#     json.dump(filtered, f, indent=2)
+# Результат фильтрации записывается в файл "filter_file.json" с использованием json.dump() с отступами
+# в 2 пробела для лучшей читаемости.
+# -----------------------------------------------
 
 
-with open("filter_file.json", "w") as f:
-    filtered = list(filter(keep, todos))
-    json.dump(filtered, f, indent=2)
+# С json форматом мы закончили, теперь переходим к изучению формата (csv)
+
+# Формат CSV (Comma-Separated Values) (Значения, разделенные запятыми) представляет собой текстовый
+# формат для хранения табличных данных.
+# В CSV данные организованы в виде таблицы, где строки представляют отдельные записи, а столбцы -
+# поля данных.
+# Основные особенности формата CSV: Формат CSV (Comma-Separated Values) представляет собой текстовый
+# формат для хранения табличных данных. В CSV данные организованы в виде таблицы, где строки
+# представляют отдельные записи, а столбцы - поля данных.
+#
+# Основные особенности формата CSV:
+# 1) Разделение данных:
+# Записи разделяются запятыми (или другим разделителем, таким как точка с запятой или табуляция).
+# Каждое поле данных отделено запятой. Например:
+# sql
+# Copy code
+# имя, возраст, город
+# John, 25, New York
+# Alice, 30, London
+# 2) Строки данных: Каждая строка представляет отдельную запись или строку данных.
+# 3) Столбцы данных: Каждый столбец представляет определенный атрибут или поле данных.
+# 4) Простота: CSV - это простой и удобный формат для хранения и передачи табличных данных.
+# Он легко читается и обрабатывается как человеком, так и компьютером.
+
+
+# Формат CSV (Comma-Separated Values) - текстовый формат для хранения больших объемов данных
+
+# csv.reader() - [] - будет получать данные в виде списка
+# csv.DictReader() - {} - будет получать данные в виде словаря
+
+
+# import csv
+#
+#
+# with open("data1.csv") as f:  # файл с таким названием "data.csv" уже создан, мы открываем его только
+#     # на чтение, можно указывать (r), можно не указывать
+#     file_reader = csv.reader(f, delimiter=";")  # file_reader - просто переменная
+#     # delimiter - разделитель (";")
+#
+#     count = 0  # создадим какую-то переменную (count), присвоим ей значение 0
+#     for row in file_reader:
+#         if count == 0:  # Этот блок выполняется только для первой строки файла.
+#             print(f"Файл содержит столбцы: {', '.join(row)}")  # Выводит на экран заголовки столбцов,
+#             # разделенные запятыми.
+#         else:  # Этот блок выполняется для всех остальных строк файла.
+#             print(f"\t{row[0]} - {row[1]}. Родился в {row[2]} году.")  # Выводит на экран данные
+#             # из строк CSV-файла. Для каждой строки выводится первый и второй столбец, а также
+#             # текст "Родился в" и значение третьего столбца.
+#         count += 1
+#
+#     # for row in file_reader:
+#     #     print(row)
+
+
+# Формат CSV (Comma-Separated Values) - текстовый формат для хранения больших объемов данных
+
+# csv.reader() - [] - будет получать данные в виде списка
+# csv.DictReader() - {} - будет получать данные в виде словаря
+# sv.writer() - [] - будет записывать данные в виде списка
+# sv.DictWriter() - {} - будет записывать данные в виде словаря
+
+
+# import csv
+#
+#
+# with open("data1.csv") as f:
+#     file_reader = csv.DictReader(f, delimiter=";")
+#     for row in file_reader:
+#         print(row)
+# Результат: получили 2 словаря
+# {'Имя': 'Виктор', 'Профессия': 'Веб-дизайнер', 'Год рождения': '1995'}
+# {'Имя': 'Игорь', 'Профессия': 'Программист', 'Год рождения': '1983'}
+
+
+# import csv
+#
+#
+# with open("data1.csv") as f:
+#     file_names = ['Имя', 'Профессия', 'Год рождения']
+#     file_reader = csv.DictReader(f, delimiter=";", fieldnames=file_names)
+#     count = 0
+#     for row in file_reader:
+#         if count == 0:
+#             print(f"Файл содержит столбцы: {', '.join(row)}")
+#         print(f"\t{row['Имя']} - {row['Профессия']}. Родился в {row['Год рождения']} году.")
+#         count += 1
+
+
+# import csv
+#
+# # Этот код создает CSV-файл с именем "student.csv" и записывает в него данные о студентах.
+# with open("student.csv", "w") as f:  # Открывает файл "student.csv" для записи ("w" - режим записи)
+#     # и создает файловый объект f. Блок with гарантирует закрытие файла после завершения работы с ним.
+#     writer = csv.writer(f, delimiter=";", lineterminator="\r")  # ограничитель строки
+#     # Создает переменную - объект (writer) с помощью функции csv.writer(), разделитель данных будет
+#     # использоваться точка с запятой (delimiter=";"), а lineterminator="\r" устанавливает символ конца
+#     # строки в возврат каретки (\r) - возврат каретки
+#     writer.writerow(["Имя", "Класс", "Возраст"])  #  Записывает первую строку в файл, содержащую
+#     # заголовки столбцов: "Имя", "Класс" и "Возраст".
+#     writer.writerow(["Женя", 9, 15])  # Записывает данные о первом студенте в файл. Имя "Женя", класс 9,
+#     # возраст 15.
+#     writer.writerow(["Саша", 5, 12])
+#     writer.writerow(["Маша", 11, 18])
+
+
+# import csv
+#
+#
+# data = [['hostname', 'vendor', 'model', 'location'],
+#         ['sw1', 'Cisco', '3750', 'London, Best str'],
+#         ['sw2', 'Cisco', '3850', 'Liverpool, Better str'],
+#         ['sw3', 'Cisco', '3650', 'Liverpool, Better str'],
+#         ['sw4', 'Cisco', '3650', 'London, Best str']]
+#
+# with open("data_new.csv", "w") as f:
+#     writer = csv.writer(f, delimiter=";", lineterminator="\r")
+#     # for row in data:
+#     #     writer.writerow(row)
+#     writer.writerows(data)
+#
+# with open("data_new.csv") as f:
+#     print(f.read())
+
+
+# Формат CSV (Comma-Separated Values) - текстовый формат для хранения больших объемов данных
+
+# csv.reader() - [] - будет получать данные в виде списка
+# csv.DictReader() - {} - будет получать данные в виде словаря
+# sv.writer() - [] - будет записывать данные в виде списка
+# sv.DictWriter() - {} - будет записывать данные в виде словаря
+
+
+# import csv
+#
+#
+# with open("student1.csv", "w") as f:
+#     names = ["Имя", "Возраст"]
+#     file_writer = csv.DictWriter(f, delimiter=";", lineterminator="\r", fieldnames=names)
+#     # fieldnames=names - будет заголовочная строка
+#     file_writer.writeheader()  # заголовочная строка
+#     file_writer.writerow({"Имя": "Саша", "Возраст": 6})  # вывести первую строку
+#     file_writer.writerow({"Имя": "Маша", "Возраст": 15})  # вывести вторую строку
+#     file_writer.writerow({"Имя": "Вова", "Возраст": 14})  # вывести третью строку
+
+
+import csv
+
+# Задача - список словарей
+data = [{
+    'hostname': 'sw1',
+    'location': 'London',
+    'model': '3750',
+    'vendor': 'Cisco'
+}, {
+    'hostname': 'sw2',
+    'location': 'Liverpool',
+    'model': '3850',
+    'vendor': 'Cisco'
+}, {
+    'hostname': 'sw3',
+    'location': 'Liverpool',
+    'model': '3650',
+    'vendor': 'Cisco'
+}, {
+    'hostname': 'sw4',
+    'location': 'London',
+    'model': '3650',
+    'vendor': 'Cisco'
+}]
+
+with open("dict_writer.csv", "w") as f:
+    # fieldnames = ['hostname', 'location', 'model', 'vendor']
+    writer = csv.DictWriter(f, delimiter=";", lineterminator="\r", fieldnames=list(data[0].keys()))
+    writer.writeheader()
+    for d in data:
+        writer.writerow(d)  # обращаемся к переменной writer и записываем, проходя в цикле, строки
+        # по порядку
+
+# print(list(data[0].keys()))  # нам нужно из словаря взять только ключи, поэтому .keys()
+# В Python \r представляет собой управляющий символ, который обозначает возврат каретки (carriage return).
+# Этот символ используется для перемещения курсора в начало строки без перехода на новую строку.
+
+
+#
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+

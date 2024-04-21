@@ -79,37 +79,37 @@
 # сохранить данные для последующего использования.
 
 
-import json
-
-
-class CountryCapital:  # создадим класс, где мы все эти методы будет реализовывать
-    # @staticmethod
-    # def load(file_name):
-    #     # data = None
-    #     try:
-    #         data = json.load(open(file_name))
-    #     except FileNotFoundError:
-    #         data = {}
-    #     finally:
-    #         return data
-
-    @staticmethod  # Нам здесь проще и удобнее использовать статические методы, чтобы не создавать экземпляры
-    # класса. Мы можем просто обращаться к имени класса (CountryCapital.) и вызывать нужный нам метод
-    def add_country(file_name):
-        new_country = input("Введите название страны: ").lower()  # приводит к нижнему регистру
-        new_capital = input("Введите название столицы: ").lower()
-
-        data = CountryCapital.load(file_name)  # load - это метод или функция, используемая для загрузки
-        # данных о странах и их столицах из файла с указанным именем (file_name)
-        # Она выполняет чтение данных из файла и создание объекта (или объектов), представляющих эту информацию,
-        # которые затем могут быть использованы в программе.
-
-        data[new_country] = new_capital  # у нас есть словарь data{}, но нам нужно записать туда new_country -
-        # ключом, а new_capital - значением
-
-        with open(file_name, 'w') as f:  # 'w' - режим записи, создаем файл
-            json.dump(data, f, indent=2)  # dump - это функция из модуля json, которая используется для записи
-            # данных в файл в формате JSON.
+# import json
+#
+#
+# class CountryCapital:  # создадим класс, где мы все эти методы будет реализовывать
+#     # @staticmethod
+#     # def load(file_name):
+#     #     # data = None
+#     #     try:
+#     #         data = json.load(open(file_name))
+#     #     except FileNotFoundError:
+#     #         data = {}
+#     #     finally:
+#     #         return data
+#
+#     @staticmethod  # Нам здесь проще и удобнее использовать статические методы, чтобы не создавать экземпляры
+#     # класса. Мы можем просто обращаться к имени класса (CountryCapital.) и вызывать нужный нам метод
+#     def add_country(file_name):
+#         new_country = input("Введите название страны: ").lower()  # приводит к нижнему регистру
+#         new_capital = input("Введите название столицы: ").lower()
+#
+#         data = CountryCapital.load(file_name)  # load - это метод или функция, используемая для загрузки
+#         # данных о странах и их столицах из файла с указанным именем (file_name)
+#         # Она выполняет чтение данных из файла и создание объекта (или объектов), представляющих эту информацию,
+#         # которые затем могут быть использованы в программе.
+#
+#         data[new_country] = new_capital  # у нас есть словарь data{}, но нам нужно записать туда new_country -
+#         # ключом, а new_capital - значением
+#
+#         with open(file_name, 'w') as f:  # 'w' - режим записи, создаем файл
+#             json.dump(data, f, indent=2)  # dump - это функция из модуля json, которая используется для записи
+#             # данных в файл в формате JSON.
 
 
 # import requests
@@ -119,20 +119,64 @@ class CountryCapital:  # создадим класс, где мы все эти 
 # После того как вы импортируете модуль requests с помощью команды import requests, вы можете использовать его
 # функциональность для выполнения различных HTTP-запросов. Например:
 
-import requests
-
-# Отправка GET-запроса
-response = requests.get('https://api.example.com/data')
-
-# Отправка POST-запроса с данными
-payload = {'key1': 'value1', 'key2': 'value2'}
-response = requests.post('https://api.example.com/submit', data=payload)
-
-# Проверка успешности запроса и вывод ответа
-if response.status_code == 200:
-    print(response.text)
-else:
-    print('Ошибка:', response.status_code)
+# import requests
+#
+# # Отправка GET-запроса
+# response = requests.get('https://api.example.com/data')
+#
+# # Отправка POST-запроса с данными
+# payload = {'key1': 'value1', 'key2': 'value2'}
+# response = requests.post('https://api.example.com/submit', data=payload)
+#
+# # Проверка успешности запроса и вывод ответа
+# if response.status_code == 200:
+#     print(response.text)
+# else:
+#     print('Ошибка:', response.status_code)
 # В этом примере мы импортируем модуль requests и используем его для отправки GET- и POST-запросов на различные
 # URL-адреса. Результаты запросов сохраняются в переменной response, и мы можем анализировать их,
 # проверяя статус-коды и получая текст ответов.
+
+
+# ДЗ №33 от 17.04.2024
+# Задача:
+# Нужно взять любой json объект (в json формате), к примеру, тот, который можно найти по данной
+# ссылке - https://jsonplaceholder.typicode.com/todos и преобразовать его в формат csv (в Python)
+
+import requests  # Эта строка импортирует модуль requests, который используется для отправки HTTP-запросов
+# на сторонний ресурс
+import csv  # Эта строка импортирует модуль csv, который предоставляет функциональность для работы
+# с файлами в формате CSV
+
+# Загружаем данные из JSON-файла на стороннем ресурсе
+response = requests.get("https://jsonplaceholder.typicode.com/todos")  # Эта строка отправляет GET-запрос
+# по указанному URL-адресу, который возвращает данные в формате JSON. Полученный ответ сохраняется
+# в переменной response.
+todos = response.json()  # здесь мы преобразовываем полученные данные из формата JSON в Python-объекты.
+# Результат сохраняется в переменной (todos).
+
+# Открываем файл для записи в формате CSV
+with open("todos.csv", "w", newline='') as csvfile:  # Этот блок открывает файл "todos.csv" для записи
+    # ("w" - режим записи). Опция newline='' указывает, что при записи файл будет использовать пустую строку
+    # в качестве символа новой строки. Блок (with) гарантирует автоматическое закрытие файла после завершения
+    # работы с ним.
+    # Создаем объект для записи CSV
+    csv_writer = csv.writer(csvfile)  # Эта строка создает объект csv_writer, который предоставляет методы
+    # для записи данных в CSV-файл.
+
+    # Записываем заголовки столбцов
+    csv_writer.writerow(["userId", "id", "title", "completed"])  # Эта строка записывает первую строку в CSV-файл,
+    # содержащую заголовки столбцов: "userId", "id", "title" и "completed".
+
+    # Записываем данные из JSON в CSV
+    for todo in todos:  # Этот цикл перебирает каждую задачу из списка todos, который содержит данные из JSON.
+        csv_writer.writerow([todo["userId"], todo["id"], todo["title"], todo["completed"]])
+#  В этой строке записывается строка данных в CSV-файл. Каждая строка соответствует одной задаче.
+#  Значения из задачи извлекаются по ключам (userId, id, title, completed) и записываются в
+#  соответствующие столбцы CSV.
+
+print("Данные успешно записаны в файл todos.csv")
+# Эта строка выводит сообщение о том, что данные успешно записаны в файл "todos.csv".
+
+
+
