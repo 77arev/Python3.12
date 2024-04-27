@@ -138,45 +138,132 @@
 # проверяя статус-коды и получая текст ответов.
 
 
+# -------------------------------------------------------
 # ДЗ №33 от 17.04.2024
 # Задача:
 # Нужно взять любой json объект (в json формате), к примеру, тот, который можно найти по данной
 # ссылке - https://jsonplaceholder.typicode.com/todos и преобразовать его в формат csv (в Python)
 
-import requests  # Эта строка импортирует модуль requests, который используется для отправки HTTP-запросов
-# на сторонний ресурс
-import csv  # Эта строка импортирует модуль csv, который предоставляет функциональность для работы
-# с файлами в формате CSV
+# import requests  # Эта строка импортирует модуль requests, который используется для отправки HTTP-запросов
+# # на сторонний ресурс
+# import csv  # Эта строка импортирует модуль csv, который предоставляет функциональность для работы
+# # с файлами в формате CSV
+#
+# # Загружаем данные из JSON-файла на стороннем ресурсе
+# response = requests.get("https://jsonplaceholder.typicode.com/todos")  # Эта строка отправляет GET-запрос
+# # по указанному URL-адресу, который возвращает данные в формате JSON. Полученный ответ сохраняется
+# # в переменной response.
+# todos = response.json()  # здесь мы преобразовываем полученные данные из формата JSON в Python-объекты.
+# # Результат сохраняется в переменной (todos).
+#
+# # Открываем файл для записи в формате CSV
+# with open("todos.csv", "w", newline='') as csvfile:  # Этот блок открывает файл "todos.csv" для записи
+#     # ("w" - режим записи). Опция newline='' указывает, что при записи файл будет использовать пустую строку
+#     # в качестве символа новой строки. Блок (with) гарантирует автоматическое закрытие файла после завершения
+#     # работы с ним.
+#     # Создаем объект для записи CSV
+#     csv_writer = csv.writer(csvfile)  # Эта строка создает объект csv_writer, который предоставляет методы
+#     # для записи данных в CSV-файл.
+#
+#     # Записываем заголовки столбцов
+#     csv_writer.writerow(["userId", "id", "title", "completed"])  # Эта строка записывает первую строку в CSV-файл,
+#     # содержащую заголовки столбцов: "userId", "id", "title" и "completed".
+#
+#     # Записываем данные из JSON в CSV
+#     for todo in todos:  # Этот цикл перебирает каждую задачу из списка todos, который содержит данные из JSON.
+#         csv_writer.writerow([todo["userId"], todo["id"], todo["title"], todo["completed"]])
+# #  В этой строке записывается строка данных в CSV-файл. Каждая строка соответствует одной задаче.
+# #  Значения из задачи извлекаются по ключам (userId, id, title, completed) и записываются в
+# #  соответствующие столбцы CSV.
+#
+# print("Данные успешно записаны в файл todos.csv")
+# # Эта строка выводит сообщение о том, что данные успешно записаны в файл "todos.csv".
 
-# Загружаем данные из JSON-файла на стороннем ресурсе
-response = requests.get("https://jsonplaceholder.typicode.com/todos")  # Эта строка отправляет GET-запрос
-# по указанному URL-адресу, который возвращает данные в формате JSON. Полученный ответ сохраняется
-# в переменной response.
-todos = response.json()  # здесь мы преобразовываем полученные данные из формата JSON в Python-объекты.
-# Результат сохраняется в переменной (todos).
 
-# Открываем файл для записи в формате CSV
-with open("todos.csv", "w", newline='') as csvfile:  # Этот блок открывает файл "todos.csv" для записи
-    # ("w" - режим записи). Опция newline='' указывает, что при записи файл будет использовать пустую строку
-    # в качестве символа новой строки. Блок (with) гарантирует автоматическое закрытие файла после завершения
-    # работы с ним.
-    # Создаем объект для записи CSV
-    csv_writer = csv.writer(csvfile)  # Эта строка создает объект csv_writer, который предоставляет методы
-    # для записи данных в CSV-файл.
+# НАШ ПЕРВЫЙ КОД - НАШ ОБРАЗЕЦ!
+# import requests
+# from bs4 import BeautifulSoup
+#
+#
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
+#
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, "lxml")
+#     p1 = soup.find("header", id="masthead").find("p", class_="site-title").text
+#     return p1
+#
+#
+# def main():
+#     url = "https://ru.wordpress.org/"
+#     print(get_data(get_html(url)))
+#
+#
+# if __name__ == '__main__':
+#     main()
 
-    # Записываем заголовки столбцов
-    csv_writer.writerow(["userId", "id", "title", "completed"])  # Эта строка записывает первую строку в CSV-файл,
-    # содержащую заголовки столбцов: "userId", "id", "title" и "completed".
+# -------------------------------------------------------
+# ДЗ №33 от 17.04.2024
+# Задача:
+# User - С помощью языка Python реализовать парсинг данных из любого интернет ресурса с однотипными данными
+# и сохранить их в формате csv
 
-    # Записываем данные из JSON в CSV
-    for todo in todos:  # Этот цикл перебирает каждую задачу из списка todos, который содержит данные из JSON.
-        csv_writer.writerow([todo["userId"], todo["id"], todo["title"], todo["completed"]])
-#  В этой строке записывается строка данных в CSV-файл. Каждая строка соответствует одной задаче.
-#  Значения из задачи извлекаются по ключам (userId, id, title, completed) и записываются в
-#  соответствующие столбцы CSV.
+# Шаг 1: Импорт необходимых библиотек
+# import requests
+# from bs4 import BeautifulSoup
+# import csv
+#
+#
+# # requests: Эта библиотека используется для отправки HTTP-запросов к веб-сайтам и получения HTML-кода страницы.
+# # BeautifulSoup: Это библиотека для парсинга HTML и извлечения данных из него.
+# # csv: Эта библиотека позволяет нам работать с CSV-файлами, создавать и записывать данные в них.
+#
+#
+# # Шаг 2: Функция для получения HTML-кода страницы
+# def get_html(url):
+#     response = requests.get(url)
+#     return response.text
+#
+#
+# # Эта функция принимает URL в качестве аргумента и использует библиотеку requests для отправки GET-запроса
+# # к указанному URL. Затем она возвращает текст HTML-кода страницы.
+#
+# # Шаг 3: Функция для парсинга данных из HTML
+# def parse(html):
+#     soup = BeautifulSoup(html, 'html.parser')
+#     books = []
+#     for book in soup.find_all('article', class_='product_pod'):
+#         title = book.find('h3').find('a')['title']
+#         price = book.find('p', class_='price_color').get_text()
+#         books.append({'Title': title, 'Price': price})
+#     return books
+#
+#
+# # Шаг 4: Функция для сохранения данных в CSV
+#
+# def save_csv(data, path):
+#     with open(path, 'w', newline='', encoding='utf-8') as csvfile:
+#         fieldnames = ['Title', 'Price']
+#         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+#         writer.writeheader()
+#         for item in data:
+#             writer.writerow(item)
+#
+#
+# # Шаг 5: Основная функция
+# def main():
+#     url = 'http://books.toscrape.com/'
+#     html = get_html(url)
+#     data = parse(html)
+#     save_csv(data, 'books.csv')
+#
+#
+# if __name__ == '__main__':
+#     main()
+# -------------------------------------------------------
 
-print("Данные успешно записаны в файл todos.csv")
-# Эта строка выводит сообщение о том, что данные успешно записаны в файл "todos.csv".
 
 
 

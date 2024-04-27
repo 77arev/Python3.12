@@ -10371,38 +10371,38 @@ import json
 #     file_writer.writerow({"Имя": "Вова", "Возраст": 14})  # вывести третью строку
 
 
-import csv
-
-# Задача - список словарей
-data = [{
-    'hostname': 'sw1',
-    'location': 'London',
-    'model': '3750',
-    'vendor': 'Cisco'
-}, {
-    'hostname': 'sw2',
-    'location': 'Liverpool',
-    'model': '3850',
-    'vendor': 'Cisco'
-}, {
-    'hostname': 'sw3',
-    'location': 'Liverpool',
-    'model': '3650',
-    'vendor': 'Cisco'
-}, {
-    'hostname': 'sw4',
-    'location': 'London',
-    'model': '3650',
-    'vendor': 'Cisco'
-}]
-
-with open("dict_writer.csv", "w") as f:
-    # fieldnames = ['hostname', 'location', 'model', 'vendor']
-    writer = csv.DictWriter(f, delimiter=";", lineterminator="\r", fieldnames=list(data[0].keys()))
-    writer.writeheader()
-    for d in data:
-        writer.writerow(d)  # обращаемся к переменной writer и записываем, проходя в цикле, строки
-        # по порядку
+# import csv
+#
+# # Задача - список словарей
+# data = [{
+#     'hostname': 'sw1',
+#     'location': 'London',
+#     'model': '3750',
+#     'vendor': 'Cisco'
+# }, {
+#     'hostname': 'sw2',
+#     'location': 'Liverpool',
+#     'model': '3850',
+#     'vendor': 'Cisco'
+# }, {
+#     'hostname': 'sw3',
+#     'location': 'Liverpool',
+#     'model': '3650',
+#     'vendor': 'Cisco'
+# }, {
+#     'hostname': 'sw4',
+#     'location': 'London',
+#     'model': '3650',
+#     'vendor': 'Cisco'
+# }]
+#
+# with open("dict_writer.csv", "w") as f:
+#     # fieldnames = ['hostname', 'location', 'model', 'vendor']
+#     writer = csv.DictWriter(f, delimiter=";", lineterminator="\r", fieldnames=list(data[0].keys()))
+#     writer.writeheader()
+#     for d in data:
+#         writer.writerow(d)  # обращаемся к переменной writer и записываем, проходя в цикле, строки
+#         # по порядку
 
 # print(list(data[0].keys()))  # нам нужно из словаря взять только ключи, поэтому .keys()
 # В Python \r представляет собой управляющий символ, который обозначает возврат каретки (carriage return).
@@ -10414,3 +10414,445 @@ with open("dict_writer.csv", "w") as f:
 # Урок №2
 # ----------------------------
 
+# Парсинг
+
+# Новая тема - это парсинг данных с какого-то сайта * * *
+# Парсинг данных с сайта - это процесс извлечения информации из веб-страницы или веб-сайта с целью анализа,
+# обработки или использования этой информации в приложениях или исследованиях. Парсинг может включать
+# в себя извлечение текста, изображений, ссылок, таблиц, метаданных и других элементов веб-страницы.
+
+# Основные шаги парсинга данных с сайта обычно включают в себя:
+#
+# 1) Загрузка страницы: С помощью HTTP-запроса загружается HTML-код веб-страницы, с которой нужно извлечь данные.
+# 2) Анализ HTML: HTML-код веб-страницы анализируется для идентификации нужных элементов, таких как теги,
+# классы, идентификаторы и атрибуты.
+# 3) Извлечение данных: Используя различные методы и библиотеки парсинга (например, BeautifulSoup для Python),
+# данные извлекаются из HTML-кода веб-страницы в структурированный формат для последующей обработки.
+# 4) Обработка данных: Извлеченные данные могут быть очищены, обработаны и преобразованы в нужный формат
+# в соответствии с целями парсинга.
+# 5) Использование данных: Обработанные данные могут быть использованы для анализа, визуализации, хранения,
+# интеграции с другими системами или любыми другими целями.
+
+
+# from bs4 import BeautifulSoup
+#
+#
+# f = open('index.html').read()  # здесь мы просто открыли файл для чтения в виде строки (получили просто
+# # html разметку)
+# # print(f)
+#
+# soup = BeautifulSoup(f, "html.parser")  # сюда мы передадим нашу строку, она сейчас находится в
+# переменной (f), BeautifulSoup - требует своим вторым параметром (parser)
+
+# row = soup.find("div", class_="name").text  # поиск (html) элементов на странице (1 встречный элемент)
+# row = soup.find_all("div", class_="name")  # возвращает список всех найденных совпадений
+# [<div class="name">Petr</div>, <div class="name">Alena</div>, <div class="name">Kate</div>,
+# <div class="name">Ksenia</div>]
+# row = soup.find_all("div", class_="name")[1]  # можно обратиться по индексу - <div class="name">Alena</div>
+# row = soup.find_all("div", class_="name")[1].text # и даже взять текст по индексу - Alena
+# print(row)
+
+# Можем добираться до элементов через точечную нотацию:
+# row = soup.find_all("div", class_="row")[1].find("div", class_="links")  # получаем доступ к элементу
+# # "div" по классу "row". но обращаемся к классу, который внутри "links", отрабатывает слева направо
+# print(row)
+
+# Теперь хотим получить все зарплаты, которые есть, т.е. ко всем salary:
+# row = soup.find_all("div", {"data-set": "salary"})  # "data-set" - это пользовательский атрибут,
+# почему в {}, потому что указываем как элементы словаря, получили 4 блока
+# row = soup.find_all("div", {"class": "name"})
+# print(row)
+
+
+# row = soup.find("div", string="Alena")  # <div class="name">Alena</div>
+# А теперь попробуем найти элемент на уровень выше с помощью (.parent)
+# row = soup.find("div", string="Alena").parent
+# .parent - можно применять несколько раз, если написать его 2 раза (.parent.parent), то мы получим
+# доступ на 2 уровня выше
+# row = soup.find("div", string="Alena").parent.parent
+# print(row)
+# row = soup.find("div", string="Alena").find_parent(class_="row")  # это найти родителя также,
+# # тоже самое, что и (.parent.parent). Здесь мы идем изнутри наружу.
+# print(row)
+
+
+# Давайте попробуем найти (id)
+# row = soup.find("div", id="whois3")  # <div class="whois" id="whois3">Designer</div>
+# row = soup.find("div", id="whois3").find_next_sibling()  # <div data-set="salary">2300 usd</div> -
+# здесь мы пишем (найти следующего родственника)
+# row = soup.find("div", id="whois3").find_previous_sibling()  # предыдущего
+# # <div class="name">Ksenia</div>
+# print(row)
+
+
+# from bs4 import BeautifulSoup
+#
+#
+# def get_copywriter(tag):
+#     whois = tag.find("div", class_="whois")
+#     if "Copywriter" in whois:
+#         return tag
+#     return None
+#
+#
+# f = open('index.html').read()
+# soup = BeautifulSoup(f, "html.parser")
+#
+# copywriter = []
+# row = soup.find_all("div", class_="row")  # row - это список их 4х этих divов
+# for i in row:
+#     cw = get_copywriter(i)
+#     if cw:
+#         copywriter.append(cw)
+#
+# print(copywriter)
+
+
+# from bs4 import BeautifulSoup
+# import re
+#
+#
+# def get_salary(s):
+#     pattern = r"\d+"
+#     # res = re.findall(pattern, s)[0]
+#     res = re.search(pattern, s).group()
+#     print(res)
+#
+#
+# f = open('index.html').read()
+# soup = BeautifulSoup(f, "html.parser")
+# salary = soup.find_all("div", {"data-set": "salary"})
+#
+# for i in salary:
+#     get_salary(i.text)
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №34 Python от 22.04.2024
+# Урок №1
+# -----------------------------------------------
+
+# Делаем парсинг со стороннего ресурса - https://ru.wordpress.org/
+# Получаем доступ к ресурсу, устанавливая модуль requests
+# Коды состояние:
+# 1XX - информация
+# 2XX - успешно
+# 3XX - перенаправление
+# 4XX - ошибка клиента (ошибка на вашей стороне)
+# 5XX - ошибка сервера (ошибка на их стороне)
+
+
+# import requests
+#
+# r = requests.get("https://ru.wordpress.org/")
+# print(r)  # <Response [200]>
+# print(r.status_code)  # 200
+# print(r.headers)  # заголовки, которые нам возвращает сервер
+# print(r.headers['Content-Type'])  # text/html; charset=UTF-8
+# r.encoding = 'utf-8'
+# print(r)
+# print(r.content)  # содержимое - байтовая строка
+# print(r.text)
+
+
+# import requests
+#
+# r = requests.get("https://ru.wordpress.org/").encode('utf-8')
+# print(r.headers)
+# print(r.content)
+# print(r.text)
+
+
+# import requests
+# from bs4 import BeautifulSoup
+#
+#
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
+#
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, "lxml")
+#     p1 = soup.find("header", id="masthead").find("p", class_="site-title").text
+#     return p1
+#
+#
+# def main():
+#     url = "https://ru.wordpress.org/"
+#     print(get_data(get_html(url)))
+#
+#
+# if __name__ == '__main__':
+#     main()
+
+
+# А ТЕПЕРЬ ЭТОТ КОД МЫ РАЗБЕРЕМ ПОДРОБНЕЕ :
+# BeautifulSoup - это библиотека для парсинга HTML и XML документов.
+# import requests  # Эта строка импортирует модуль requests, который используется для отправки HTTP-запросов.
+# from bs4 import BeautifulSoup  # Эта строка импортирует класс BeautifulSoup из модуля bs4.
+#
+#
+# def get_html(url):  # Эта строка определяет функцию get_html(), которая принимает URL в качестве аргумента.
+#     r = requests.get(url)  # Эта строка отправляет GET-запрос по указанному URL и сохраняет ответ в
+#     # переменной (r).
+#     return r.text  # Эта строка возвращает текст ответа (HTML-код) из переменной r.
+#
+#
+# def get_data(html):  # Эта строка определяет функцию get_data(), которая принимает HTML-код в качестве
+#     # аргумента.
+#     soup = BeautifulSoup(html, "lxml")  # (вместо "html.parser" - "lxml") Эта строка создает объект
+#     # BeautifulSoup из HTML-кода, который был передан в функцию. Аргумент "lxml" указывает на использование
+#     # парсера lxml для анализа HTML.
+#     p1 = soup.find("header", id="masthead").find("p", class_="site-title").text  # Эта строка находит
+#     # элемент <p> с классом site-title внутри <header> с идентификатором masthead и извлекает текст из него.
+#     # Результат сохраняется в переменной p1.
+#     return p1  # Эта строка возвращает извлеченный текст.
+#
+#
+# def main():  # Эта строка определяет главную функцию main().
+#     url = "https://ru.wordpress.org/"  # Эта строка определяет URL-адрес, который мы будем парсить.
+#     print(get_data(get_html(url)))  # Эта строка вызывает функцию get_html() для загрузки HTML-кода
+#     # страницы по указанному URL, а затем передает этот HTML-код в функцию get_data() для извлечения данных.
+#     # Результат выводится на экран.
+#
+#
+# if __name__ == '__main__':  # Этот блок проверяет, запущен ли скрипт напрямую (а не импортирован в
+#     # другой скрипт). Если скрипт запущен напрямую:
+#     main()  # Эта строка вызывает функцию main() для выполнения основной логики программы.
+
+
+# import re
+# import requests
+# from bs4 import BeautifulSoup
+#
+#
+# def main():
+#     url = "https://ru.wordpress.org/plugins/"
+#     get_data(get_html(url))
+#
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, "lxml")
+#     p1 = soup.find_all("section", class_="plugin-section")[-1]
+#     plugins = p1.find_all('article')
+#
+#     for plugin in plugins:
+#         name = plugin.find("h3").text
+#         url = plugin.find("h3").find("a").get('href')
+#         rating = plugin.find("span", class_="rating-count").find("a").text
+#         r = refined(rating)
+#         data = {'name': name, "url": url, "rating": r}
+#         write_csv(data)
+#
+#
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
+#
+#
+# def write_csv(data):
+#     with open("plugins.csv", "a") as f:
+#         writer = csv.writer(f, delimiter=";", lineterminator="\r")
+#         writer.writerow((data['name'], data['url'], data['rating']))
+#
+#
+# def refined(s):
+#     res = re.sub(r"\D+", "", s)
+#     return res
+#
+#
+# if __name__ == '__main__':
+#     main()
+
+
+# А ТЕПЕРЬ ЭТОТ КОД МЫ РАЗБЕРЕМ ПОДРОБНЕЕ :
+# import re  # Эта строка импортирует модуль re, который предоставляет функциональность для работы
+# # с регулярными выражениями (regular expressions).
+# import requests  # Эта строка импортирует модуль requests, который используется для отправки HTTP-запросов.
+# from bs4 import BeautifulSoup  # Эта строка импортирует класс BeautifulSoup из модуля bs4. BeautifulSoup
+# # - это библиотека для парсинга HTML и XML документов.
+# import csv
+#
+#
+# def main():
+#     url = "https://ru.wordpress.org/plugins/"  # Эта строка определяет URL-адрес страницы с плагинами
+#     # для WordPress.
+#     get_data(get_html(url))
+#
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, "lxml")  # Эта строка создает объект BeautifulSoup из HTML-кода,
+#     # который был передан в функцию. Аргумент "lxml" указывает на использование парсера lxml для анализа HTML.
+#     p1 = soup.find_all("section", class_="plugin-section")[-1]  # Эта строка находит последний элемент
+#     # <section> с классом "plugin-section". Это делается, чтобы извлечь список плагинов с правильного блока
+#     # на странице.
+#     plugins = p1.find_all('article')  # Эта строка находит все элементы <article> внутри найденного <section>.
+#     # Каждый <article> представляет собой один плагин.
+#
+#     for plugin in plugins:  # в цикле извлекаются данные о каждом плагине
+#         name = plugin.find("h3").text  # Извлекается текст заголовка <h3>, который содержит название плагина.
+#         # print(name)
+#         url = plugin.find("h3").find("a").get('href')  # Извлекается атрибут href ссылки внутри заголовка <h3>,
+#         # который содержит URL плагина.
+#         # print(url)
+#         rating = plugin.find("span", class_="rating-count").find("a").text  # Извлекается текст элемента,
+#         # который содержит рейтинг плагина.
+#         # print(rating)
+#         r = refined(rating)  # Рейтинг плагина очищается от лишних символов с помощью функции refined().
+#         # print(r)
+#         data = {'name': name, "url": url, "rating": r}  # Создается словарь с данными о плагине.
+#         # print(data)
+#         write_csv(data)  # Данные о плагине записываются в CSV-файл.
+#
+#
+# def get_html(url):  # Эта строка определяет функцию get_html(), которая принимает URL в качестве аргумента.
+#     r = requests.get(url)  # Эта строка отправляет GET-запрос по указанному URL и сохраняет ответ
+#     # в переменной (r).
+#     return r.text  # Эта строка возвращает текст ответа (HTML-код) из переменной (r).
+#
+#
+# def write_csv(data):  # Эта строка определяет функцию write_csv(), которая принимает данные о плагине в виде
+#     # словаря в качестве аргумента.
+#     with open("plugins.csv", "a") as f:  # Эта строка открывает файл "plugins.csv" для записи в формате CSV.
+#         # Режим "a" означает, что новые данные будут добавляться в конец файла.
+#         writer = csv.writer(f, delimiter=";", lineterminator="\r")  # Создается объект writer для записи CSV.
+#         # Разделитель столбцов установлен в точку с запятой (;), а символ новой строки установлен в возврат
+#         # каретки (\r).
+#         writer.writerow((data['name'], data['url'], data['rating']))  # Эта строка записывает данные
+#         # о плагине в CSV-файл.
+#
+#
+# def refined(s):  # Эта строка определяет функцию refined(), которая принимает строку в качестве аргумента.
+#     res = re.sub(r"\D+", "", s)  # Эта строка использует регулярное выражение для удаления всех
+#     # нецифровых символов из строки, мы ищем все что не цифра, заменяем на пустую строку "",
+#     # и где будем искать, в аргументе (s)
+#     return res  # Очищенная строка возвращается в качестве результата.
+#
+#
+# if __name__ == '__main__':
+#     main()
+
+
+#
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+
+# Делаем парсинг сайта:
+import requests
+from bs4 import BeautifulSoup
+import csv
+
+
+def get_html(url):
+    r = requests.get(url)
+    return r.text
+
+
+def refine_cy(s):
+    return s.split()[-1]
+
+
+def get_data(html):
+    soup = BeautifulSoup(html, "lxml")
+    elements = soup.find_all("article", class_="plugin-card")
+    for el in elements:
+        try:
+            name = el.find("h3").text
+        except AttributeError:
+            name = ""
+        try:
+            url = el.find("h3").find("a")['href']
+        except AttributeError:
+            url = ""
+        # print(url)
+
+        try:
+            snippet = el.find("div", class_="entry-excerpt").text.strip()  # .strip() - удаляет все лишние пробелы
+        except AttributeError:
+            snippet = ""
+        # print(snippet)
+
+        try:
+            active = el.find("span", class_="active-installs").text.strip()
+        except AttributeError:
+            active = ""
+        # print(active)
+
+        try:
+            c = el.find("span", class_="tested-with").text.strip()
+            cy = refine_cy(c)
+        except AttributeError:
+            cy = ""
+        data = {
+            'name': name,
+            'url': url,
+            'snippet': snippet,
+            'active': active,
+            'cy': cy
+        }
+        write_csv(data)
+
+
+def write_csv(data):
+    with open("plugins1.csv", "a", encoding="utf-8") as f:  # можно поставить кодировку для русского языка
+        # - encoding="windows-1251"
+        writer = csv.writer(f, delimiter=";", lineterminator="\r")
+        writer.writerow((data['name'], data['url'], data['snippet'], data['active'], data['cy']))
+
+
+def main():
+    for i in range(1, 5):
+        url = "https://ru.wordpress.org/plugins/browse/blocks/page/{i}/"
+        get_data(get_html(url))
+
+
+if __name__ == '__main__':
+    main()
+
+
+# ---------------------------------------
+from parsers import Parser
+
+
+def main():
+    pars = Parser("https://www.ixbt.com/live/index/news/", "news.txt")
+    # pars.get_html()
+    pars.run()
+
+
+if __name__ == '__main__':
+    main()
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №35 Python от 24.04.2024
+# Урок №1
+# -----------------------------------------------
+
+# from parsers import Parser
+#
+#
+# def main():
+#     pars = Parser("https://www.ixbt.com/live/index/news/", "news.txt")
+#     pars.run()
+#
+#
+# if __name__ == '__main__':
+#     main()
+
+
+# НОВАЯ ТЕМА:
+
+# MVC
+# Model - модель
+# View - вид и представление
+# Controller - контроллер
+
+
+# Декоратор потоооом ***

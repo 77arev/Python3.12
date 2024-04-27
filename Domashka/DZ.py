@@ -1172,26 +1172,69 @@ import re
 # Нужно взять любой json объект (в json формате), к примеру, тот, который можно найти по данной
 # ссылке - https://jsonplaceholder.typicode.com/todos и преобразовать его в формат csv
 
+# import requests
+# import csv
+#
+# # Загружаем данные из JSON-файла
+# response = requests.get("https://jsonplaceholder.typicode.com/todos")
+# todos = response.json()
+#
+# with open("todos.csv", "w", newline='') as csvfile:
+#     # Создаем объект для записи CSV
+#     csv_writer = csv.writer(csvfile)
+#
+#     # Записываем заголовки столбцов
+#     csv_writer.writerow(["userId", "id", "title", "completed"])
+#
+#     # Записываем данные из JSON в CSV
+#     for todo in todos:
+#         csv_writer.writerow([todo["userId"], todo["id"], todo["title"], todo["completed"]])
+#
+# print("Данные успешно записаны в файл todos.csv")
+
+
+# ДЗ №34 от 22.04.2024
+# Задача:
+# Реализовать парсинг данных из любого интернет ресурса с однотипными данными и сохранить их в формате csv
+
 import requests
+from bs4 import BeautifulSoup
 import csv
 
-# Загружаем данные из JSON-файла
-response = requests.get("https://jsonplaceholder.typicode.com/todos")
-todos = response.json()
 
-with open("todos.csv", "w", newline='') as csvfile:
-    # Создаем объект для записи CSV
-    csv_writer = csv.writer(csvfile)
-
-    # Записываем заголовки столбцов
-    csv_writer.writerow(["userId", "id", "title", "completed"])
-
-    # Записываем данные из JSON в CSV
-    for todo in todos:
-        csv_writer.writerow([todo["userId"], todo["id"], todo["title"], todo["completed"]])
-
-print("Данные успешно записаны в файл todos.csv")
+# Функция для получения HTML-кода страницы
+def get_html(url):
+    response = requests.get(url)
+    return response.text
 
 
+# Функция для парсинга данных из HTML
+def parse(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    books = []
+    for book in soup.find_all('article', class_='product_pod'):
+        title = book.find('h3').find('a')['title']
+        price = book.find('p', class_='price_color').get_text()
+        books.append({'Title': title, 'Price': price})
+    return books
 
 
+# Функция для сохранения данных в CSV
+def save_csv(data, path):
+    with open(path, 'w', newline='', encoding='utf-8') as csvfile:
+        fieldnames = ['Title', 'Price']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for item in data:
+            writer.writerow(item)
+
+
+def main():
+    url = 'http://books.toscrape.com/'
+    html = get_html(url)
+    data = parse(html)
+    save_csv(data, 'books.csv')
+
+
+if __name__ == '__main__':
+    main()
