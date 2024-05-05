@@ -4,10 +4,10 @@ from model import ArticleModel
 
 class Controller:
     def __init__(self):
-        self.article_model = ArticleModel()  # Model
-        self.user_interface = UserInterface()  # View
+        self.article_model = ArticleModel()  # Model - будет устанавливать связь с моделью
+        self.user_interface = UserInterface()  # View - будет устанавливать связь с представлением
 
-    def run(self):
+    def run(self):  # будет запускать нашу программу
         answer = None
         while answer != "q":
             answer = self.user_interface.wait_user_answer()
@@ -40,3 +40,5 @@ class Controller:
             self.article_model.save_data()
         else:
             self.user_interface.show_incorrect_answer_error(answer)
+
+

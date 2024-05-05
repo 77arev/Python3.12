@@ -10743,90 +10743,91 @@ import json
 
 
 # Делаем парсинг сайта:
-import requests
-from bs4 import BeautifulSoup
-import csv
-
-
-def get_html(url):
-    r = requests.get(url)
-    return r.text
-
-
-def refine_cy(s):
-    return s.split()[-1]
-
-
-def get_data(html):
-    soup = BeautifulSoup(html, "lxml")
-    elements = soup.find_all("article", class_="plugin-card")
-    for el in elements:
-        try:
-            name = el.find("h3").text
-        except AttributeError:
-            name = ""
-        try:
-            url = el.find("h3").find("a")['href']
-        except AttributeError:
-            url = ""
-        # print(url)
-
-        try:
-            snippet = el.find("div", class_="entry-excerpt").text.strip()  # .strip() - удаляет все лишние пробелы
-        except AttributeError:
-            snippet = ""
-        # print(snippet)
-
-        try:
-            active = el.find("span", class_="active-installs").text.strip()
-        except AttributeError:
-            active = ""
-        # print(active)
-
-        try:
-            c = el.find("span", class_="tested-with").text.strip()
-            cy = refine_cy(c)
-        except AttributeError:
-            cy = ""
-        data = {
-            'name': name,
-            'url': url,
-            'snippet': snippet,
-            'active': active,
-            'cy': cy
-        }
-        write_csv(data)
-
-
-def write_csv(data):
-    with open("plugins1.csv", "a", encoding="utf-8") as f:  # можно поставить кодировку для русского языка
-        # - encoding="windows-1251"
-        writer = csv.writer(f, delimiter=";", lineterminator="\r")
-        writer.writerow((data['name'], data['url'], data['snippet'], data['active'], data['cy']))
-
-
-def main():
-    for i in range(1, 5):
-        url = "https://ru.wordpress.org/plugins/browse/blocks/page/{i}/"
-        get_data(get_html(url))
-
-
-if __name__ == '__main__':
-    main()
+# import requests
+# from bs4 import BeautifulSoup
+# import csv
+#
+#
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
+#
+#
+# def refine_cy(s):
+#     return s.split()[-1]
+#
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, "lxml")
+#     elements = soup.find_all("article", class_="plugin-card")
+#     for el in elements:
+#         try:
+#             name = el.find("h3").text
+#         except AttributeError:
+#             name = ""
+#         try:
+#             url = el.find("h3").find("a")['href']
+#         except AttributeError:
+#             url = ""
+#         # print(url)
+#
+#         try:
+#             snippet = el.find("div", class_="entry-excerpt").text.strip()  # .strip() - удаляет все лишние пробелы
+#         except AttributeError:
+#             snippet = ""
+#         # print(snippet)
+#
+#         try:
+#             active = el.find("span", class_="active-installs").text.strip()
+#         except AttributeError:
+#             active = ""
+#         # print(active)
+#
+#         try:
+#             c = el.find("span", class_="tested-with").text.strip()
+#             cy = refine_cy(c)
+#         except AttributeError:
+#             cy = ""
+#         data = {
+#             'name': name,
+#             'url': url,
+#             'snippet': snippet,
+#             'active': active,
+#             'cy': cy
+#         }
+#         write_csv(data)
+#
+#
+# def write_csv(data):
+#     with open("plugins1.csv", "a", encoding="utf-8") as f:  # можно поставить кодировку для русского языка
+#         # - encoding="windows-1251"
+#         writer = csv.writer(f, delimiter=";", lineterminator="\r")
+#         writer.writerow((data['name'], data['url'], data['snippet'], data['active'], data['cy']))
+#
+#
+# def main():
+#     for i in range(1, 5):
+#         url = "https://ru.wordpress.org/plugins/browse/blocks/page/{i}/"
+#         get_data(get_html(url))
+#
+#
+# if __name__ == '__main__':
+#     main()
 
 
 # ---------------------------------------
-from parsers import Parser
+# from parsers import Parser
+#
+#
+# def main():
+#     pars = Parser("https://www.ixbt.com/live/index/news/", "news.txt")
+#     # pars.get_html()
+#     pars.run()
+#
+#
+# if __name__ == '__main__':
+#     main()
 
-
-def main():
-    pars = Parser("https://www.ixbt.com/live/index/news/", "news.txt")
-    # pars.get_html()
-    pars.run()
-
-
-if __name__ == '__main__':
-    main()
 
 #
 # ****************************************
@@ -10845,14 +10846,29 @@ if __name__ == '__main__':
 #
 # if __name__ == '__main__':
 #     main()
+# ---------------------------------------
 
 
 # НОВАЯ ТЕМА:
 
 # MVC
 # Model - модель
-# View - вид и представление
+# View - вид или представление
 # Controller - контроллер
 
+# Задача:
+# Создать приложение, которое позволит манипулировать статьями. Реализуйте паттерн MVC.
 
-# Декоратор потоооом ***
+# Сокеты:
+# Серверный
+# Клиентский
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №36 Python от 29.04.2024
+# Урок №1
+# -----------------------------------------------
+
+
+

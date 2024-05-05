@@ -1197,44 +1197,59 @@ import re
 # Задача:
 # Реализовать парсинг данных из любого интернет ресурса с однотипными данными и сохранить их в формате csv
 
-import requests
-from bs4 import BeautifulSoup
-import csv
+# import requests
+# from bs4 import BeautifulSoup
+# import csv
+#
+#
+# # Функция для получения HTML-кода страницы
+# def get_html(url):
+#     response = requests.get(url)
+#     return response.text
+#
+#
+# # Функция для парсинга данных из HTML
+# def parse(html):
+#     soup = BeautifulSoup(html, 'html.parser')
+#     books = []
+#     for book in soup.find_all('article', class_='product_pod'):
+#         title = book.find('h3').find('a')['title']
+#         price = book.find('p', class_='price_color').get_text()
+#         books.append({'Title': title, 'Price': price})
+#     return books
+#
+#
+# # Функция для сохранения данных в CSV
+# def save_csv(data, path):
+#     with open(path, 'w', newline='', encoding='utf-8') as csvfile:
+#         fieldnames = ['Title', 'Price']
+#         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+#         writer.writeheader()
+#         for item in data:
+#             writer.writerow(item)
+#
+#
+# def main():
+#     url = 'http://books.toscrape.com/'
+#     html = get_html(url)
+#     data = parse(html)
+#     save_csv(data, 'books.csv')
+#
+#
+# if __name__ == '__main__':
+#     main()
 
 
-# Функция для получения HTML-кода страницы
-def get_html(url):
-    response = requests.get(url)
-    return response.text
+# ДЗ №35 от 24.04.2024
+# Задача:
+# В Python создайте приложение для работы с фильмами, которое будет реализовывать паттерн MVC для класса Фильм и
+# код для модели, контроллера, представления.
+# Необходимо хранить следующую информацию:
+# - название фильма
+# - жанр
+# - режиссер
+# - год выпуска
+# - длительность
+# - студия
+# - актеры
 
-
-# Функция для парсинга данных из HTML
-def parse(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    books = []
-    for book in soup.find_all('article', class_='product_pod'):
-        title = book.find('h3').find('a')['title']
-        price = book.find('p', class_='price_color').get_text()
-        books.append({'Title': title, 'Price': price})
-    return books
-
-
-# Функция для сохранения данных в CSV
-def save_csv(data, path):
-    with open(path, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['Title', 'Price']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        for item in data:
-            writer.writerow(item)
-
-
-def main():
-    url = 'http://books.toscrape.com/'
-    html = get_html(url)
-    data = parse(html)
-    save_csv(data, 'books.csv')
-
-
-if __name__ == '__main__':
-    main()

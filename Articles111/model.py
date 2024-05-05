@@ -1,5 +1,5 @@
 import pickle
-import os.path
+import os
 
 
 class Article:
@@ -15,12 +15,12 @@ class Article:
 
 class ArticleModel:
     def __init__(self):
+        self.articles = {}
         self.db_name = "db.txt"
-        self.articles = self.load_data()  # {"qqq": {"title": "qqq", "author": "www"}}
+        self.articles = self.load_data()
 
-    # {'название': 'qqq', 'автора': 'www', 'количество страниц': '5', 'описание': 'eee'}
     def add_article(self, dict_article):
-        article = Article(*dict_article.values())  # 'qqq', 'www'
+        article = Article(*dict_article.values())
         self.articles[article.title] = article
 
     def get_all_articles(self):

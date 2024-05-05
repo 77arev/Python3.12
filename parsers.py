@@ -28,14 +28,14 @@ class Parser:
             })
             print(author)
 
-    # def save(self):
-    #     with open(self.path, "w") as f:
-    #         i = 1
-    #         for item in self.res:
-    #             f.write(f"Новость № {i}\n\nНазвание: {item['title']}\nСсылка: {item['href']}\nАвтор:"
-    #                     f"{item['author']}\n\n{'*' * 40}\n")
-    #             i += 1
-    #
+    def save(self):
+        with open(self.path, "w") as f:
+            i = 1
+            for item in self.res:
+                f.write(f"Новость № {i}\n\nНазвание: {item['title']}\nСсылка: {item['href']}\nАвтор:"
+                        f"{item['author']}\n\n{'*' * 40}\n")
+                i += 1
+
     def run(self):
         self.get_html()
         self.parsing()
