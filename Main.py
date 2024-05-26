@@ -10863,12 +10863,457 @@ import json
 # Серверный
 # Клиентский
 
+
 #
 # ****************************************
 # ----------------------------------------------------------------
 # Урок №36 Python от 29.04.2024
 # Урок №1
 # -----------------------------------------------
+
+
+# import socket
+#
+# from view import index, blog
+#
+# # Хотим создать серверный сокет
+# URLS = {
+#     '/': index,
+#     '/blog': blog
+# }
+#
+#
+# def parser_request(request):
+#     parsed = request.split()
+#     method = parsed[0]
+#     url = parsed[1]
+#     return method, url
+#
+#
+# def generate_headers(method, url):
+#     if method != 'GET':
+#         return 'HTTP/1.1 405 Method Not Allowed!\n\n', 405
+#     if url not in URLS:
+#         return 'HTTP/1.1 404 Page Not Found!\n\n', 404
+#     return 'HTTP/1.1 200 OK!\n\n', 200
+#
+#
+# def generate_content(code, url):
+#     if code == 404:
+#         return '<h1>404</h1><h3>Page Not Found!</h3>'
+#     if code == 405:
+#         return '<h1>405</h1><h3>Method Not Allowed!</h3>'
+#     return URLS[url]()
+#
+#
+# def generate_response(request):
+#     method, url = parser_request(request)
+#     headers, code = generate_headers(method, url)
+#     body = generate_content(code, url)
+#     return (headers + body).encode()
+#
+#
+# def run():
+#     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # здесь мы обратимся к нашему модулю socket
+#     # и вызовем у него метод .socket, AF_INET - для сетевого протокола
+#     server_socket.bind(('127.0.0.1', 5000))  # 127.0.0.1:5000 - .bind - привязывает сокет к адресу address
+#     server_socket.listen()  # .listen() - переводит сервер в режим приема соединения
+#
+#     while True:
+#         client_socket, addr = server_socket.accept()  # принимает соединение и блокирует приложение в ожидании
+#         # сообщения от клиента, conn - объект соединения, address - адрес клиента
+#         request = client_socket.recv(1024)  # .recv - читает и возвращает данные в двоичном формате
+#         print(f"Клиент: {addr} => \n{request.decode('utf-8')}\n")
+#         # print(f"Клиент: {addr} => \n{request}\n")
+#
+#         response = generate_response(request.decode())
+#         client_socket.sendall(response)
+#         client_socket.close()
+#
+#
+# if __name__ == "__main__":  # мы будем вызывать (run), если запуск будем делать с этого документа
+#     run()
+
+
+# ---------------------------------------
+
+# НОВАЯ ТЕМА - БАЗЫ ДАННЫХ * * *
+
+# SQL - запрос -> СУБД -> БД
+# Данные -> СУБД -> БД
+
+
+import sqlite3
+
+# Любая база данных работает с расширением .db, .sqlite (в джанго), .db3, .sqlite3
+
+# Сейчас мы рассмотрим 2 способа создания баз данных:
+# Вариант №1
+# con = sqlite3.connect("profile.db")  # Метод .connect делает соединение с базой данных, если она существует,
+# # если ее нет, он эту базу данных создаст
+# cur = con.cursor()  # а потом через переменную мы можем обратиться к методу .cursor()
+# cur.execute("""""")
+# con.close()  # не забываем закрывать соединение с базой данных
+
+# Вариант №2
+# Теперь мы сделаем тоже самое через контекстный менеджер (with)
+# Создали пустую базу данных
+# with sqlite3.connect("profile.db") as con:
+#     cur = con.cursor()
+#     cur.execute("""""")
+
+# Теперь заполним ее информацией
+# with sqlite3.connect("profile.db") as con:
+#     cur = con.cursor()
+#     cur.execute("""CREATE TABLE IF NOT EXISTS users(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     name TEXT NOT NULL,
+#     summa REAL,
+#     date BLOB)""")
+#     cur.execute("DROP TABLE users")
+
+
+# with sqlite3.connect("profile.db") as con:
+#     cur = con.cursor()
+#     cur.execute("""CREATE TABLE IF NOT EXISTS users(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     name TEXT NOT NULL,
+#     summa REAL,
+#     date BLOB)""")
+#     # cur.execute("DROP TABLE users")  # удаляет таблицу
+
+
+# SELECT * звездочка  - это все значения или нужно перечислять названия столбцов
+# SELECT * [ALL | DISTINCT] {* | столбец_1 [, столбец_N]} - DISTINCT - чтобы не дублировать
+# FROM T1 - это будет имя таблицы - таблица_1 [, таблица_N]
+# WHERE условие
+# =, ==, !=, <>, <, <=, >, >=
+# (AND, OR)
+# [NOT] BETWEEN начальное_значение AND конечное_значение - BETWEEN - здесь мы указываем диапазон значений
+# [NOT] LIKE шаблон_строки:
+# % - любое кол-во символов
+# _ - один любой символ
+# Представим, что вы хотите найти все имена, начинающиеся с буквы J. Для этого достаточно использовать
+# следующий запрос: SELECT * FROM table_name WHERE name LIKE 'J%';
+
+
+# SELECT *
+# FROM T1
+# /*WHERE FName LIKE "Петров"*/+
+# --WHERE FName == "Петров" (=)
+# WHERE FName LIKE "Пе%"
+
+# IS NULL
+# IS [NOT] NULL
+# NULL - это специальное значение, которое используется в SQL для обозначения отсутствия данных.
+# Оно отличается от пустой строки или нулевого значения, так как NULL означает отсутствие какого-либо значения
+# в ячейке таблицы.
+
+# ORDER BY CITY2 - отсортировать в алфавитном порядке
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №37 Python от 13.05.2024
+# Урок №1
+# -----------------------------------------------
+
+# В SQL, GLOB (Global) - это оператор, используемый для сопоставления шаблонов строк, аналогичный оператору LIKE.
+# Однако GLOB используется в основном в базах данных SQLite, а не в других популярных СУБД, таких как MySQL или
+# PostgreSQL.
+
+# Основные характеристики оператора GLOB:
+# Шаблоны: GLOB использует шаблоны для сопоставления строк, где специальный символ * соответствует любой
+# последовательности символов (включая пустую строку), а символ ? соответствует любому одному символу.
+# Чувствительность к регистру: Оператор GLOB чувствителен к регистру. Это означает, что "abc" не будет
+# соответствовать "ABC" при использовании GLOB.
+#
+# Примеры использования:
+# '*abc*' соответствует любой строке, содержащей "abc".
+# 'a?c' соответствует строкам длиной 3 символа, где первый символ - 'a', второй может быть любым, а третий - 'c'.
+
+
+# [NOT] GLOB регулярные_выражения:
+# * - любое кол-во символов
+# ? - элемент может быть, может не быть
+# . - один любой символ
+# [символы] - соответствует одному из заданных символов
+# [начальное_значение - конечное_значение] - одно из значений заданного диапазона
+# [^...] - все, кроме заданных символов [^0-9]
+
+
+# ORDER BY название_столбца | номер_столбца [ASC | DESC]
+# ASC - сортировка по возрастанию
+# DESC - сортировка по убыванию
+
+# [NOT] IN (набор значений  | выражение)
+
+# SELECT NAME, SUM, KOD
+# FROM ZAKAZ
+# /*WHERE SUM > 4000 AND (KOD = 1003 OR KOD = 1010 OR KOD = 1016)*/
+# /*WHERE SUM > 4000 AND (KOD LIKE 1003 OR KOD LIKE 1010 OR KOD LIKE 1016)*/
+# /*WHERE SUM > 4000 AND (KOD IS 1003 OR KOD IS 1010 OR KOD IS 1016)*/
+# WHERE SUM > 4000 AND KOD IN (1003, 1010, 1016) или NOT IN - это одно из заданных значений
+
+# ---------------------------------------------
+
+import sqlite3
+
+
+# with sqlite3.connect("users.db") as con:
+#     cur = con.cursor()
+#     cur.execute("""
+#     CREATE TABLE IF NOT EXISTS person(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     name TEXT NOT NULL,
+#     phone BLOB NOT NULL DEFAULT "+79099000000",
+#     age INTEGER CHECK(age > 0 AND age < 100),
+#     email TEXT UNIQUE
+#     )""")
+
+
+# ---------------------------------------------
+
+# with sqlite3.connect("users.db") as con:
+#     cur = con.cursor()
+#
+#     cur.execute("""
+#     ALTER TABLE person_table
+#     DROP TABLE person_table
+#     """)
+# # удалить всю таблицу, не удаляя базу данных
+#
+#     cur.execute("""
+#     ALTER TABLE person_table
+#     DROP COLUMN home_address;
+#     """)
+# # здесь удаляем не всю таблицу, а только один из столбцов
+#
+#     cur.execute("""
+#     ALTER TABLE person_table
+#     RENAME COLUMN address TO home_address;
+#     """)
+#
+#     cur.execute("""
+#     ALTER TABLE person_table
+#     ADD COLUMN address_add TEXT NOT NULL DEFAULT "Москва";
+#     """)
+#
+#     cur.execute("""
+#     ALTER TABLE person
+#     RENAME TO person_table;
+#     """)
+#
+#     cur.execute("""
+#     CREATE TABLE IF NOT EXISTS person(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     name TEXT NOT NULL,
+#     phone BLOB NOT NULL DEFAULT "+79099000000",
+#     age INTEGER CHECK(age > 0 AND age < 100),
+#     email TEXT UNIQUE
+#     )""")
+
+
+# INSERT - добавление новой строки в базу данных
+# UPDATE - изменить строку в существующей базе данных
+# DELETE - удаление строки из БД
+
+# INSERT INTO имя_таблицы [(название_столбцов)]
+# VALUES (набор_значений)
+# SELECT список_столбцов
+# FROM имя_таблицы
+# WHERE условие
+
+# ---------------------------------------------
+
+# INSERT INTO T1
+# VALUES (16, 'Юшина', 'Секретарь', 2, 1500)
+#
+# INSERT INTO T1 (ID, Doljnost, ORab, ZP, FName)
+# VALUES (17, 'Охранники', 1, 2500, 'Петров');
+#
+# INSERT INTO T1 (ID, FName)
+# VALUES (29, 'Николаев');
+#
+#
+# Перенос в другую таблицу
+# INSERT INTO T1 (ID, FName, Doljnost, ORab, ZP)
+# SELECT ID, FName, D, ORabot, Zp
+# FROM T2
+# WHERE ID LIKE 18;
+# ---------------------------------------------
+
+
+# UPDATE имя_таблицы
+# SET столбец_1=значение_1, столбец_N=значение_N - установить значение
+# WHERE условие
+
+# DELETE FROM имя_таблицы - удалить из таблицы
+# WHERE удаление
+
+# Новый оператор LIMIT, используется только после ORDER BY
+# LIMIT - количество строк до вывода
+# OFFSET - смещение (на необходимое количество)
+
+# [NOT] IN (набор_значений  | выражение)
+# ORDER BY название_столбца | номер_столбца [ASC | DESC]
+# LIMIT количество_строк OFFSET смещение
+#         LIMIT [смещение,] количество_строк
+
+
+# SELECT * - выведем все
+# FROM Ware - из таблицы Ware
+# ORDER BY Price DESC - отсортируем по цене (Price) по убыванию
+# LIMIT 5 OFFSET 2 - выведем только 5 строк, OFFSET 2 - смещение на первые 2 строчки (те после 2-х следующие 5)
+
+
+# SELECT *
+# FROM Ware
+# ORDER BY Price DESC
+# /*LIMIT 5 OFFSET 2*/
+# LIMIT 2, 5 - другой вариант записи LIMIT
+
+
+# with sqlite3.connect("db_4.db") as con:
+#     cur = con.cursor()
+#
+#     cur.execute("""
+#     SELECT *
+#     FROM Ware
+#     ORDER BY Price DESC
+#     LIMIT 2, 5
+#     """)
+#
+#     # res = cur.fetchall() - возвращает список кортежей
+#     # res = cur.fetchone()
+#     # print(res)
+#     # res = cur.fetchone()
+#     # print(res)
+#     # res = cur.fetchmany(2)  # цифра - это кол-во записей, которые хотим вывести
+#     # print(res)
+#
+#     for res in cur:
+#         print(res)
+
+# Логическая БД
+# Физическая БД
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №38 Python от 15.05.2024
+# Урок №1
+# -----------------------------------------------
+
+# Логическая БД
+# Физическая БД
+
+# Первичный ключ:
+# Суррогатный ключ (искусственный)
+# Логический ключ (естественный)
+
+# Виды связи:
+# 1:1 Связь один-к-одному
+# 1:М Связь один-ко-многим
+# M:N Связь многие-ко-многим
+
+# Внешний ключ - это ограничение на ввод данных для определенного поля.
+
+
+# Декартовое произведение - все возможные комбинации каждой строки одной таблицы с каждой строкой другой таблицы
+# Это если следующее:
+# SELECT Seller, Goods
+# FROM Seller, SallerGoods
+
+# Для решения этой проблемы, нам нужно связать внешний ключ с первичным ключом
+# То есть:
+# SELECT Seller, Goods
+# FROM Seller, SallerGoods
+# WHERE Seller.INNSeller=SallerGoods.INNSeller
+
+
+# Функции агрегирования (посчитает по значению столбца)
+# SUM (только с числами)
+# AVG (только с числами)
+# COUNT (с любыми типами данных)
+# MIN (с любыми типами данных)
+# MAX (с любыми типами данных)
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №39 Python от 20.05.2024
+# Урок №1
+# -----------------------------------------------
+
+
+# ПОРЯДОК НАПИСАНИЯ КОМАНД:
+# WHERE (условие и связывание таблиц)
+# GROUP BY (группировать по)
+# HAVING (условие для групп)
+# ORDER BY (отсортировать по алфавитному порядку или наоборот)
+# LIMIT (ограничить кол-во строк)
+
+# Пример:
+# SELECT city, MAX(rating)
+# FROM Customers
+# GROUP BY city
+# ORDER BY 2
+
+
+# COUNT
+# MIN
+# MAX
+
+# Подзапросы (вложенные запросы)
+# - однострочный (>, <, =, <>, !=, <=, =>)
+# - многострочный IN (NOT IN)
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №40 Python от 22.05.2024
+# Урок №1
+# -----------------------------------------------
+
+# НОВЫЙ ОПЕРАТОР
+# where
+# exists (проверяет элемент на существование)
+# используется сразу после оператора where
+# а далее идет вложенный запрос
+
+# select cnum, cname, city
+# from Customers
+# where exists
+# (select *
+# from Customers
+# where city="Berlin")
+
+# Оператор exists отрабатывает, если вложенный запрос вернет значение true,
+# То есть основной (главный) запрос отработает, если вложенный запрос вернет значение true
+
+# UNION - выводит элементы без дубликатов,
+# UNION ALL - выводит данные с дубликатами (с повторяющимися строками)
+
+# Внутреннее объединение - пересечение 2х таблиц - JOIN
+# full outer join
+# inner join
+# left join
+# right join
+
+# SELECT столбцы
+# FROM имя_таблицы_1 [INNER] JOIN имя_таблицы_2
+# ON условие (это связь_ключей)
+
+
+
+
+
+
 
 
 
