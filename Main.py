@@ -11060,7 +11060,6 @@ import sqlite3
 
 import sqlite3
 
-
 # with sqlite3.connect("users.db") as con:
 #     cur = con.cursor()
 #     cur.execute("""
@@ -11310,10 +11309,361 @@ import sqlite3
 # ON условие (это связь_ключей)
 
 
+# import sqlite3
+#
+#
+# cars_list = [
+#     ('BMW', 54000),
+#     ('Chevrolet', 46000),
+#     ('Daewoo', 38000),
+#     ('Citroen', 29000),
+#     ('Honda', 33000),
+# ]
+#
+# with sqlite3.connect("car.db") as con:  # con - это переменная, где у нас хранится соединение с базой данных
+#     cur = con.cursor()  # execute - метод, который выполняет 1 xql запрос
+#     cur.execute("""
+#     CREATE TABLE IF NOT EXISTS cars (
+#         car_id INTEGER PRIMARY KEY AUTOINCREMENT,
+#         model TEXT,
+#         price INTEGER
+#     )
+#     """)
+#
+#     # executescript - выполняет много разных разного плана запросов
+#     cur.executescript("""
+#     DELETE FROM cars WHERE model LIKE 'B%';
+#     UPDATE cars SET price = price + 100;
+#     """)
+#
+#     # А теперь именованные параметры
+#     cur.execute(f"UPDATE cars SET price = :Price where model LIKE 'B%'", {'Price': 0})
+#
+#     # cur.executemany("INSERT INTO cars VALUES(NULL, ?, ?)", cars_list)
+#     # executemany - выполняет много однотипных запросов
+#
+#     # for car in cars_list:
+#     #     cur.execute("INSERT INTO cars VALUES(NULL, ?, ?)", car)
+#
+#     # cur.execute("INSERT INTO cars VALUES(1, 'Renault', 22000)")
+#     # cur.execute("INSERT INTO cars VALUES(2, 'Volvo', 29000)")
+#     # cur.execute("INSERT INTO cars VALUES(3, 'Mercedes', 57000)")
+#     # cur.execute("INSERT INTO cars VALUES(4, 'Bentley', 35000)")
+#     # cur.execute("INSERT INTO cars VALUES(5, 'Audi', 52000)")
+#
+# # con.commit() - это если мы не будем пользоваться контекстным менеджером (with)
+# # con.close()
 
 
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №41 Python от 27.05.2024
+# Урок №1
+# -----------------------------------------------
+
+# ПОЧТИ ЗАВЕРШИЛИ РАБОТУ с xql и написанием запросов в SQLiteStudio
+# ----------------------------------------------
+# ----------------------------
 
 
+# Запрос №1
+# import sqlite3
+#
+# con = None
+# try:
+#     con = sqlite3.connect("car.db")
+#     cur = con.cursor()
+#     cur.executescript("""
+#     CREATE TABLE IF NOT EXISTS cars (
+#         car_id INTEGER PRIMARY KEY AUTOINCREMENT,
+#         model TEXT,
+#         price INTEGER
+#     );
+#     BEGIN;
+#     INSERT INTO cars VALUES(NULL, 'Renault', 22000);
+#     UPDATE cars2 SET price = price + 100;
+#     """)
+#     con.commit()
+# except sqlite3.Error as e:
+#     if con:
+#         con.rollback()
+#     print("Ошибка выполнения запроса")
+# finally:
+#     if con:
+#         con.close()
+# -------------------------------
+
+# Этот из чата Сработал:
+# con = None
+# try:
+#     con = sqlite3.connect("car.db")
+#     cur = con.cursor()
+#     cur.executescript("""
+#     CREATE TABLE IF NOT EXISTS cars (
+#         car_id INTEGER PRIMARY KEY AUTOINCREMENT,
+#         model TEXT,
+#         price INTEGER
+#     );
+#     BEGIN;
+#     INSERT INTO cars VALUES(NULL, 'Renault', 22000);
+#     UPDATE cars SET price = price + 100;
+#     """)
+#     con.commit()
+# except sqlite3.Error as e:
+#     if con:
+#         ...
+#     print("Ошибка выполнения запроса")
+# finally:
+#     if con:
+#         con.close()
+# -------------------------------
 
 
+# Запрос №2
+# import sqlite3
+#
+#
+# with sqlite3.connect("car.db") as con:
+#     con.row_factory = sqlite3.Row
+#     cur = con.cursor()
+#     cur.executescript("""
+#     CREATE TABLE IF NOT EXISTS cars (
+#         car_id INTEGER PRIMARY KEY AUTOINCREMENT,
+#         model TEXT,
+#         price INTEGER
+#     );
+#     CREATE TABLE IF NOT EXISTS cost (
+#         name TEXT, tr_in INTEGER, buy INTEGER
+#     );
+#     """)
+#
+#     # cur.execute("INSERT INTO cars VALUES(NULL, 'Запорожец', 1000)")
+#     # last_row_id = cur.lastrowid  # у объекта cur мы берем id последней записи
+#     # buy_car_id = 2
+#     # cur.execute("INSERT INTO cost VALUES('Илья', ?, ?)", (last_row_id, buy_car_id))
+#
+#     cur.execute("SELECT model, price FROM cars")
+#
+#     # rows = cur.fetchall()
+#     # print(rows)
+#     # rows = cur.fetchone()
+#     # print(rows)
+#     # rows = cur.fetchmany(5)
+#     # print(rows)
+#     # print()
+#     for res in cur:
+#         # print(res[0], res[1]) - вывод по индексам
+#         # print(res)
+#         print(res['model'], res['price'])  # - вывод по ключам
 
+
+#
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# Запрос №3 - сохранение картинки в базе данных
+# import sqlite3
+#
+#
+# def read_ava(n):
+#     try:
+#         with open(f"avatars/{n}.png", "rb") as f:
+#             return f.read()
+#     except IOError as e:
+#         print(e)
+#         return False
+#
+#
+# def write_ava(name, data):
+#     try:
+#         with open(name, "wb") as f:
+#             f.write(data)
+#     except IOError as e:
+#         print(e)
+#         return False
+#     return True
+#
+#
+# with sqlite3.connect("car.db") as con:
+#     con.row_factory = sqlite3.Row
+#     cur = con.cursor()
+#
+#     cur.execute("""
+#     CREATE TABLE IF NOT EXISTS users (
+#         name TEXT,
+#         ava BLOB,
+#         score INTEGER
+#     )""")
+#
+#     # img = read_ava(1)
+#     # if img:
+#     #     binary = sqlite3.Binary(img)
+#     #     cur.execute("INSERT INTO users VALUES ('Илья', ?, 1000)", (binary,))
+#
+#     cur.execute("SELECT ava FROM users")
+#     img = cur.fetchone()['ava']
+#
+#     write_ava("out.png", img)
+
+
+# Запрос №4
+# import sqlite3
+
+
+# with sqlite3.connect("car.db") as con:
+#     cur = con.cursor()
+#
+#     with open("sql_dump.sql", "w") as f:
+#         for sql in con.iterdump():  # iterdump - для восстановления базы данных
+#             f.write(sql)
+#
+#     # for sql in con.iterdump():  # iterdump - это метод, в котором хранятся все запросы бд
+#     #     print(sql)
+
+
+# with sqlite3.connect("car_new.db") as con:
+#     cur = con.cursor()
+#
+#     with open("sql_dump.sql", "r") as f:  # восстанавливаем удаленную базу данных (со всеми данными)
+#         sql = f.read()
+#         cur.executescript(sql)
+
+
+# МЫ ЗАВЕРШИЛИ РАБОТУ С БАЗАМИ ДАННЫХ (бд).
+# ----------------------------------------------
+# ----------------------------
+
+
+# НОВАЯ ТЕМА ***
+# ШАБЛОНИЗАТОР - посредник между питоном и другими программами
+# В наших фреймворках используется шаблонизатор, который называется Jinja
+# pip install jinja2
+# Файл - settings - Python Interpreter - (+) - Jinja2
+# {{ название переменной }}
+# {% блок кода %} - то есть циклы, условия, импорты
+
+# {% for i in names %} - можно использовать цикл
+# {% for <выражение> %}
+# {% endfor %} - конструкция используется для завершения блока цикла (for)
+
+# {% if <условие> %} - есть еще условие с if
+# {% elif %}
+# {% else %}
+# {% endif %} - закрывает блок с if
+
+# Мы будем изучать фреймверки Flask и Django
+
+
+from jinja2 import Template
+
+# template = Template('Hello, {{ name }}!')
+# rendered = template.render(name='World')
+# print(rendered)  # Выведет: Hello, World!
+# Этот пример демонстрирует, как с помощью Jinja2 можно вставить переменную (name) в шаблон
+# и получить динамически сгенерированную строку.
+
+# name = "Игорь"
+# tm = Template("Привет {{ n }}")  # Template - это шаблон
+# msg = tm.render(n=name)
+# print(msg)
+
+
+# name = "Игорь"
+# age = 28
+#
+# tm = Template("Мне {{ a*2 }} лет. Меня зовут {{ n.upper() }}.")
+# # tm = Template("Мне {{ a }} лет. Меня зовут {{ n }}.")
+# msg = tm.render(n=name, a=age)  # n & a - это переменные из питона
+#
+# print(msg)
+
+
+# Сейчас я создам словарь
+# per = {"name": "Игорь", "age": 28}
+#
+# tm = Template("Мне {{ p.age }} лет. Меня зовут {{ p['name'] }}.")  # p.age - можно через точечную
+# # нотацию, можно через p['name'] - скобки, но ключ тогда надо указать в кавычках
+# msg = tm.render(p=per) # при словаре только одна переменная (p), присваиваю ей значение нашего словаря
+# # (per)
+#
+# print(msg)
+
+
+# Теперь создадим класс
+# class Person:
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#
+#     # def get_name(self):
+#     #     return self.name
+#
+#
+# per = Person("Игорь", 28)
+#
+# tm = Template("Мне {{ p.age }} лет. Меня зовут {{ p.name }}.")
+# # tm = Template("Мне {{ p.age }} лет. Меня зовут {{ p.get_name() }}.")
+# msg = tm.render(p=per)
+#
+# print(msg)
+
+
+# # Подготовим словари
+# cities = [
+#     {"id": 1, "city": "Москва"},
+#     {"id": 2, "city": "Сочи"},
+#     {"id": 3, "city": "Смоленск"},
+#     {"id": 4, "city": "Ярославль"},
+#     {"id": 5, "city": "Минск"}
+# ]
+# # Сейчас сделаем многострочный текст
+# link = """
+# <select name='cities'>
+#     {% for c in cities -%}
+#         {% if c.id > 3 -%}
+#             <option value="{{ c['id'] }}">{{ c['city'] }}</option>
+#         {% elif c.city == "Москва" %}
+#             <option>{{ c['city'] }}</option>
+#         {% else -%}
+#             {{ c['city'] }}
+#         {% endif -%}
+#     {% endfor -%}
+# </select>
+# """
+#
+# # link = """
+# # <select name='cities'>
+# #     {% for c in cities -%}
+# #         <option value="{{ c['id'] }}">{{ c['city'] }}</option>
+# #     {% endfor -%}
+# # </select>
+# # """
+#
+# # -% - убирает пустые пробельные символы
+# tm = Template(link)
+# msg = tm.render(cities=cities)  # для цикла берем с левой стороны cities
+#
+# print(msg)
+
+
+# Домашнее задание:
+# Используйте шаблонизатор и from jinja2 import Template. Выведите список из пунктов меню и ссылок.
+# Представьте, что активный пункт - Главная (добавить к нему class="active")
+# Чтобы получился следующий результат:
+#     <ul>
+#         <li><a href="/index" class="active">Главная</a></li>
+#         <li><a href="/news">Новости</a></li>
+#         <li><a href="/about">О компании</a></li>
+#         <li><a href="/shop">Магазин</a></li>
+#         <li><a href="/contacts">Контакты</a></li>
+#     </ul>
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №42 Python от 29.05.2024
+# Урок №1
+# -----------------------------------------------

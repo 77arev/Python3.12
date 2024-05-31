@@ -1259,4 +1259,39 @@ import re
 # ДЗ №37 от 13.05.2024
 # Задача:
 
+# Урок №41 Python от 27.05.2024
+# Домашнее задание
+
+from jinja2 import Template
+
+menu = [
+    {'name': 'Главная', 'url': '/index'},
+    {'name': 'Новости', 'url': '/news'},
+    {'name': 'О компании', 'url': '/about'},
+    {'name': 'Магазин', 'url': '/shop'},
+    {'name': 'Контакты', 'url': '/contacts'},
+]
+
+template_str = """
+<ul>
+{% for item in menu -%}
+    <li><a href="{{ item.url }}" class="{{ 'active' if item.name == active_item else '' }}">{{ item.name }}</a></li>
+{% endfor -%}
+</ul>
+"""
+
+template = Template(template_str)
+active_item = 'Главная'
+rendered_html = template.render(menu=menu, active_item=active_item)
+print(rendered_html)
+
+
+# Результат:
+# <ul>
+# <li><a href="/index" class="active">Главная</a></li>
+# <li><a href="/news" class="">Новости</a></li>
+# <li><a href="/about" class="">О компании</a></li>
+# <li><a href="/shop" class="">Магазин</a></li>
+# <li><a href="/contacts" class="">Контакты</a></li>
+# </ul>
 
