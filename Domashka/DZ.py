@@ -1264,27 +1264,26 @@ import re
 
 from jinja2 import Template
 
-menu = [
-    {'name': 'Главная', 'url': '/index'},
-    {'name': 'Новости', 'url': '/news'},
-    {'name': 'О компании', 'url': '/about'},
-    {'name': 'Магазин', 'url': '/shop'},
-    {'name': 'Контакты', 'url': '/contacts'},
-]
-
-template_str = """
-<ul>
-{% for item in menu -%}
-    <li><a href="{{ item.url }}" class="{{ 'active' if item.name == active_item else '' }}">{{ item.name }}</a></li>
-{% endfor -%}
-</ul>
-"""
-
-template = Template(template_str)
-active_item = 'Главная'
-rendered_html = template.render(menu=menu, active_item=active_item)
-print(rendered_html)
-
+# menu = [
+#     {'name': 'Главная', 'url': '/index'},
+#     {'name': 'Новости', 'url': '/news'},
+#     {'name': 'О компании', 'url': '/about'},
+#     {'name': 'Магазин', 'url': '/shop'},
+#     {'name': 'Контакты', 'url': '/contacts'},
+# ]
+#
+# template_str = """
+# <ul>
+# {% for item in menu -%}
+#     <li><a href="{{ item.url }}" class="{{ 'active' if item.name == active_item else '' }}">{{ item.name }}</a></li>
+# {% endfor -%}
+# </ul>
+# """
+#
+# template = Template(template_str)
+# active_item = 'Главная'
+# rendered_html = template.render(menu=menu, active_item=active_item)
+# print(rendered_html)
 
 # Результат:
 # <ul>
@@ -1294,4 +1293,68 @@ print(rendered_html)
 # <li><a href="/shop" class="">Магазин</a></li>
 # <li><a href="/contacts" class="">Контакты</a></li>
 # </ul>
+
+
+# НОВАЯ ТЕМА ***
+# ШАБЛОНИЗАТОР - посредник между питоном и другими программами
+# В наших фреймворках используется шаблонизатор, который называется Jinja
+# pip install jinja2
+# Файл - settings - Python Interpreter - (+) - Jinja2
+# {{ название переменной }}
+# {% блок кода %} - то есть циклы, условия, импорты
+
+# {% for i in names %} - можно использовать цикл
+# {% for <выражение> %}
+# {% endfor %} - конструкция используется для завершения блока цикла (for)
+
+# {% if <условие> %} - есть еще условие с if
+# {% elif %}
+# {% else %}
+# {% endif %} - закрывает блок с if
+
+# Мы будем изучать фреймверки Flask и Django
+
+# Макро определение:
+# {% macro имя (аргументы) %}
+# {% endmacro %}
+# {{ имя (параметры) }}
+
+
+# Урок №42 Python от 29.05.2024
+# Домашнее задание
+
+from jinja2 import Template
+from jinja2 import Environment, FileSystemLoader
+
+
+template_str = """
+{% macro input_field(type, name, placeholder) %}
+<p><input type="{{ type }}" name="{{ name }}" placeholder="{{ placeholder }}"></p>
+{% endmacro %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Example</title>
+</head>
+<body>
+    {{ input_field('text', 'firstname', 'Имя') }}
+    {{ input_field('text', 'lastname', 'Фамилия') }}
+    {{ input_field('text', 'address', 'Адрес') }}
+    {{ input_field('tel', 'phone', 'Телефон') }}
+    {{ input_field('email', 'email', 'Почта') }}
+</body>
+</html>
+"""
+
+template = Template(template_str)
+rendered_html = template.render()
+
+with open('output.html', 'w', encoding='utf-8') as f:
+    f.write(rendered_html)
+
+print('Шаблон успешно отрендерен и сохранен в output.html')
+
 

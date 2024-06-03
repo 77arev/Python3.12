@@ -11555,8 +11555,13 @@ import sqlite3
 
 # Мы будем изучать фреймверки Flask и Django
 
+# Макро определение
+# {% macro имя (аргументы) %}
+# {% endmacro %}
+# {{ имя (параметры) }}
 
-from jinja2 import Template
+
+# from jinja2 import Template
 
 # template = Template('Hello, {{ name }}!')
 # rendered = template.render(name='World')
@@ -11667,3 +11672,202 @@ from jinja2 import Template
 # Урок №42 Python от 29.05.2024
 # Урок №1
 # -----------------------------------------------
+
+# Официальный сайт - Jinja - https://jinja.palletsprojects.com/en/latest/
+# Это ссылка на последнюю версию сайта
+
+# from jinja2 import Template
+
+# cars = [9, 6, 8, 7, 4, 5, 1]
+
+# tp1 = "Сумма: {{ cs }}"
+# tm = Template(tp1)
+# msg = tm.render(cs=cars)
+#
+# print(msg)
+
+
+cars = [
+    {'model': 'Audi', 'price': 23000},
+    {'model': 'Skoda', 'price': 17300},
+    {'model': 'Renault', 'price': 44300},
+    {'model': 'Wolksvagen', 'price': 21300}
+]
+
+# tp1 = "Сумма: {{ cs | sum(attribute='price') }}"
+# tp1 = "Max: {{ cs | max(attribute='price') }}"
+# tp1 = "Min: {{ (cs | min(attribute='price')).model }}"
+# tp1 = "{{ (cs | min(attribute='price')).model }}"
+# tp1 = "{{ cs | random }}"
+tp1 = "{{ cs | replace('model', 'brand') }}"
+tm = Template(tp1)
+msg = tm.render(cs=cars)
+
+print(msg)
+# print(cars)
+
+
+# НОВАЯ ТЕМА ***
+# ШАБЛОНИЗАТОР - посредник между питоном и другими программами
+# В наших фреймворках используется шаблонизатор, который называется Jinja
+# pip install jinja2
+# Файл - settings - Python Interpreter - (+) - Jinja2
+# {{ название переменной }}
+# {% блок кода %} - то есть циклы, условия, импорты
+
+# {% for i in names %} - можно использовать цикл
+# {% for <выражение> %}
+# {% endfor %} - конструкция используется для завершения блока цикла (for)
+
+# {% if <условие> %} - есть еще условие с if
+# {% elif %}
+# {% else %}
+# {% endif %} - закрывает блок с if
+
+# Мы будем изучать фреймверки Flask и Django
+
+# Макро определение - это аналог обычной функции
+# {% macro имя (аргументы) %}
+# {% endmacro %}
+# {{ имя (параметры) }}
+
+
+# html = '''
+# {% macro get_input(name, value='', type='text', size=20) -%}
+#     <input type="{{ type }}" name="{{ name }}" value="{{ value }}" size="{{ size }}">
+# {% endmacro -%}
+#
+# <p>{{ get_input('username') }}</p>
+# <p>{{ get_input('email') }}</p>
+# <p>{{ get_input('password', type='password') }}</p>
+# '''
+#
+# tm = Template(html)
+# msg = tm.render()
+#
+# print(msg)
+
+
+# Новая папка - templates
+# index.html = main.html
+
+# from jinja2 import Template
+# from jinja2 import Environment, FileSystemLoader
+#
+#
+# persons = [
+#     {"name": "Алексей", "year": 18, "weight": 78.5},
+#     {"name": "Никита", "year": 28, "weight": 82.3},
+#     {"name": "Виталий", "year": 33, "weight": 94.0}
+# ]
+#
+# file_loader = FileSystemLoader('templates')
+# env = Environment(loader=file_loader)
+#
+# tm = env.get_template('main.html')
+# msg = tm.render(users=persons, title="About Jinja")
+#
+# print(msg)
+
+
+# from jinja2 import Environment, FileSystemLoader
+#
+# # Наследование или расширение шаблона
+# subs = ["Культура", "Наука", "Политика", "Спорт"]
+#
+# file_loader = FileSystemLoader('templates')
+# env = Environment(loader=file_loader)
+#
+# tm = env.get_template('about.html')
+# msg = tm.render(list_table=subs)  # list_table=subs
+#
+# print(msg)
+
+
+# Домашнее задание:
+# Используйте шаблонизатор и from jinja2 import Template. Выведите список из пунктов меню и ссылок.
+# Представьте, что активный пункт - Главная (добавить к нему class="active")
+# Чтобы получился следующий результат:
+#     <ul>
+#         <li><a href="/index" class="active">Главная</a></li>
+#         <li><a href="/news">Новости</a></li>
+#         <li><a href="/about">О компании</a></li>
+#         <li><a href="/shop">Магазин</a></li>
+#         <li><a href="/contacts">Контакты</a></li>
+#     </ul>
+
+
+# Домашнее задание
+# Используйте шаблонизатор и from jinja2 import Template и from jinja2 import Environment, FileSystemLoader
+# Создайте макроопределение для шаблона полей ввода input в шаблоне html-документа по образцу, то есть создаете
+# в виде текстовой строки макро определение и вызываете это макро определние без импорта:
+# Чтобы получился следующий результат:
+# <p><input type="text" name="firstname" placeholder="Имя"></p>
+# <p><input type="text" name="lastname" placeholder="Фамилия"></p>
+# <p><input type="text" name="address" placeholder="Адрес"></p>
+# <p><input type="tel" name="phone" placeholder="Телефон"></p>
+# <p><input type="email" name="email" placeholder="Почта"></p>
+
+
+# from jinja2 import Template
+# from jinja2 import Environment, FileSystemLoader
+#
+#
+# # Определение шаблона с макросом
+# template_str = """
+# {% macro input_field(type, name, placeholder) %}
+# <p><input type="{{ type }}" name="{{ name }}" placeholder="{{ placeholder }}"></p>
+# {% endmacro %}
+#
+# <!DOCTYPE html>
+# <html lang="en">
+# <head>
+#     <meta charset="UTF-8">
+#     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+#     <title>Form Example</title>
+# </head>
+# <body>
+#     {{ input_field('text', 'firstname', 'Имя') }}
+#     {{ input_field('text', 'lastname', 'Фамилия') }}
+#     {{ input_field('text', 'address', 'Адрес') }}
+#     {{ input_field('tel', 'phone', 'Телефон') }}
+#     {{ input_field('email', 'email', 'Почта') }}
+# </body>
+# </html>
+# """
+#
+# # Создание объекта Template
+# template = Template(template_str)
+#
+# # Рендеринг шаблона
+# rendered_html = template.render()
+#
+# # Сохранение результата в файл
+# with open('output.html', 'w', encoding='utf-8') as f:
+#     f.write(rendered_html)
+#
+# print('Шаблон успешно отрендерен и сохранен в output.html')
+
+
+#
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# БЕРЕМ НОВУЮ ТЕМУ - FRAME WORKS
+# Flask
+# Django
+
+# templates
+#     index.html
+#     about.html
+#     base.html
+
+# int - только цифры
+# float - вещественное число
+# path - любые допустимые символы URL + "/"
+
+
+# @app.route("/profile/<int: username>")
+# def profile(username):
+#     return f"Пользователь: {username}"
