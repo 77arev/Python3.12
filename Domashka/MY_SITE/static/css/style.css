@@ -1,5 +1,5 @@
 body{
-    background: yellow;
+    background: rgb(176, 228, 236);
     margin: 0;
     padding: 0;
 }
@@ -7,7 +7,7 @@ body{
     display: flex;
     justify-content: space-around;
     list-style: none;
-    background: orange;
+    background: rgb(63, 196, 233);
     padding: 20px;
     margin-top: 0;
 }

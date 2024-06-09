@@ -1323,38 +1323,71 @@ from jinja2 import Template
 # Урок №42 Python от 29.05.2024
 # Домашнее задание
 
-from jinja2 import Template
-from jinja2 import Environment, FileSystemLoader
+# from jinja2 import Template
+# from jinja2 import Environment, FileSystemLoader
+#
+#
+# template_str = """
+# {% macro input_field(type, name, placeholder) %}
+# <p><input type="{{ type }}" name="{{ name }}" placeholder="{{ placeholder }}"></p>
+# {% endmacro %}
+#
+# <!DOCTYPE html>
+# <html lang="en">
+# <head>
+#     <meta charset="UTF-8">
+#     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+#     <title>Form Example</title>
+# </head>
+# <body>
+#     {{ input_field('text', 'firstname', 'Имя') }}
+#     {{ input_field('text', 'lastname', 'Фамилия') }}
+#     {{ input_field('text', 'address', 'Адрес') }}
+#     {{ input_field('tel', 'phone', 'Телефон') }}
+#     {{ input_field('email', 'email', 'Почта') }}
+# </body>
+# </html>
+# """
+#
+# template = Template(template_str)
+# rendered_html = template.render()
+#
+# with open('output.html', 'w', encoding='utf-8') as f:
+#     f.write(rendered_html)
+#
+# print('Шаблон успешно отрендерен и сохранен в output.html')
 
 
-template_str = """
-{% macro input_field(type, name, placeholder) %}
-<p><input type="{{ type }}" name="{{ name }}" placeholder="{{ placeholder }}"></p>
-{% endmacro %}
+# Урок №43 Python от 03.06.2024
+# Домашнее задание
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Example</title>
-</head>
-<body>
-    {{ input_field('text', 'firstname', 'Имя') }}
-    {{ input_field('text', 'lastname', 'Фамилия') }}
-    {{ input_field('text', 'address', 'Адрес') }}
-    {{ input_field('tel', 'phone', 'Телефон') }}
-    {{ input_field('email', 'email', 'Почта') }}
-</body>
-</html>
-"""
+from flask import Flask, render_template, request, redirect, url_for
 
-template = Template(template_str)
-rendered_html = template.render()
-
-with open('output.html', 'w', encoding='utf-8') as f:
-    f.write(rendered_html)
-
-print('Шаблон успешно отрендерен и сохранен в output.html')
+app = Flask(__name__)
 
 
+@app.route('/')
+def index():
+    return '<h1>Welcome to Flask!</h1>'
+
+
+@app.route('/hello/<name>')
+def hello(name):
+    return f'<h1>Hello, {name}!</h1>'
+
+
+@app.route('/form', methods=['GET', 'POST'])
+def form():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        return redirect(url_for('hello', name=name))
+    return '''
+        <form method="post">
+            Имя: <input type="text" name="name">
+            <input type="submit" value="Отправить">
+        </form>
+    '''
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

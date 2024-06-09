@@ -11687,24 +11687,24 @@ import sqlite3
 # print(msg)
 
 
-cars = [
-    {'model': 'Audi', 'price': 23000},
-    {'model': 'Skoda', 'price': 17300},
-    {'model': 'Renault', 'price': 44300},
-    {'model': 'Wolksvagen', 'price': 21300}
-]
-
-# tp1 = "Сумма: {{ cs | sum(attribute='price') }}"
-# tp1 = "Max: {{ cs | max(attribute='price') }}"
-# tp1 = "Min: {{ (cs | min(attribute='price')).model }}"
-# tp1 = "{{ (cs | min(attribute='price')).model }}"
-# tp1 = "{{ cs | random }}"
-tp1 = "{{ cs | replace('model', 'brand') }}"
-tm = Template(tp1)
-msg = tm.render(cs=cars)
-
-print(msg)
-# print(cars)
+# cars = [
+#     {'model': 'Audi', 'price': 23000},
+#     {'model': 'Skoda', 'price': 17300},
+#     {'model': 'Renault', 'price': 44300},
+#     {'model': 'Wolksvagen', 'price': 21300}
+# ]
+#
+# # tp1 = "Сумма: {{ cs | sum(attribute='price') }}"
+# # tp1 = "Max: {{ cs | max(attribute='price') }}"
+# # tp1 = "Min: {{ (cs | min(attribute='price')).model }}"
+# # tp1 = "{{ (cs | min(attribute='price')).model }}"
+# # tp1 = "{{ cs | random }}"
+# tp1 = "{{ cs | replace('model', 'brand') }}"
+# tm = Template(tp1)
+# msg = tm.render(cs=cars)
+#
+# print(msg)
+# # print(cars)
 
 
 # НОВАЯ ТЕМА ***
@@ -11871,3 +11871,40 @@ print(msg)
 # @app.route("/profile/<int: username>")
 # def profile(username):
 #     return f"Пользователь: {username}"
+
+
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №43 Python от 03.06.2024
+# Урок №1
+# -----------------------------------------------
+
+
+# templates
+#     index.html
+#     about.html
+#     base.html
+#     contact.html
+#     page404.html
+#     login.html
+
+
+# http://127.0.0.1:5000/contact?username=igor&email=igor%40gmail.com&message=
+
+# flash() - отправка мгновенных сообщений
+# get_flashed_messages()
+
+# ----------------------------
+
+# import os
+# os.urandom(20).hex()
+
+# Two/sq_db.sql
+
+# from Two.fldbsite import create_db
+# create_db()
+
+
+
+
