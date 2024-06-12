@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+
+{{ post | safe }}
+<!--убирает теги <p></p> на страницах-->
+
+{% endblock %}
