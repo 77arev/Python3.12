@@ -11909,3 +11909,92 @@ import sqlite3
 # create_db()
 
 
+#
+# ****************************************
+# ----------------------------------------------------------------
+# Урок №45 Python от 10.06.2024
+# Урок №1
+# -----------------------------------------------
+
+# FRAME WORKS:
+# Flask
+# Django
+
+# pip install django
+
+# Теперь мы работаем в Terminal
+
+# cd First - переходим в папку, которую создали для проекта
+# django-admin startproject password_generator_project
+# startproject password_generator_project - это название нашего проекта
+# django-admin - эта команда означает, что мы начинаем новый проект на django
+
+
+# Если у нас проблемы с новой OC Windows и вводом скриптов
+# Заходим в (Пуск) и начинаем писать Windows PowerShell, открываем галочку (стрелка вправо) -
+# Запуск от имени администратора
+# Set-ExecutonPolicy Unrestricted - это команда
+# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+# y - нажимайте
+# Далее назад в Terminal
+# django-admin startproject password_generator_project
+
+# Если не помогло и проблемы с виртуальным окружением:
+# python -m venv venv - это создание виртуального окружения
+# venv\scripts\activate - это активация виртуального окружения
+# pip install django
+
+
+# Как запустить проект
+# в Terminal - cd (далее начало названия папки и tab), к примеру, pass...
+# оно само выскочит cd .\password_generator_project\
+# Потом Enter
+# (.venv) PS C:\Python3.12\First\password_generator_project>
+
+# python - это просто служебная команда, а далее надо название папки (manage.py) и
+# runserver - запуск сервера
+# python manage.py runserver
+
+
+# Как остановить сервер - это Ctrl+C
+# Как создать свое приложение в проекте
+# python manage.py startapp generator
+# generator - это создание приложения внутри проекта
+# python manage.py runserver - можно в Terminal просто нажать стрелкой вверх
+
+
+# django
+# MTV
+# Model - будут храниться классы, которые будут преобразовываться в таблицы в базе данных (models.py)
+# Template - будут храниться (html документы) - взаимодействие с пользователем
+# View - будет брать инфо из Model и Template и выводить через пути (URL) пользователю
+
+# Человек -> URL (urls.py) -> View (views.py) -> Model (models.py)
+#                    View -> Template (мы будем создавать самостоятельно)
+
+
+# Мы решистрируем свое приложение в папке (settings.py) в поле (INSTALLED_APPS)
+# Название берем из (apps.py) - name = 'generator'
+# Пишем - 'generator.apps.GeneratorConfig'
+
+# Теперь указываем путь в папке (urls.py) - path('', views.home, name="home"),
+
+# Если в (urls.py) - подчеркивается from generator import views
+# Надо дать PyCharm понять, где находится корневой проект (password_generator_project)
+#  На внешнюю папку (password_generator_project) - правой кнопкой мыши (Mark Directory as) ->
+# -> (Sources Root)
+
+
+# ----------------------------------------------------------------
+# Урок №2
+# ----------------------------
+
+# http://127.0.0.1:8000/?length=2
+
+# Обязательно 3 элемента, чтобы заработало:
+#  urls.py -> views.py -> html
+
+
+# Стили не подтягиваются
+# Нажимаем в Терминале Ctrl + C, чтобы остановить проект
+#
