@@ -11998,3 +11998,47 @@ import sqlite3
 # Стили не подтягиваются
 # Нажимаем в Терминале Ctrl + C, чтобы остановить проект
 #
+
+
+# ----------------------------------------------------------------
+# Урок №46 Python от 17.06.2024
+# Урок №1
+# -----------------------------------------------
+
+# Новый проект (Second) с использованием баз данных, внутри у нас будет 2 приложения
+# cd Second (Enter)
+# django-admin startproject personal_portfolio
+
+# И в папке (personal_portfolio) мы создадим 2 приложения:
+# python manage.py startapp skills
+# python manage.py startapp blog
+
+
+# Pillow - устанавливаем библиотеку pillow
+# Теперь создаем файлы с миграциями
+# python manage.py makemigrations - создали базу данных для skills, но она пока пустая
+# python manage.py migrate - применение миграции и заполнение полей
+
+# Создаем супер пользователя
+# python manage.py createsuperuser
+
+
+# ----------------------------------------------------------------
+# Урок №47 Python от 19.06.2024
+# Урок №1
+# -----------------------------------------------
+
+
+# cd \Python3.12\Domashka\Portfolio
+# django-admin startproject personal_portfolio
+# cd .\personal_portfolio\ (То есть cd pers... и tab)
+# python manage.py startapp works (Далее создаем наше приложение)
+
+# python manage.py makemigrations - создали базу данных для works, но она пока пустая
+# python manage.py migrate - применение миграции и заполнение полей
+# Migrations for 'works':
+# - Create model Works
+
+# Создаем супер пользователя
+# python manage.py createsuperuser
+# python manage.py runserver
