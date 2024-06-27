@@ -1,10 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 body{
-    background: #CCCCFF;
+    /* background: #CCCCFF; */
+    /* background-image: url('https://img.freepik.com/free-photo/graphic-2d-colorful-wallpaper-with-grainy-gradients_23-2151001658.jpg?w=740&t=st=1719423529~exp=1719424129~hmac=50050e645d41fde78d1bf8cba7a8a0eb329402970be3072a9a605142f1914bd7'); */
+    background-image: url('ethereal-environment-with-cloth_23-2151113623.jpg');
     padding: 0;
     margin: 0;
     font-family: "Roboto", sans-serif;
+    height: 100vh; /* Высота экрана */
+    background-size: cover; /* Изображение покрывает весь фон */
+    background-position: center; /* Центрирование изображения */
+    background-repeat: no-repeat; /* Изображение не повторяется */
+    background-attachment: fixed; /* Фиксирование фона при прокрутке */
+
 }
 .wrap{
     max-width: 1200px;
@@ -54,7 +62,8 @@ body{
 }
 
 .top{
-    background: #663366;
+    /* background: #663366; */
+    background: #ae53ae;
     margin: 0;
     border-radius: 6px 6px 0 0;
 }
@@ -62,12 +71,13 @@ body{
 .top a{
     color: #FFF;
     text-decoration: none;
-    padding: 20px;
-    display: block;
+    padding: 15px;
+    display: block; /* Чтобы сделать кликабельным и фон */
 }
 
 .detail{
-    background: #FFF;
+    /* background: #FFF; */
+    background: lightyellow;
     padding: 20px 20px 60px;
     box-sizing: border-box;
 }
@@ -97,7 +107,7 @@ body{
     color: #663366;
     font-weight: bold;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 25px;
 }
 .menu ul{
     list-style: none;

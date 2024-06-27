@@ -12042,3 +12042,24 @@ import sqlite3
 # Создаем супер пользователя
 # python manage.py createsuperuser
 # python manage.py runserver
+# -----------------------------------------------
+
+# python manage.py makemigrations
+# python manage.py migrate
+
+# Заканчиваем проект cd ../.. мы вышли в корень нашего проекта
+# Создаем 3 проект с регистрациями Third
+# cd Third
+
+# django-admin startproject todos (создали там новую папку для работы)
+
+# И в папке (todos) мы создаем 1 приложение:
+# python manage.py startapp todo
+
+
+# ----------------------------------------------------------------
+# Урок №48 Python от 24.06.2024
+# Урок №1
+# -----------------------------------------------
+
+
