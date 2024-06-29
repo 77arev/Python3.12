@@ -12052,8 +12052,9 @@ import sqlite3
 # cd Third
 
 # django-admin startproject todos (создали там новую папку для работы)
+# cd to..(tab) - cd .\todos\ - перешли во внутреннюю папку
 
-# И в папке (todos) мы создаем 1 приложение:
+# И в папке (todos) мы создаем 1 приложение (todo):
 # python manage.py startapp todo
 
 
@@ -12061,5 +12062,26 @@ import sqlite3
 # Урок №48 Python от 24.06.2024
 # Урок №1
 # -----------------------------------------------
+
+# DFDNRxO9sF7salxzQfnnGdHs0EgZ0YuSlaGv4xWMWpnWwIU7uafCYPWU4FrTNot2
+# 6NlAytqyp9bFhpdBWjWnEs7zD1yVYUTUOioiLtybTTr9DMA9AeOCW4m1H2JPLkS4
+
+# Ctrl + C
+# python manage.py migrate
+# python manage.py createsuperuser
+
+# Igor
+# *Igor123456
+# *Igor123456
+
+# models.CASCADE - если пользователь будет удален, то удалятся все его задачи
+# models.PROTECT - запрещает удалять пользователя, пока у него есть задачи
+# models.SET_NULL - задачи останутся в базе, даже при удалении пользователя, но значение в поле
+# задачи изменится на NULL
+# models.DEFAULT - задачи останутся в базе, даже при удалении пользователя, но значение в поле
+# задачи изменится на значение, заданное по умолчанию
+
+# python manage.py makemigrations
+# python manage.py migrate
 
 
