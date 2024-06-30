@@ -12029,6 +12029,7 @@ import sqlite3
 # -----------------------------------------------
 
 
+# ДОМАШКА:
 # cd \Python3.12\Domashka\Portfolio
 # django-admin startproject personal_portfolio
 # cd .\personal_portfolio\ (То есть cd pers... и tab)
@@ -12081,7 +12082,36 @@ import sqlite3
 # models.DEFAULT - задачи останутся в базе, даже при удалении пользователя, но значение в поле
 # задачи изменится на значение, заданное по умолчанию
 
+# Перед миграциями нужно остановить сервер
 # python manage.py makemigrations
 # python manage.py migrate
+# -----------------------------------------------
+
+# ДОМАШКА:
+# Portfolio
+# cd \Python3.12\Domashka\Portfolio
+# django-admin startproject personal_portfolio
+# cd .\personal_portfolio\ (То есть cd pers... и tab)
+# python manage.py startapp works (Далее создаем наше приложение)
+
+
+# ДОМАШКА:
+# REGISTRATION_SITE
+# cd \Python3.12\Domashka\REGISTRATION_SITE
+# django-admin startproject Register - создали проект папку (Register)
+# cd .\Register\ (То есть cd reg... и tab) - переходим непосредственно в папку (Register)
+# python manage.py startapp Registration (Далее создаем наше приложение)
+# В папке (Register) мы создали приложение (Registration)
+# python manage.py migrate
+# python manage.py createsuperuser
+
+
+# Igor
+# *Igor123456
+# *Igor123456
+
+# Vera
+# **Vera123456
+# **Vera123456
 
 

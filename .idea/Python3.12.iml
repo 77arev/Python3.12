@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Second/personal_portfolio" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Domashka/Portfolio/personal_portfolio" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Third/todos" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Domashka/REGISTRATION_SITE/Register" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
     <orderEntry type="inheritedJdk" />
