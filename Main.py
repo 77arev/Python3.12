@@ -12118,3 +12118,6 @@ import sqlite3
 # Урок №49 Python от 26.06.2024
 # Урок №1
 # -----------------------------------------------
+
+# cd \Python3.12\Graduate_Work\Fit_Star_Home
+# django-admin startproject Begin
