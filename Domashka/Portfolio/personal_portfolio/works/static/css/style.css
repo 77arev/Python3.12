@@ -93,7 +93,8 @@ body{
 }
 
 .menu{
-    background: lightyellow;
+    /* background: lightyellow; */
+    background: rgb(207, 137, 206);
     padding: 10px;
     border-bottom: 6px solid #FFF;
 }

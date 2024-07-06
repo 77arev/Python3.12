@@ -12105,7 +12105,6 @@ import sqlite3
 # python manage.py migrate
 # python manage.py createsuperuser
 
-
 # Igor
 # *Igor123456
 # *Igor123456
@@ -12115,3 +12114,7 @@ import sqlite3
 # **Vera123456
 
 
+# ----------------------------------------------------------------
+# Урок №49 Python от 26.06.2024
+# Урок №1
+# -----------------------------------------------

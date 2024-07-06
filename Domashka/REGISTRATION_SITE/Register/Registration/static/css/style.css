@@ -115,11 +115,13 @@ input, textarea{
     box-shadow: 0 2px 8px 2px #003366;
     margin-bottom: 20px;
     font-size: 20px;
+    /* padding: 10px; */
 }
 
 .content a{
     color: #000;
     display: block;
+    /* чтобы не только ссылки, но и весь блок стал кликабельным */
     padding: 20px;
 }
 .but{
@@ -130,7 +132,8 @@ input, textarea{
     background: teal;
 }
 .remove{
-    background: orangered;
+    /* background: orangered; */
+    background: rgb(150, 64, 33);
 }
 
 a b{
