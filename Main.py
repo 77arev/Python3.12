@@ -12121,3 +12121,67 @@ import sqlite3
 
 # cd \Python3.12\Graduate_Work\Fit_Star_Home
 # django-admin startproject Begin
+# python manage.py startapp Registration (Далее создаем наше приложение)
+
+
+#
+#
+
+
+# ----------------------------------------------------------------
+# Урок №50 Python от 01.07.2024
+# Урок №1
+# -----------------------------------------------
+
+
+# Fourth
+# django-admin startproject devsearch
+# python manage.py startapp projects
+
+
+# OneToOneField - связь между моделями, один к одному
+# ForeignKey - связь между моделями, один ко многим
+# ManyToManyField - связь между моделями, многие ко многим
+
+# python manage.py makemigrations
+# python manage.py migrate
+
+# python manage.py createsuperuser
+
+# Username - admin
+# Email - admin@localhost
+# Password - 123456
+
+
+# python manage.py shell
+# from projects.models import Project
+
+# Project.objects.all()
+# Project.objects.get(id=1)
+# Project.objects.filter(id=1)
+# Project.objects.filter(title__startswith="Website")
+# Project.objects.filter(title__contains="site")
+# Project.objects.filter(title__contains="land")
+# Project.objects.exclude(title__startswith="Website")
+
+# Выйти из python manage.py shell
+# quit()
+
+
+# ----------------------------------------------------------------
+# python manage.py startapp users
+# python manage.py startapp users
+
+
+# python manage.py makemigrations
+# python manage.py migrate
+
+
+# Новые пользователи:
+# Ataur
+# 123456Ataur
+
+# Berkay
+# 123456Berkay
+
+

@@ -1,5 +1,5 @@
 """
-URL configuration for Begin project.
+URL configuration for devsearch project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -15,16 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from Registration import views
+from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    path('signup/', views.signupuser, name='signupuser'),
-    # path('logout/', views.logoutuser, name='logoutuser'),
-    # path('login/', views.loginuser, name='loginuser'),
-
-    path('current/', views.currenttodos, name='currenttodos'),
-    # path('', views.home, name='home'),
+    path('projects/', include('projects.urls')),
+    path('', include('users.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
